@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-import argparse
 import html
 import json
 import re
 import sys
-import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -16,13 +14,9 @@ from bs4 import BeautifulSoup, Tag
 from markdownify import markdownify as html_to_markdown
 
 ROOT = Path(__file__).resolve().parents[2]
-RSS_URL = "https://burnoutseries.substack.com/feed"
+RSS_SOURCE = ROOT / "feed.rss"
 POSTS_MD = ROOT / "posts.md"
 POSTS_JSON = ROOT / "posts.json"
-USER_AGENT = (
-    "blackaft-burnoutseries/1.0 "
-    "(https://github.com/blackaft/burnoutseries)"
-)
 NAMESPACES = {
     "content": "http://purl.org/rss/1.0/modules/content/",
     "dc": "http://purl.org/dc/elements/1.1/",
@@ -44,61 +38,16 @@ def utc_now() -> str:
         .replace("+00:00", "Z")
     )
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Synchronize Burnout Series posts from RSS."
-    )
-
-    parser.add_argument(
-        "--source",
-        default=RSS_URL,
-        help=(
-            "RSS source as an HTTP URL or local file path. "
-            f"Defaults to {RSS_URL}"
-        ),
-    )
-
-    return parser.parse_args()
-
-def read_source(source: str) -> bytes:
-    if source.startswith(("https://", "http://")):
-        print(f"Fetching RSS from {source}")
-
-        response = requests.get(
-            source,
-            headers={
-                "User-Agent": (
-                    "Mozilla/5.0 (X11; Linux x86_64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/126.0.0.0 Safari/537.36"
-                ),
-                "Accept": (
-                    "application/rss+xml, "
-                    "application/xml;q=0.9, "
-                    "text/xml;q=0.8, "
-                    "*/*;q=0.7"
-                ),
-                "Accept-Language": "en-US,en;q=0.9",
-                "Cache-Control": "no-cache",
-            },
-            timeout=30,
-        )
-
-        response.raise_for_status()
-        return response.content
-
-    path = Path(source)
-
-    if not path.is_absolute():
-        path = ROOT / path
-
+def read_source(path: Path) -> bytes:
     if not path.exists():
         raise FileNotFoundError(f"RSS source not found: {path}")
 
-    if not path.is_file():
-        raise ValueError(f"RSS source is not a file: {path}")
+    try:
+        display = path.relative_to(ROOT)
+    except ValueError:
+        display = path
 
-    print(f"Reading RSS from {path.relative_to(ROOT)}")
+    print(f"Reading RSS from {display}")
     return path.read_bytes()
 
 def element_text(element: ET.Element | None) -> str:
@@ -630,7 +579,7 @@ def build_posts_markdown(
             "",
             (
                 "_Automatically generated from "
-                f"[the publication RSS feed]({RSS_URL})._"
+                f"[the publication RSS feed]({RSS_SOURCE})._"
             ),
         ]
     )
@@ -674,14 +623,12 @@ def write_json(
     )
 
 def main() -> None:
-    args = parse_args()
-
     existing_index = load_existing_posts_json()
     existing_blocks = (
         load_existing_markdown_blocks()
     )
 
-    xml_data = read_source(args.source)
+    xml_data = read_source(RSS_SOURCE)
     feed_posts = parse_feed(xml_data)
 
     metadata = merge_metadata(
