@@ -25,6 +25,7 @@ Publish the update:
     <summary>Run the command on the terminal yourself</summary>
 
 ```bash
+chmod +x publish.sh
 ./publish.sh
 ```
 </details>
