@@ -1,8 +1,15 @@
 {
-  "updated_at": "2026-07-24T17:43:56Z",
-  "latest": "materials-and-guides-explore-your",
-  "count": 9,
+  "updated_at": "2026-07-24T18:27:01Z",
+  "latest": "github-now-available",
+  "count": 10,
   "posts": [
+    {
+      "slug": "github-now-available",
+      "title": "Github, now available",
+      "creator": "George Kary",
+      "published": "2026-07-24T18:26:08Z",
+      "url": "https://burnoutseries.substack.com/p/github-now-available"
+    },
     {
       "slug": "materials-and-guides-explore-your",
       "title": "Materials & Guides: Explore your thoughts with the series's preloaded ChatGPT",
