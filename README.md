@@ -40,3 +40,7 @@ A major aspect of the experiment is the use of AI in both the creation of conten
 
 - [Substack](https://substack.com/@thanosd)
 - [Instagram](https://www.instagram.com/thanos_do/)
+
+---
+
+<sub>Powered by Blackaft Studio.</sub>
