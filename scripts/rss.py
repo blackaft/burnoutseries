@@ -13,7 +13,7 @@ from urllib.parse import parse_qs, urlparse
 from bs4 import BeautifulSoup, Tag
 from markdownify import markdownify as html_to_markdown
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 RSS_SOURCE = ROOT / "feed.rss"
 POSTS_MD = ROOT / "posts.md"
 POSTS_JSON = ROOT / "posts.json"

@@ -14,13 +14,27 @@ Ready to use:
 
 ## Updating this knowledge base
 
-Humans!
+Prepare the update:
 
 - Add any new images under `imgs/`, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
 - Download the latest RSS feed from https://burnoutseries.substack.com/feed.rss and replace the contents of `feed.rss`.
-- Commit and push to the `dev` branch.
 
-The GitHub Action (`.github/workflows/publish.yml`) regenerates `posts.md`, `posts.json` and `imgs.json`, then commits any changes back to the repository. Fetch and pull once the action is complete.
+Publish the update:
+
+<details>
+    <summary>Run the command on the terminal yourself</summary>
+
+```bash
+./publish.sh
+```
+</details>
+<details>
+    <summary>Prompt your AI to do it</summary>
+
+```markdown
+Publish this knowledge base update by running `./publish.sh` and following any prompts the script presents. If the script reports an error, stop and show me the complete output instead of trying to work around it.
+```
+</details>
 
 Ping [George Kary](https://github.com/geogkary) on Google Chat for help.
 
@@ -56,3 +70,7 @@ Follow on [X](https://x.com/blackaftx) for updates.
 
 - [Substack](https://substack.com/@thanosd)
 - [Instagram](https://www.instagram.com/thanos_do/)
+
+---
+
+*Created and maintained together with AI. This software is protected and distributed by the [PolyForm Shield License 1.0.0](LICENSE.md). Badges by [shields.io](https://github.com/badges/shields).*

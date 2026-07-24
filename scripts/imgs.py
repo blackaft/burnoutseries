@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import quote
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 IMGS_DIR = ROOT / "imgs"
 OUTPUT_FILE = ROOT / "imgs.json"
 
