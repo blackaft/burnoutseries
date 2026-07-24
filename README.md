@@ -2,7 +2,7 @@
 
 BURNOUT is an experimental series about the bullshit lies we tell ourselves, with 3 parts and 19 chapters, including videos, author’s notes and behind the scenes with George Kary. It was born out of a passion for exploring multi-disciplinary and cross-functional projects; and, of course, a love of storytelling.
 
-A major aspect of the experiment is the use of AI in both analysis (research and retrospectives) for the creation of content, as well as the distribution of context to audiences.
+A major aspect of the experiment is the use of AI in both the creation of content (strictly as part of analysis for research and retrospectives) and the distribution of context to audiences.
 
 ## Links
 
