@@ -5,7 +5,7 @@ import html
 import json
 import re
 import sys
-import urllib.request
+import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup, Tag
 from markdownify import markdownify as html_to_markdown
 
 ROOT = Path(__file__).resolve().parents[2]
-RSS_URL = "https://burnoutseries.substack.com/feed.rss"
+RSS_URL = "https://burnoutseries.substack.com/feed"
 POSTS_MD = ROOT / "posts.md"
 POSTS_JSON = ROOT / "posts.json"
 USER_AGENT = (
@@ -62,20 +62,30 @@ def parse_args() -> argparse.Namespace:
 
 def read_source(source: str) -> bytes:
     if source.startswith(("https://", "http://")):
-        request = urllib.request.Request(
+        print(f"Fetching RSS from {source}")
+
+        response = requests.get(
             source,
             headers={
-                "User-Agent": USER_AGENT,
+                "User-Agent": (
+                    "Mozilla/5.0 (X11; Linux x86_64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/126.0.0.0 Safari/537.36"
+                ),
                 "Accept": (
                     "application/rss+xml, "
-                    "application/xml, "
-                    "text/xml"
+                    "application/xml;q=0.9, "
+                    "text/xml;q=0.8, "
+                    "*/*;q=0.7"
                 ),
+                "Accept-Language": "en-US,en;q=0.9",
+                "Cache-Control": "no-cache",
             },
+            timeout=30,
         )
 
-        with urllib.request.urlopen(request, timeout=30) as response:
-            return response.read()
+        response.raise_for_status()
+        return response.content
 
     path = Path(source)
 
@@ -88,6 +98,7 @@ def read_source(source: str) -> bytes:
     if not path.is_file():
         raise ValueError(f"RSS source is not a file: {path}")
 
+    print(f"Reading RSS from {path.relative_to(ROOT)}")
     return path.read_bytes()
 
 def element_text(element: ET.Element | None) -> str:
@@ -446,11 +457,13 @@ def load_existing_posts_json() -> dict[str, Any]:
         return empty_posts_index()
 
     try:
-        payload = json.loads(
-            POSTS_JSON.read_text(
-                encoding="utf-8"
-            )
-        )
+        raw = POSTS_JSON.read_text(encoding="utf-8").strip()
+
+        if not raw:
+            return empty_posts_index()
+
+        payload = json.loads(raw)
+
     except (json.JSONDecodeError, OSError) as error:
         print(
             f"Could not read existing posts.json: {error}",
@@ -460,8 +473,7 @@ def load_existing_posts_json() -> dict[str, Any]:
 
     if not isinstance(payload, dict):
         print(
-            "Existing posts.json is not a JSON object; "
-            "rebuilding",
+            "Existing posts.json is not a JSON object; rebuilding",
             file=sys.stderr,
         )
         return empty_posts_index()
