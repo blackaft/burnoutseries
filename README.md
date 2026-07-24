@@ -4,11 +4,11 @@ BURNOUT is an experimental series about the bullshit lies we tell ourselves, wit
 
 A major aspect of the experiment is the use of AI in both the creation of content (strictly as part of analysis for research and retrospectives) and the distribution of context to audiences.
 
-## Links
-
-### AI
+Available AIs for distribution of context:
 
 - [ChatGPT](https://chatgpt.com/g/g-6a61ca759b788191babe096fc2c19e58-burnout-series)
+
+## Links
 
 ### Substack
 
