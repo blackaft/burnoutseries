@@ -47,16 +47,19 @@ def read_source(path: Path) -> bytes:
     if not data.strip():
         raise ValueError(f"RSS source is empty: {path}")
 
-    preview = data.lstrip()[:100].lower()
+    # Remove UTF-8 BOM and any accidental whitespace before the XML declaration.
+    data = data.lstrip(b"\xef\xbb\xbf \t\r\n")
+
+    xml_start = data.find(b"<?xml")
+
+    if xml_start > 0:
+        data = data[xml_start:]
+
+    preview = data[:100].lower()
 
     if preview.startswith(b"<!doctype html") or preview.startswith(b"<html"):
         raise ValueError(
             f"RSS source appears to be HTML, not RSS XML: {path}"
-        )
-
-    if preview.startswith(b"version https://git-lfs.github.com"):
-        raise ValueError(
-            f"RSS source is a Git LFS pointer, not the actual feed: {path}"
         )
 
     print(f"Reading RSS from {path.relative_to(ROOT)}")
