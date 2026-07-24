@@ -1,266 +1,156 @@
-# Burnout Series Knowledge Base
+# Burnout Series GPT — Product Requirements Document
 
-## Product Requirements Document (v1)
+## Vision
 
----
+The Burnout Series GPT is the primary interface through which readers explore the Burnout Series.
 
-# Overview
+Rather than replacing the series, it complements it by helping readers navigate, connect and discuss the project's evolving story, meta and production process.
 
-The Burnout Series knowledge base is a GitHub-native publishing pipeline that compiles the Substack publication into structured assets consumable by a Custom GPT.
-
-No backend, database or CMS is required. GitHub acts as both the source repository and the publishing platform.
-
-The knowledge base is distributed as static files and accessed by the GPT through simple HTTP GET requests.
+The GPT should feel like a knowledgeable companion—not a search engine or a chatbot.
 
 ---
 
-# Objectives
+## Product goals
 
-- Keep the GPT knowledge base automatically up to date.
-- Compile new Substack posts into LLM-friendly Markdown.
-- Preserve historical posts beyond the RSS feed window.
-- Maintain an index of repository images.
-- Run entirely from GitHub Actions.
-- Keep the architecture reusable for future knowledge bases.
+- Ground every factual answer in the published Burnout Series knowledge base.
+- Keep knowledge continuously synchronized with Substack.
+- Encourage exploration rather than passive summarization.
+- Preserve the project's spoiler philosophy.
+- Require minimal maintenance.
 
 ---
 
-# Repository Structure
+## Architecture
 
 ```text
-.github/
-├── scripts/
-│   ├── imgs.py
-│   └── rss.py
-└── workflows/
-    └── publish.yml
-
-docs/
-├── imgs.schema.json
-├── posts.schema.json
-└── rss.sample.txt
-
-imgs/
-
-about.txt
-imgs.json
-posts.json
+Substack
+    │
+feed.rss
+    │
+publish.sh
+    │
+───────────────
+rss.py
+imgs.py
+───────────────
+    │
 posts.md
-
-requirements.txt
-README.md
+posts.json
+imgs.json
+about.txt
+    │
+GitHub
+    │
+GPT Actions
+    │
+Burnout Series GPT
 ```
 
 ---
 
-# Knowledge Files
+## Knowledge sources
 
-## about.txt
+The GPT retrieves knowledge through repository-backed actions.
 
-Maintained manually.
+| Source | Purpose |
+|---------|----------|
+| posts.json | latest post discovery, metadata, navigation |
+| posts.md | complete knowledge base |
+| imgs.json | image discovery and metadata |
+| about.txt | project background |
 
-Contains stable project information including:
-
-- project overview
-- writing style
-- GPT instructions
-- permanent context
-
-This file is never modified automatically.
+The repository is the authoritative source.
 
 ---
 
-## posts.md
+## Publishing workflow
 
-Generated automatically.
+Updating the GPT requires one command.
 
-Contains the complete publication corpus.
-
-Each post contains minimal frontmatter.
-
-```md
----
-title: "..."
-published: "..."
-url: "..."
----
-
-Article body...
-```
-
-Content is compiled into clean Markdown.
-
-The compiler removes:
-
-- images
-- image captions
-- subscription forms
-- related post widgets
-
-The compiler converts:
-
-- HTML → Markdown
-- YouTube embeds → Markdown links
-- buttons → plain Markdown links
-
----
-
-## posts.json
-
-Generated automatically.
-
-Provides lightweight metadata used for discovery.
-
-```json
-{
-  "updated_at": "...",
-  "latest": "...",
-  "count": 12,
-  "posts": [
-    {
-      "slug": "...",
-      "title": "...",
-      "creator": "...",
-      "published": "...",
-      "url": "..."
-    }
-  ]
-}
-```
-
----
-
-## imgs.json
-
-Generated automatically.
-
-Indexes every supported image within the repository.
-
-```json
-{
-  "updated_at": "...",
-  "base_url": "...",
-  "count": 14,
-  "imgs": [
-    "featured.png",
-    "diagram.webp"
-  ]
-}
-```
-
-`base_url` is constructed using repository metadata supplied by GitHub Actions.
-
----
-
-# RSS Compiler
-
-`rss.py` performs the following process.
-
-1. Read the RSS feed.
-2. Parse publication metadata.
-3. Read `content:encoded`.
-4. Remove non-content HTML.
-5. Remove images and captions.
-6. Remove subscription widgets.
-7. Remove related-post widgets.
-8. Convert YouTube embeds into Markdown links.
-9. Convert buttons into standard links.
-10. Convert HTML into Markdown.
-11. Normalize Markdown formatting.
-12. Merge with previously stored posts.
-13. Preserve historical posts.
-14. Generate `posts.md`.
-15. Generate `posts.json`.
-
-For development, the compiler can consume a local RSS fixture.
+1. Replace `feed.rss`.
+2. Add any new images to `imgs/`.
+3. Run:
 
 ```bash
-python .github/scripts/rss.py --source docs/rss.sample.txt
+./publish.sh
 ```
 
----
+The script:
 
-# Image Compiler
+- validates inputs
+- regenerates knowledge
+- creates/resumes a branch
+- commits
+- pushes
+- opens/resumes a PR
+- optionally merges
+- restores a clean local repository
 
-`imgs.py` scans the repository image directory.
-
-Supported formats include:
-
-- PNG
-- JPEG
-- JPG
-- WEBP
-- GIF
-- AVIF
-
-The compiler generates `imgs.json` containing:
-
-- update timestamp
-- repository image base URL
-- image count
-- image filenames
+No GitHub Actions are required.
 
 ---
 
-# GitHub Actions
+## GPT behaviour
 
-Publishing is performed entirely through GitHub Actions.
+The GPT should:
 
-Workflow:
-
-1. Checkout repository.
-2. Install Python dependencies.
-3. Execute `rss.py`.
-4. Execute `imgs.py`.
-5. Commit generated files if changes exist.
-6. Push back to the triggering branch.
-
-Repository owner, repository name and branch are provided through the GitHub Actions environment.
-
-No branch names are hardcoded.
+- retrieve knowledge before answering
+- identify the latest post
+- cite relevant posts
+- remain conversational
+- avoid spoilers
+- explore ideas instead of merely summarizing
+- clearly distinguish repository facts from reasoning
 
 ---
 
-# Dependencies
+## Design principles
 
-```text
-beautifulsoup4
-markdownify
-```
-
----
-
-# Design Principles
-
-- GitHub-first
-- Backend-free
-- Database-free
-- Static knowledge only
-- Human-readable outputs
-- Fully reproducible
-- LLM-optimised content
-- Minimal generated artefacts
+- Git is the database.
+- Substack is the CMS.
+- The repository is the knowledge base.
+- AI retrieves knowledge rather than memorizing it.
+- Publishing should be deterministic.
+- Every generated artifact should be reproducible.
+- Maintenance should require as little human effort as possible.
 
 ---
 
-# Generated Outputs
+## Future roadmap
 
-| File | Source | Generated |
-|------|--------|-----------|
-| about.txt | Manual | No |
-| posts.md | RSS compiler | Yes |
-| posts.json | RSS compiler | Yes |
-| imgs.json | Image compiler | Yes |
+### Images
+
+Improve image retrieval through richer metadata:
+
+- descriptions
+- captions
+- tags
+- related posts
+- semantic context
+
+### Visual reasoning
+
+Allow the GPT to identify the most relevant project image before requesting visual inspection.
+
+### Additional knowledge
+
+Potential future indices:
+
+- videos
+- trailers
+- excerpts
+- timeline
+- glossary
+- behind-the-scenes references
 
 ---
 
-# Future Work
+## Success criteria
 
-Potential future enhancements include:
+The system is considered successful if:
 
-- richer Markdown normalization
-- audio/video normalization
-- automatic excerpt generation
-- semantic search indexes
-- multiple publication support
-- reusable compiler package for additional Substack-based knowledge bases
+- updating knowledge requires a single command;
+- the GPT always retrieves the latest published content;
+- repository history remains auditable;
+- the GPT never invents repository facts;
+- readers experience the GPT as an extension of the series rather than a detached assistant.
