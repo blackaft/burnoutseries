@@ -42,13 +42,25 @@ def read_source(path: Path) -> bytes:
     if not path.exists():
         raise FileNotFoundError(f"RSS source not found: {path}")
 
-    try:
-        display = path.relative_to(ROOT)
-    except ValueError:
-        display = path
+    data = path.read_bytes()
 
-    print(f"Reading RSS from {display}")
-    return path.read_bytes()
+    if not data.strip():
+        raise ValueError(f"RSS source is empty: {path}")
+
+    preview = data.lstrip()[:100].lower()
+
+    if preview.startswith(b"<!doctype html") or preview.startswith(b"<html"):
+        raise ValueError(
+            f"RSS source appears to be HTML, not RSS XML: {path}"
+        )
+
+    if preview.startswith(b"version https://git-lfs.github.com"):
+        raise ValueError(
+            f"RSS source is a Git LFS pointer, not the actual feed: {path}"
+        )
+
+    print(f"Reading RSS from {path.relative_to(ROOT)}")
+    return data
 
 def element_text(element: ET.Element | None) -> str:
     if element is None or element.text is None:

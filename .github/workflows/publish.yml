@@ -41,6 +41,12 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r .github/scripts/requirements.txt
 
+      - name: Inspect feed.rss
+        run: |
+            ls -lh feed.rss
+            file feed.rss
+            head -n 5 feed.rss
+
       - name: Update posts.md and posts.json
         run: python .github/scripts/rss.py
 
