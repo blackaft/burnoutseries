@@ -444,7 +444,7 @@ fi
 source "${VENV_PATH}/bin/activate"
 
 python -m pip install --quiet --upgrade pip
-python -m pip install --quiet -r requirements.txt
+python -m pip install --quiet -r scripts/requirements.txt
 
 success "Python dependencies are ready."
 
