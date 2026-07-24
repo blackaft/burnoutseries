@@ -588,25 +588,10 @@ def build_posts_markdown(
             file=sys.stderr,
         )
 
-    header = "\n".join(
-        [
-            "# Burnout Series Posts",
-            "",
-            (
-                "_Automatically generated from "
-                f"[the publication RSS feed]({RSS_SOURCE})._"
-            ),
-        ]
-    )
-
-    if not blocks:
-        return header + "\n"
-
     return (
-        header
-        + "\n\n"
-        + "\n\n---\n\n".join(blocks)
-        + "\n"
+        "\n\n---\n\n".join(blocks) + "\n"
+        if blocks
+        else ""
     )
 
 def build_posts_json(
