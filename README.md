@@ -17,7 +17,7 @@ Ready to use:
 Prepare the update:
 
 - Add any new images under `imgs/`, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
-- Download the latest RSS feed from https://burnoutseries.substack.com/feed.rss and replace the contents of `feed.rss`.
+- Download the latest RSS feed (raw page source) from https://burnoutseries.substack.com/feed.rss and replace the contents of `feed.rss`.
 
 Publish the update:
 
