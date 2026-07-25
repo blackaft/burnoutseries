@@ -26,9 +26,13 @@ Keep in mind structural changes have already been initiated on the local working
     - posts, from the series's meta-posts (not chapters)
 - .agents/AGENT.md contains a high-level mapping of this repository for future AI sessions
 
+## Organisation
+
+- Consider moving all processing python scripts under .agents/scripts/processing/, i.e. .agents/scripts/processing/rss.py instead of naming the files process-rss.py
+
 # Functional Specifications
 
-## Images
+## Change imgs.py
 
 We need to change .agents/scripts/imgs.py:
 
@@ -39,7 +43,7 @@ We need to change .agents/scripts/imgs.py:
 - Consider changing the script's name from imgs.py to process-images.py for consistency.
 - Update .agents/scripts/publish.sh to reflect path changes for the image script.
 
-## RSS
+## Change rss.py
 
 We need to change .agents/scripts/rss.py:
 
@@ -50,6 +54,14 @@ We need to change .agents/scripts/rss.py:
 - Keep the rest of the functionality as is, including continuing to update .agents/vaults/posts.json
 - Consider changing the script's name from rss.py to process-rss.py for consistency.
 - Update .agents/scripts/publish.sh to reflect path changes for the rss script.
+
+## Add process-txt.py
+
+We need to add a new .agents/scripts/process-txt.py script:
+
+- It will look for .txt files under .humans/, convert them into AI-first .md files with bare minimum content changes from the original human source, put them under .agents/vaults/about/ or .agents/vaults/excerpts/ depending on the prefix of the human source file (i.e. about-sources.txt) and once confirmed, delete the human source.
+- It will also update .agents/vaults/about.json and .agents/vaults/excerpts.json; we'll need to create and verify a .agents/schemas/about.schema.json and .agents/schemas/excerpts.schema.json first.
+- Update .agents/scripts/publish.sh to reflect the addition of this new script.
 
 # Implementation Plan
 
