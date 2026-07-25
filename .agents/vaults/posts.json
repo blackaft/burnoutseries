@@ -1,77 +1,98 @@
 {
-  "updated_at": "2026-07-24T18:27:01Z",
+  "updated_at": "2026-07-25T06:37:46Z",
+  "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/vaults/posts/",
   "latest": "github-now-available",
   "count": 10,
   "posts": [
     {
-      "slug": "github-now-available",
+      "id": "github-now-available",
       "title": "Github, now available",
-      "creator": "George Kary",
-      "published": "2026-07-24T18:26:08Z",
-      "url": "https://burnoutseries.substack.com/p/github-now-available"
+      "excerpt": "BURNOUT embraces AI strictly for analysis, distribution in some parts and post-consumption, not consumption. Put your ass down and read, like humans used to before 2023. That means, the series does not use AI to generate any kind of content",
+      "created_by": "George Kary",
+      "published_at": "2026-07-24T18:26:08Z",
+      "substack_url": "https://burnoutseries.substack.com/p/github-now-available",
+      "file": "20260724-github-now-available.md"
     },
     {
-      "slug": "materials-and-guides-explore-your",
+      "id": "materials-and-guides-explore-your",
       "title": "Materials & Guides: Explore your thoughts with the series's preloaded ChatGPT",
-      "creator": "George Kary",
-      "published": "2026-07-24T10:13:48Z",
-      "url": "https://burnoutseries.substack.com/p/materials-and-guides-explore-your"
+      "excerpt": "BURNOUT is a series that intentionally embraces the complexity of multi-thread narration, both in the story and the meta. Both represent inexplicable pieces of the project’s own deconstruction-in-construction process, since the project itse",
+      "created_by": "George Kary",
+      "published_at": "2026-07-24T10:13:48Z",
+      "substack_url": "https://burnoutseries.substack.com/p/materials-and-guides-explore-your",
+      "file": "20260724-materials-and-guides-explore-your.md"
     },
     {
-      "slug": "authors-note-the-process-of-experimentation",
+      "id": "authors-note-the-process-of-experimentation",
       "title": "Author's Note: The process of experimentation",
-      "creator": "George Kary",
-      "published": "2026-07-22T19:06:16Z",
-      "url": "https://burnoutseries.substack.com/p/authors-note-the-process-of-experimentation"
+      "excerpt": "Still shot from lighting and composition tests for the scheduled author’s notes videos featuring George Kary.\n\nBURNOUT is an experimental series - the process of making it is equally - if not more - important as the actual story itself. Aft",
+      "created_by": "George Kary",
+      "published_at": "2026-07-22T19:06:16Z",
+      "substack_url": "https://burnoutseries.substack.com/p/authors-note-the-process-of-experimentation",
+      "file": "20260722-authors-note-the-process-of-experimentation.md"
     },
     {
-      "slug": "coming-up-july-2026",
+      "id": "coming-up-july-2026",
       "title": "Coming up, July 2026",
-      "creator": "George Kary",
-      "published": "2026-07-19T15:58:59Z",
-      "url": "https://burnoutseries.substack.com/p/coming-up-july-2026"
+      "excerpt": "Thanos Doumas joins as one of the characters for the experimental Burnout Series by George Kary.\n\nBURNOUT is a bit behind schedule as we had to firefight the sudden recall of quite a bit of material, but it’s still alive and kicking. Additi",
+      "created_by": "George Kary",
+      "published_at": "2026-07-19T15:58:59Z",
+      "substack_url": "https://burnoutseries.substack.com/p/coming-up-july-2026",
+      "file": "20260719-coming-up-july-2026.md"
     },
     {
-      "slug": "coming-up-june-2026",
+      "id": "coming-up-june-2026",
       "title": "Coming up, June 2026",
-      "creator": "George Kary",
-      "published": "2026-06-05T10:15:54Z",
-      "url": "https://burnoutseries.substack.com/p/coming-up-june-2026"
+      "excerpt": "BURNOUT, being an experimental series with very specific goals, naturally has a primary content funnel, as well as a secondary one. The primary funnel is the actual series itself (3 parts, 19 chapters). The secondary one is comprised of aut",
+      "created_by": "George Kary",
+      "published_at": "2026-06-05T10:15:54Z",
+      "substack_url": "https://burnoutseries.substack.com/p/coming-up-june-2026",
+      "file": "20260605-coming-up-june-2026.md"
     },
     {
-      "slug": "characters-and-character-progression",
+      "id": "characters-and-character-progression",
       "title": "Author's Note: Characters and character progression",
-      "creator": "George Kary",
-      "published": "2026-05-26T20:19:51Z",
-      "url": "https://burnoutseries.substack.com/p/characters-and-character-progression"
+      "excerpt": "BURNOUT’s primary character is the Ego, played by George Kary. The story begins with the Ego being absurdly obnoxious, arrogant, superior and patronising (sometimes breaking the fourth wall for dramatic effect), looking back and remembering",
+      "created_by": "George Kary",
+      "published_at": "2026-05-26T20:19:51Z",
+      "substack_url": "https://burnoutseries.substack.com/p/characters-and-character-progression",
+      "file": "20260526-characters-and-character-progression.md"
     },
     {
-      "slug": "coming-up-may-2026",
+      "id": "coming-up-may-2026",
       "title": "Coming up, May 2026",
-      "creator": "George Kary",
-      "published": "2026-05-19T21:18:11Z",
-      "url": "https://burnoutseries.substack.com/p/coming-up-may-2026"
+      "excerpt": "Gallery and symbolism\nof the logo\n\nMeet the Id\n\nFrom initial concept to how the character progressed, insights from AI-assisted analysis, challenges, setup, lighting and color grading.\n\nMeet the Superego\n\nMeet the Ego\n\nAlso including challe",
+      "created_by": "George Kary",
+      "published_at": "2026-05-19T21:18:11Z",
+      "substack_url": "https://burnoutseries.substack.com/p/coming-up-may-2026",
+      "file": "20260519-coming-up-may-2026.md"
     },
     {
-      "slug": "authors-note-an-ai-augmented-creative",
+      "id": "authors-note-an-ai-augmented-creative",
       "title": "Author's Note: An AI-augmented creative project",
-      "creator": "George Kary",
-      "published": "2026-05-18T22:19:42Z",
-      "url": "https://burnoutseries.substack.com/p/authors-note-an-ai-augmented-creative"
+      "excerpt": "BURNOUT is a purely creative project, with text, images and videos exclusively created by humans, for humans, in alignment with Blackaft’s principles, the biztech venture firm founded by George Kary. But the project has long been augmented",
+      "created_by": "George Kary",
+      "published_at": "2026-05-18T22:19:42Z",
+      "substack_url": "https://burnoutseries.substack.com/p/authors-note-an-ai-augmented-creative",
+      "file": "20260518-authors-note-an-ai-augmented-creative.md"
     },
     {
-      "slug": "upcoming-behind-the-scenes-content",
+      "id": "upcoming-behind-the-scenes-content",
       "title": "Author's Note: Upcoming \"behind the scenes\" content",
-      "creator": "George Kary",
-      "published": "2026-05-17T13:21:37Z",
-      "url": "https://burnoutseries.substack.com/p/upcoming-behind-the-scenes-content"
+      "excerpt": "BURNOUT’s content also features “behind the scenes”, which complements the experimental nature of the series as a “meta” piece of the entire experience. Here’s the list of episodes (videos and articles) planned:\n\nPixar’s 3-layer narrative",
+      "created_by": "George Kary",
+      "published_at": "2026-05-17T13:21:37Z",
+      "substack_url": "https://burnoutseries.substack.com/p/upcoming-behind-the-scenes-content",
+      "file": "20260517-upcoming-behind-the-scenes-content.md"
     },
     {
-      "slug": "welcome-aboard",
+      "id": "welcome-aboard",
       "title": "Author's Note: Introduction",
-      "creator": "George Kary",
-      "published": "2026-05-17T12:51:25Z",
-      "url": "https://burnoutseries.substack.com/p/welcome-aboard"
+      "excerpt": "BURNOUT is an experimental series created by George Kary, born out of a passion for tackling multi-disciplinary and cross-functional projects. The purpose of the series is to explore:\n\nCinematography and storytelling. Techniques and princip",
+      "created_by": "George Kary",
+      "published_at": "2026-05-17T12:51:25Z",
+      "substack_url": "https://burnoutseries.substack.com/p/welcome-aboard",
+      "file": "20260517-welcome-aboard.md"
     }
   ]
 }
