@@ -454,7 +454,7 @@ success "Python dependencies are ready."
 
 info "Generating posts.md and posts.json..."
 
-python scripts/rss.py
+python main.py
 
 success "Post knowledge files were generated."
 
@@ -462,11 +462,6 @@ info "Generating imgs.json..."
 
 GITHUB_OWNER="${REPO%/*}"
 GITHUB_REPO="${REPO#*/}"
-
-GITHUB_OWNER="$GITHUB_OWNER" \
-GITHUB_REPO="$GITHUB_REPO" \
-GITHUB_BRANCH="$BASE_BRANCH" \
-python scripts/imgs.py
 
 success "Image index was generated."
 
