@@ -16,8 +16,8 @@ Ready to use:
 
 Prepare the update:
 
-- Add any new images under `imgs/`, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
-- Download the latest RSS feed (raw page source) from https://burnoutseries.substack.com/feed.rss and replace the contents of `feed.rss`.
+- Add any new images under `.humans/`, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
+- Add any new about or excerpt .txt files under `.humans/` by prepending the category at the beginning (i.e. about-summary.txt)
 
 Publish the update:
 
@@ -26,14 +26,14 @@ Publish the update:
 
 ```bash
 chmod +x .agents/scripts/publish.sh
-./publish.sh
+./.agents/scripts/publish.sh
 ```
 </details>
 <details>
     <summary>Prompt your AI to do it</summary>
 
 ```markdown
-Publish this knowledge base update by running `./publish.sh` and following any prompts the script presents. If the script reports an error, stop and show me the complete output instead of trying to work around it.
+Publish this knowledge base update by running `./.agents/scripts/publish.sh` and following any prompts the script presents. If the script reports an error, stop and show me the complete output instead of trying to work around it.
 ```
 </details>
 
