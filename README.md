@@ -2,22 +2,32 @@
 
 ![Target Audience](https://img.shields.io/badge/Target_Audience-Humans-FF5722?style=flat-square&logo=userpilot&logoColor=white)
 
+This repository is a knowledge base meant for audiences using AI companions to consume content.
+
+Ping [George Kary](https://github.com/geogkary) on Google Chat for help.
+
+Follow on [X](https://x.com/blackaftx) for updates.
+
+## A few words
+
 **BURNOUT** is an experimental series about the bullshit lies we tell ourselves, spanning 3 parts and 19 chapters, complemented by videos, author's notes and behind-the-scenes content by George Kary. It was born out of a passion for exploring multi-disciplinary and cross-functional projects, and, of course, a love of storytelling.
 
 A major aspect of the experiment is the use of AI in both the creation of the project (strictly for research, analysis and retrospectives) and the distribution of its knowledge base. Rather than asking audiences to navigate dozens of articles, the series publishes a structured, machine-readable corpus that can be explored through AI assistants, coding agents or any application capable of ingesting external context, whether through knowledge uploads, raw files or programmatic retrieval.
 
-If you're looking to build your own AI setup, use `manifest.json`.
+## Using this knowledge base
+
+If you're looking to build your own AI setup, take a look or point your AI to `.agents/BLACKAFT.md`.
 
 Ready to use:
 
 - [ChatGPT](https://chatgpt.com/g/g-6a61ca759b788191babe096fc2c19e58-burnout-series) (Custom GPT)
 
-## Updating this knowledge base
+## Updating it
 
-Prepare the update:
+Under `.humans/`, add any new
 
-- Add any new images under `.humans/`, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
-- Add any new about or excerpt .txt files under `.humans/` by prepending the category at the beginning (i.e. about-summary.txt)
+- Image, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
+- Text files, by prepending whether they're an about or excerpt item (i.e. `about-summary.txt`)
 
 Publish the update:
 
@@ -36,10 +46,6 @@ chmod +x .agents/scripts/publish.sh
 Publish this knowledge base update by running `./.agents/scripts/publish.sh` and following any prompts the script presents. If the script reports an error, stop and show me the complete output instead of trying to work around it.
 ```
 </details>
-
-Ping [George Kary](https://github.com/geogkary) on Google Chat for help.
-
-Follow on [X](https://x.com/blackaftx) for updates.
 
 ## Links
 
