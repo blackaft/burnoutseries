@@ -33,7 +33,23 @@ Keep the knowledge base:
 
 ## How It Works
 
-The publish pipeline lives under `.agents/scripts/`.
+The publish pipeline is deterministic, agent-agnostic, and idempotent. It treats Git as the database and Substack as the CMS.
+
+```
+Substack (content source)
+    ↓
+.humans/ (human-added files: images, .txt)
+    ↓
+.agents/scripts/main.py (orchestrator)
+    ↓
+Processors (imgs.py, rss.py, txt.py, manifest.py)
+    ↓
+.agents/vaults/ (durable indexed corpus)
+    ↓
+GitHub raw URLs → Custom GPT + retrieval clients
+```
+
+### The Orchestrator
 
 Run `.agents/scripts/main.py` to orchestrate the processors:
 
@@ -41,6 +57,22 @@ Run `.agents/scripts/main.py` to orchestrate the processors:
 - `processors/rss.py` fetches the Substack RSS feed, stores it at `.agents/vaults/feed.rss`, generates per-post Markdown files, and regenerates `posts.json`.
 - `processors/txt.py` scans existing Markdown files under `.agents/vaults/about/` and `.agents/vaults/excerpts/` and regenerates their JSON indexes.
 - `processors/manifest.py` merges the generated vault indexes into `.agents/vaults/manifest.json`.
+
+Each processor is isolated, reads from specific inputs, writes to specific outputs, and updates one or two JSON files. Processors import path constants from `main.py` rather than duplicating them.
+
+### The Publishing Workflow
+
+User runs `./publish.sh`:
+1. Validates environment (Git, Python 3, GitHub CLI auth)
+2. Creates or resumes a git branch for the update
+3. Runs Python orchestrator (`main.py`)
+4. Validates generated JSON
+5. Commits, pushes, opens or resumes PR
+6. Optionally merges and cleans up
+
+No GitHub Actions. No external state. All logic is local and replayable.
+
+### The Custom GPT
 
 The Custom GPT action is defined in `.agents/scripts/gpt.yml`. It should use `manifest.json` as the first context call, then fetch post, about, or excerpt Markdown only when the conversation needs full content.
 
@@ -68,3 +100,65 @@ The Custom GPT action is defined in `.agents/scripts/gpt.yml`. It should use `ma
 Before making changes, inspect the latest requirements note and current generated JSON. When changing processors, run or mentally trace `main.py` end to end: images, RSS, text indexes, then manifest.
 
 When in doubt, keep the durable vaults stable and update the indexes to reflect the vault contents. The goal is not to maximize automation; the goal is to keep the knowledge base trustworthy for audience-facing AI companions.
+
+## Key Patterns and Contracts
+
+### Processor Pattern
+Each processor:
+- Imports `MAIN` constants from `main.py`
+- Reads from `.humans/` or vault sources
+- Writes JSON + Markdown to `.agents/vaults/`
+- Returns exit code 0 on success
+- Can be extended or refactored; never hardcode paths
+
+### Durable Vaults
+Once content exists in `.agents/vaults/`, it is canonical:
+- `.agents/vaults/posts/` contains generated Markdown from Substack
+- `.agents/vaults/about/` and `.agents/vaults/excerpts/` contain durable story and context material
+- `.agents/vaults/imgs/` contains image assets
+- `.humans/` is an intake area; processors decide whether to copy or move
+
+### Manifest-First Retrieval
+`manifest.json` is the primary entrypoint for all retrieval clients:
+- External tools (Custom GPT) read manifest first
+- They then fetch full Markdown or images only when needed
+- This keeps bandwidth and inference cost low
+- Agents should never need to ingest the entire repository
+
+### Validation
+All vault outputs must pass validation:
+- JSON files are valid (`python -m json.tool`)
+- Required paths exist before and after processing
+- No stale files left behind
+- Schema compliance is checked before commit
+
+## Agent Checklist
+
+When starting work on this repo:
+
+- [ ] Read this brief (BLACKAFT.md)
+- [ ] Skim the latest `.agents/docs/requirements/` file
+- [ ] Understand the specific task
+- [ ] Check current state: `git status`, review relevant JSON, inspect vault files
+- [ ] Make changes (edit files, run processors, update schemas as needed)
+- [ ] Validate outputs (JSON, paths, end-to-end if instructed)
+- [ ] Offer to run `publish.sh` when ready, or let the human decide
+
+## Common Pitfalls to Avoid
+
+- **Don't assume .humans/ is complete.** It's an intake area. The canonical corpus is in `.agents/vaults/`.
+- **Don't hardcode paths.** Import from `main.py` or ask the user.
+- **Don't delete vault files without reason.** If a post exists in `.agents/vaults/posts/`, it stays until explicitly removed.
+- **Don't modify publish.sh unless you understand the full flow.** It orchestrates Git, Python, and validation in sequence; changes can break the pipeline.
+- **Don't invent content.** Strictly process and retrieve; never hallucinate posts, dates, images, or claims.
+
+## Tool Compatibility
+
+This repo is designed for **agent-agnostic use**. It will work identically with:
+
+- Codex + VS Code + Cline
+- Gemini + VS Code + Cline
+- Claude (via file tools, shell commands, and Python execution)
+- Any other agent with file I/O and shell access
+
+The system has no tool-specific state or dependencies. All logic is file-based, shell-based, and Python-based—portable across any capable agent environment.
