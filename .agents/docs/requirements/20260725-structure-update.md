@@ -122,4 +122,148 @@ We need to add a new `.agents/scripts/process-txt.py` script:
 
 # Retrospective (incl. notes on QA/UAT iterations)
 
-[TO BE EDITED BY AI]
+## Session Summary
+
+Issue #8 became a broader product and engineering pass over the repository's agent-facing structure. The work started as a folder reorganization and grew into a more explicit knowledge-base architecture for Burnout's audience-facing AI companion.
+
+The final direction was to treat the repository as a structured corpus rather than a collection of loose files. Human inputs can still enter through `.humans/`, but the durable retrieval surface now lives under `.agents/vaults/`, with `manifest.json` as the primary context entrypoint for GPT actions and future AI agents.
+
+## Product Decisions
+
+The repository should support a Custom GPT and other AI clients that help audiences explore Burnout, not merely summarize it. That changed the shape of the deliverable:
+
+- The corpus needs to be navigable without ingesting the whole repository.
+- The manifest should provide enough metadata for first-pass orientation.
+- Full Markdown content should be fetched only when the conversation needs it.
+- Image references matter as part of the series' authored context, not as decorative attachments.
+- The project framing needs to stay explicit: human-authored creative work, AI-assisted retrieval, reflection, and distribution.
+
+The Custom GPT prompt was rewritten around this stance. It now describes the GPT as an AI companion for audiences exploring their thoughts through the series, with manifest-first retrieval, selective drill-down, and conversational responses that mention post links and relevant image references when posts are referenced.
+
+## Final Architecture
+
+The accepted layout is:
+
+- `.humans/` for human intake files.
+- `.agents/docs/` for requirements, prompts, and samples.
+- `.agents/schemas/` for JSON schemas and schema samples.
+- `.agents/scripts/` for the orchestrator, processors, OpenAPI spec, and publish workflow.
+- `.agents/vaults/` for durable knowledge artifacts exposed through raw GitHub URLs.
+
+The processor architecture is now:
+
+- `.agents/scripts/main.py` owns shared constants, paths, raw GitHub URL helpers, validation, and processor orchestration.
+- `.agents/scripts/processors/imgs.py` handles image relocation from `.humans/` to `.agents/vaults/imgs/` and regenerates `imgs.json`.
+- `.agents/scripts/processors/rss.py` fetches Substack RSS, caches it under `.agents/vaults/feed.rss`, generates post Markdown files, and regenerates `posts.json`.
+- `.agents/scripts/processors/txt.py` scans `.agents/vaults/about/` and `.agents/vaults/excerpts/` Markdown files to regenerate `about.json` and `excerpts.json`.
+- `.agents/scripts/processors/manifest.py` merges the generated JSON indexes into `.agents/vaults/manifest.json`.
+
+The key architectural correction near the end of the session was changing TXT indexing to scan the durable vault Markdown files, not only `.humans/`. This prevents `about.json`, `excerpts.json`, and `manifest.json` from losing entries when the original human intake `.txt` files are removed after conversion.
+
+## Schema and JSON Decisions
+
+The vault JSON outputs were aligned around a consistent shape:
+
+- `updated_at`
+- `base_url`
+- `count`
+- `items`
+
+`posts.json` additionally includes `latest`. Post item metadata now includes:
+
+- `id`
+- `title`
+- `excerpt`
+- `created_by`
+- `published_at`
+- `substack_url`
+- `file`
+
+`about.json` and `excerpts.json` item metadata includes:
+
+- `id`
+- `excerpt`
+- `published_at`
+- `file`
+
+`imgs.json` exposes:
+
+- `updated_at`
+- `base_url`
+- `count`
+- `items`
+
+`manifest.json` merges:
+
+- `posts`
+- `about`
+- `excerpts`
+- `imgs`
+
+Schema samples under `.agents/schemas/samples/` were treated as the truth source for JSON shape. The schemas and processors were updated to match those samples.
+
+## OpenAPI and Custom GPT Decisions
+
+The GPT action spec moved from many index calls to a manifest-first model:
+
+- `getManifest` retrieves `.agents/vaults/manifest.json`.
+- `getPostsContent` retrieves individual post Markdown.
+- `getSeriesAbout` retrieves individual about Markdown.
+- `getExcerptContent` retrieves individual excerpt Markdown.
+
+Standalone JSON index endpoints for posts, about, excerpts, and images were deprecated from `gpt.yml`, but the schema definitions remain because the manifest schema references them.
+
+The OpenAPI metadata was rewritten to make the action purpose clearer: this is an AI companion knowledge base for Burnout audiences. It retrieves about material, story excerpts, image assets, and Substack post metadata from the Burnout GitHub repository for context-aware conversation and analysis.
+
+## Publish Flow Decisions
+
+The original `publish.sh` flow was intentionally preserved where possible. The script should remain familiar and human-runnable, with path updates and Python entrypoint updates rather than an unnecessary rewrite.
+
+Important changes and fixes:
+
+- The Python entrypoint now runs the orchestrator rather than individual legacy scripts.
+- Root-level `feed.rss` is no longer required.
+- RSS is fetched directly by `rss.py` with `curl -v -fsSL`.
+- The fetched RSS source is stored under `.agents/vaults/feed.rss`.
+- Publish validation paths were corrected to account for the script running from `.agents/scripts/`.
+- JSON review now validates vault paths such as `../vaults/posts.json`, not root-level `posts.json`.
+
+The PR body and merge-message work was partially explored. A deterministic publish summary was added to `publish.sh`, but Copilot-driven prose generation was deferred because `gh copilot` is currently a shell-assistant CLI surface rather than a reliable PR-description prose generator for this workflow.
+
+## QA and UAT Notes
+
+Running `main.py` directly confirmed the orchestrator and processor import flow, but the Codex sandbox initially hit a local filesystem write restriction while moving images into `.agents/vaults/imgs/`. Running the same command from the user's terminal succeeded, which confirmed the code path was valid and the earlier failure was environment-level.
+
+During publish testing, several stale root-relative assumptions surfaced:
+
+- `publish.sh` still expected `feed.rss` at the repository root.
+- `publish.sh` still validated `posts.json` and `imgs.json` as root-level files.
+- After updating the validation paths to `.agents/vaults/...`, the script still failed because it runs from `.agents/scripts/`, making those paths incorrect at runtime.
+
+Those were corrected by removing the root feed validation and using paths relative to `.agents/scripts/` for generated vault JSON validation.
+
+Another UAT issue appeared after `.humans/about-*` and `.humans/excerpts-*` files were removed. The generated about and excerpts indexes no longer included existing vault Markdown. This exposed a flawed assumption in `txt.py`: it was indexing intake sources instead of durable vault content. The processor was changed to scan `.agents/vaults/about/*.md` and `.agents/vaults/excerpts/*.md` directly.
+
+## Important Behavioral Contracts
+
+Future agents should preserve these behaviors unless the product direction changes:
+
+- `manifest.json` is the primary AI entrypoint.
+- Vault Markdown files are durable corpus artifacts.
+- `.humans/` is an intake area, not the canonical index source.
+- `main.py` owns shared paths and common helpers.
+- Processors should call `MAIN.*` constants directly rather than redefining path aliases.
+- `rss.py` should fetch and cache RSS under `.agents/vaults/feed.rss`.
+- The GPT prompt should instruct the companion to include post links and relevant image references whenever it references a post.
+- Raw GitHub URLs should resolve against the default branch, currently expected to be `dev`.
+
+## Follow-Up Considerations
+
+Possible future improvements:
+
+- Add validation for `about.json`, `excerpts.json`, `posts.json`, `imgs.json`, and `manifest.json` against the schemas during publish.
+- Add a richer image-to-post mapping instead of relying on filename inference or prompt behavior.
+- Add explicit `images` metadata to post items when a reliable association rule exists.
+- Add a generated `latest_post` convenience object to `manifest.json`.
+- Revisit Copilot-assisted PR copy if GitHub exposes a stable non-interactive prose-generation surface suitable for shell automation.
+- Decide whether `.agents/BLACKAFT.md` should replace or coexist with any older `.agents/AGENT.md` naming convention.
