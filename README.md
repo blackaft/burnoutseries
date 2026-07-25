@@ -19,7 +19,7 @@ A major aspect of the experiment is the use of AI in both the creation of the pr
 If you're looking to build your own AI setup, point your AI to:
 
 - [Companion](.agents/COMPANION.md), if you're simply looking to interact with the series.
-- [Publisher](.agents/PUBLISHER.md), to update the knowledge base
+- [Publisher](.agents/PUBLISHER.md), to update the knowledge base.
 
 Ready to use:
 
@@ -30,7 +30,7 @@ Ready to use:
 Under `.humans/`, add any new:
 
 - Images, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
-- Text files, by prepending whether they're an about or story excerpt item (i.e. `about-summary.txt`)
+- Text files, by prepending whether they're an about or story excerpt item (i.e. `about-summary.txt`).
 
 Publish the update:
 
