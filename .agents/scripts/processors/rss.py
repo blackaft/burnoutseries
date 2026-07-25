@@ -167,10 +167,10 @@ def empty_posts_index() -> dict[str, Any]:
     return {"updated_at": None, "latest": None, "count": 0, "items": []}
 
 def load_existing_posts_json() -> dict[str, Any]:
-    if not POSTS_JSON.exists():
+    if not MAIN.POSTS_JSON.exists():
         return empty_posts_index()
     try:
-        raw = POSTS_JSON.read_text(encoding="utf-8").strip()
+        raw = MAIN.POSTS_JSON.read_text(encoding="utf-8").strip()
         if not raw:
             return empty_posts_index()
         payload = json.loads(raw)
