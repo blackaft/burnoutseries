@@ -5,12 +5,6 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-HUMANS_DIR = ROOT.parent / ".humans"
-VAULT_ROOT = ROOT / "vaults"
-ABOUT_DIR = VAULT_ROOT / "about"
-EXCERPTS_DIR = VAULT_ROOT / "excerpts"
-ABOUT_JSON = VAULT_ROOT / "about.json"
-EXCERPTS_JSON = VAULT_ROOT / "excerpts.json"
 
 def _load_main():
     path = ROOT / "scripts" / "main.py"
@@ -37,9 +31,9 @@ def build_excerpt(source: Path, limit: int = 250) -> str:
 
 def target_dir(source: Path) -> Path:
     if source.name.startswith("about-"):
-        return ABOUT_DIR
+        return MAIN.ABOUT_DIR
     if source.name.startswith("excerpts-"):
-        return EXCERPTS_DIR
+        return MAIN.EXCERPTS_DIR
     raise ValueError(f"Unsupported TXT source: {source.name}")
 
 def build_item(source: Path, md_path: Path) -> dict[str, str]:
@@ -60,11 +54,7 @@ def build_item(source: Path, md_path: Path) -> dict[str, str]:
 def write_index(path: Path, items: list[dict[str, str]]) -> None:
     payload = {
         "updated_at": MAIN.utc_now(),
-        "base_url": (
-            f"{MAIN.raw_base_url()}.agents/vaults/about/"
-            if path == ABOUT_JSON
-            else f"{MAIN.raw_base_url()}.agents/vaults/excerpts/"
-        ),
+        "base_url": MAIN.vault_base_url("about" if path == MAIN.ABOUT_JSON else "excerpts"),
         "count": len(items),
         "items": items,
     }
@@ -80,8 +70,8 @@ def process_file(source: Path) -> dict[str, dict[str, str]]:
     destination.write_text(excerpt, encoding="utf-8")
     item = build_item(source, destination)
     return {
-        "about": item if destination_dir == ABOUT_DIR else {},
-        "excerpts": item if destination_dir == EXCERPTS_DIR else {},
+        "about": item if destination_dir == MAIN.ABOUT_DIR else {},
+        "excerpts": item if destination_dir == MAIN.EXCERPTS_DIR else {},
     }
 
 def main() -> None:
@@ -97,8 +87,8 @@ def main() -> None:
         if item["excerpts"]:
             excerpt_items.append(item["excerpts"])
 
-    write_index(ABOUT_JSON, about_items)
-    write_index(EXCERPTS_JSON, excerpt_items)
+    write_index(MAIN.ABOUT_JSON, about_items)
+    write_index(MAIN.EXCERPTS_JSON, excerpt_items)
 
     print(f"Processed {len(about_items)} about txt file(s)")
     print(f"Processed {len(excerpt_items)} excerpt txt file(s)")

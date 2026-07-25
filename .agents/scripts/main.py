@@ -15,10 +15,16 @@ HUMANS_DIR = REPO_ROOT / ".humans"
 SCRIPTS_DIR = ROOT / "scripts"
 PROCESSORS_DIR = SCRIPTS_DIR / "processors"
 VAULT_ROOT = ROOT / "vaults"
+ABOUT_DIR = VAULT_ROOT / "about"
+EXCERPTS_DIR = VAULT_ROOT / "excerpts"
+IMGS_DIR = VAULT_ROOT / "imgs"
+POSTS_DIR = VAULT_ROOT / "posts"
 ABOUT_JSON = VAULT_ROOT / "about.json"
 EXCERPTS_JSON = VAULT_ROOT / "excerpts.json"
 IMGS_JSON = VAULT_ROOT / "imgs.json"
 POSTS_JSON = VAULT_ROOT / "posts.json"
+FEED_RSS = VAULT_ROOT / "feed.rss"
+RSS_URL = "https://burnoutseries.substack.com/feed.rss"
 
 def utc_now() -> str:
     return (
@@ -63,6 +69,10 @@ def repo_default_branch() -> str:
 
 def raw_base_url() -> str:
     return f"https://raw.githubusercontent.com/blackaft/burnoutseries/{repo_default_branch()}/"
+
+def vault_base_url(section: str = "") -> str:
+    base = f"{raw_base_url()}.agents/vaults/"
+    return f"{base}{section}/" if section else base
 
 def humans_txt_files() -> list[Path]:
     if not HUMANS_DIR.exists():

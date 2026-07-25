@@ -7,9 +7,6 @@ from pathlib import Path
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
-HUMANS_DIR = ROOT.parent / ".humans"
-VAULT_DIR = ROOT / "vaults" / "imgs"
-OUTPUT_FILE = ROOT / "vaults" / "imgs.json"
 SUPPORTED_EXTENSIONS = {
     ".avif",
     ".gif",
@@ -31,21 +28,21 @@ def _load_main():
 MAIN = _load_main()
 
 def move_images() -> list[str]:
-    VAULT_DIR.mkdir(parents=True, exist_ok=True)
+    MAIN.IMGS_DIR.mkdir(parents=True, exist_ok=True)
     moved: list[str] = []
 
-    if not HUMANS_DIR.exists():
+    if not MAIN.HUMANS_DIR.exists():
         return moved
 
-    for path in sorted(HUMANS_DIR.rglob("*")):
+    for path in sorted(MAIN.HUMANS_DIR.rglob("*")):
         if not path.is_file():
             continue
 
         if path.suffix.lower() not in SUPPORTED_EXTENSIONS:
             continue
 
-        relative = path.relative_to(HUMANS_DIR)
-        destination = VAULT_DIR / relative
+        relative = path.relative_to(MAIN.HUMANS_DIR)
+        destination = MAIN.IMGS_DIR / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
 
         if destination.exists():
@@ -58,19 +55,19 @@ def move_images() -> list[str]:
 
 def build_index() -> dict:
     items: list[str] = []
-    if VAULT_DIR.exists():
-        for path in VAULT_DIR.rglob("*"):
+    if MAIN.IMGS_DIR.exists():
+        for path in MAIN.IMGS_DIR.rglob("*"):
             if not path.is_file():
                 continue
             if path.suffix.lower() not in SUPPORTED_EXTENSIONS:
                 continue
-            relative = quote(path.relative_to(VAULT_DIR).as_posix(), safe="/")
+            relative = quote(path.relative_to(MAIN.IMGS_DIR).as_posix(), safe="/")
             items.append(relative)
 
     items.sort(key=str.lower)
     return {
         "updated_at": MAIN.utc_now(),
-        "base_url": f"{MAIN.raw_base_url()}.agents/vaults/imgs/",
+        "base_url": MAIN.vault_base_url("imgs"),
         "count": len(items),
         "items": items,
     }
@@ -78,13 +75,13 @@ def build_index() -> dict:
 def main() -> None:
     moved = move_images()
     payload = build_index()
-    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_FILE.write_text(
+    MAIN.IMGS_JSON.parent.mkdir(parents=True, exist_ok=True)
+    MAIN.IMGS_JSON.write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    print(f"Moved {len(moved)} image(s) into {VAULT_DIR.relative_to(ROOT)}")
-    print(f"Indexed {payload['count']} image(s) in {OUTPUT_FILE.relative_to(ROOT)}")
+    print(f"Moved {len(moved)} image(s) into {MAIN.IMGS_DIR.relative_to(ROOT)}")
+    print(f"Indexed {payload['count']} image(s) in {MAIN.IMGS_JSON.relative_to(ROOT)}")
 
 if __name__ == "__main__":
     main()
