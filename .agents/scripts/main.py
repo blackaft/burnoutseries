@@ -24,6 +24,7 @@ EXCERPTS_JSON = VAULT_ROOT / "excerpts.json"
 IMGS_JSON = VAULT_ROOT / "imgs.json"
 POSTS_JSON = VAULT_ROOT / "posts.json"
 FEED_RSS = VAULT_ROOT / "feed.rss"
+MANIFEST_JSON = VAULT_ROOT / "manifest.json"
 RSS_URL = "https://burnoutseries.substack.com/feed.rss"
 
 def utc_now() -> str:
@@ -113,11 +114,12 @@ def run_processors() -> None:
     load_processor("imgs.py").main()
     load_processor("rss.py").main()
     load_processor("txt.py").main()
+    load_processor("manifest.py").main()
 
 def main() -> None:
     validate_sources()
     run_processors()
-    validate_outputs([POSTS_JSON, IMGS_JSON, ABOUT_JSON, EXCERPTS_JSON])
+    validate_outputs([POSTS_JSON, IMGS_JSON, ABOUT_JSON, EXCERPTS_JSON, MANIFEST_JSON])
 
 if __name__ == "__main__":
     main()
