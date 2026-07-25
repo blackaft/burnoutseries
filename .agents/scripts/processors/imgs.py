@@ -1,19 +1,15 @@
 from __future__ import annotations
 
+import importlib.util
 import json
-import os
 import shutil
-import subprocess
-from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlparse
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
 HUMANS_DIR = ROOT.parent / ".humans"
 VAULT_DIR = ROOT / "vaults" / "imgs"
 OUTPUT_FILE = ROOT / "vaults" / "imgs.json"
-RAW_BASE_URL = "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/imgs/"
 SUPPORTED_EXTENSIONS = {
     ".avif",
     ".gif",
@@ -23,47 +19,16 @@ SUPPORTED_EXTENSIONS = {
     ".webp",
 }
 
+def _load_main():
+    path = ROOT / "scripts" / "main.py"
+    spec = importlib.util.spec_from_file_location("burnout_main", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Could not load main orchestrator: {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
-def utc_now() -> str:
-    return (
-        datetime.now(timezone.utc)
-        .replace(microsecond=0)
-        .isoformat()
-        .replace("+00:00", "Z")
-    )
-
-
-def required_env(name: str) -> str:
-    value = os.getenv(name, "").strip()
-    if not value:
-        raise RuntimeError(f"Missing required environment variable: {name}")
-    return value
-
-
-def repo_identity() -> tuple[str, str, str]:
-    remote_url = subprocess.run(
-        ["git", "remote", "get-url", "origin"],
-        check=True,
-        capture_output=True,
-        text=True,
-        cwd=ROOT.parent,
-    ).stdout.strip()
-    parsed = urlparse(remote_url)
-    if parsed.scheme in {"http", "https", "ssh", "git"}:
-        owner_repo = parsed.path.lstrip("/")
-    else:
-        owner_repo = remote_url.rsplit(":", 1)[-1]
-    owner_repo = owner_repo.removesuffix(".git")
-    owner, repo = owner_repo.split("/", 1)
-    branch = subprocess.run(
-        ["git", "branch", "--show-current"],
-        check=True,
-        capture_output=True,
-        text=True,
-        cwd=ROOT.parent,
-    ).stdout.strip() or "dev"
-    return owner, repo, branch
-
+MAIN = _load_main()
 
 def move_images() -> list[str]:
     VAULT_DIR.mkdir(parents=True, exist_ok=True)
@@ -91,7 +56,6 @@ def move_images() -> list[str]:
 
     return moved
 
-
 def build_index() -> dict:
     items: list[str] = []
     if VAULT_DIR.exists():
@@ -105,12 +69,11 @@ def build_index() -> dict:
 
     items.sort(key=str.lower)
     return {
-        "updated_at": utc_now(),
-        "base_url": RAW_BASE_URL,
+        "updated_at": MAIN.utc_now(),
+        "base_url": f"{MAIN.raw_base_url()}.agents/vaults/imgs/",
         "count": len(items),
         "items": items,
     }
-
 
 def main() -> None:
     moved = move_images()
@@ -122,7 +85,6 @@ def main() -> None:
     )
     print(f"Moved {len(moved)} image(s) into {VAULT_DIR.relative_to(ROOT)}")
     print(f"Indexed {payload['count']} image(s) in {OUTPUT_FILE.relative_to(ROOT)}")
-
 
 if __name__ == "__main__":
     main()
