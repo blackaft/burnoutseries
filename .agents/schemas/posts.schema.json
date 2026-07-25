@@ -1,14 +1,34 @@
 {
-  "updated_at": "2026-07-24T15:09:22Z",
-  "latest": "materials-and-guides-explore-your",
-  "count": 1,
-  "posts": [
-    {
-      "slug": "materials-and-guides-explore-your",
-      "title": "Materials & Guides: Explore your thoughts with the series's preloaded ChatGPT",
-      "creator": "George Kary",
-      "published": "2026-07-24T10:13:48Z",
-      "url": "https://burnoutseries.substack.com/p/materials-and-guides-explore-your"
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "posts.schema.json",
+  "title": "Burnout Series Vault Index",
+  "type": "object",
+  "properties": {
+    "updated_at": { "type": "string", "format": "date-time" },
+    "count": { "type": "integer", "minimum": 0 },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/indexItem" }
     }
-  ]
+  },
+  "required": ["updated_at", "count", "items"],
+  "additionalProperties": false,
+  "$defs": {
+    "indexItem": {
+      "type": "object",
+      "properties": {
+        "kind": { "type": "string", "enum": ["post"] },
+        "source": { "type": "string" },
+        "title": { "type": ["string", "null"] },
+        "creator": { "type": ["string", "null"] },
+        "published": { "type": ["string", "null"], "format": "date-time" },
+        "url": { "type": ["string", "null"], "format": "uri" },
+        "excerpt": { "type": ["string", "null"] },
+        "md_path": { "type": ["string", "null"] },
+        "raw_path": { "type": ["string", "null"] }
+      },
+      "required": ["kind", "source", "title", "creator", "published", "url", "excerpt", "md_path", "raw_path"],
+      "additionalProperties": false
+    }
+  }
 }
