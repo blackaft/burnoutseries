@@ -50,6 +50,34 @@ Publish this knowledge base update by running `./.agents/scripts/publish.sh` and
 ```
 </details>
 
+### How it works
+
+What happens, in order:
+
+1. You add human-authored source files under `.humans/`.
+2. `publish.sh` runs the orchestrator in `.agents/scripts/main.py`.
+3. The processors move or generate durable assets under `.agents/vaults/`.
+4. The manifest is rebuilt as the single entrypoint for AI clients.
+5. The Custom GPT reads the manifest first, then drills into posts, about text, excerpts, or images only when needed.
+
+```mermaid
+flowchart LR
+  A[Human adds files in .humans/] --> B[Publish script runs]
+  B --> C[main.py orchestrates processors]
+  C --> D[imgs.py moves images into .agents/vaults/imgs/]
+  C --> E[rss.py fetches Substack RSS and builds posts]
+  C --> F[txt.py converts txt sources and refreshes about / excerpts]
+  C --> G[manifest.py merges all vault JSON into manifest.json]
+  D --> H[imgs.json]
+  E --> I[posts.json + per-post markdown]
+  F --> J[about.json + excerpts.json + vault markdown]
+  G --> K[manifest.json]
+  H --> L[Custom GPT and other AI clients read the manifest]
+  I --> L
+  J --> L
+  K --> L
+```
+
 ## Links
 
 ### Substack
