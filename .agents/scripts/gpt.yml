@@ -1,30 +1,33 @@
 openapi: 3.1.0
 
 info:
-  title: Burnout Series Knowledge
+  title: Knowledge Base for the Burnout Series
   description: >
-    Read the latest Burnout Series knowledge files directly from the
-    Blackaft GitHub repository.
+    AI companion knowledge base for Burnout Series audiences. Retrieves the
+    series' about material, story excerpts, image assets, and Substack post
+    metadata directly from the Burnout GitHub repository for context-aware
+    conversation and analysis.
   version: "1.0.0"
 
 servers:
   - url: https://raw.githubusercontent.com/blackaft/burnoutseries/dev
 
 paths:
-  /.agents/vaults/posts.json:
+  /.agents/vaults/manifest.json:
     get:
-      operationId: getPostsIndex
-      summary: Get the Burnout Series post index
+      operationId: getManifest
+      summary: Get the Burnout Series manifest
       description: >
-        Returns structured metadata for all indexed posts, including the
-        latest post, titles, publication dates, creators, slugs, and URLs.
+        Returns a merged manifest of the Burnout Series knowledge vaults so an
+        AI client can inspect the available about material, excerpts, posts,
+        and image assets before drilling into specific content files.
       responses:
         "200":
-          description: Post index retrieved successfully
+          description: Manifest retrieved successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PostsIndex"
+                $ref: "#/components/schemas/Manifest"
 
   /.agents/vaults/posts/{postFile}:
     get:
@@ -48,21 +51,6 @@ paths:
               schema:
                 type: string
 
-  /.agents/vaults/about.json:
-    get:
-      operationId: getAboutIndex
-      summary: Get the Burnout Series about index
-      description: >
-        Returns the structured metadata for the Burnout Series background
-        vault content.
-      responses:
-        "200":
-          description: About index retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AboutIndex"
-
   /.agents/vaults/about/{aboutFile}:
     get:
       operationId: getSeriesAbout
@@ -84,20 +72,6 @@ paths:
               schema:
                 type: string
 
-  /.agents/vaults/excerpts.json:
-    get:
-      operationId: getExcerptsIndex
-      summary: Get the Burnout Series excerpts index
-      description: >
-        Returns the structured metadata for excerpt vault content.
-      responses:
-        "200":
-          description: Excerpts index retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ExcerptsIndex"
-
   /.agents/vaults/excerpts/{excerptFile}:
     get:
       operationId: getExcerptContent
@@ -118,23 +92,34 @@ paths:
               schema:
                 type: string
 
-  /.agents/vaults/imgs.json:
-    get:
-      operationId: getImageIndex
-      summary: Get the Burnout Series image index
-      description: >
-        Returns the base image URL and the filenames available in the vault
-        image directory.
-      responses:
-        "200":
-          description: Image index retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ImageIndex"
-
 components:
   schemas:
+    Manifest:
+      type: object
+      properties:
+        updated_at:
+          type:
+            - string
+            - "null"
+        base_url:
+          type: string
+          format: uri
+        posts:
+          $ref: "#/components/schemas/PostsIndex"
+        about:
+          $ref: "#/components/schemas/AboutIndex"
+        excerpts:
+          $ref: "#/components/schemas/ExcerptsIndex"
+        imgs:
+          $ref: "#/components/schemas/ImageIndex"
+      required:
+        - updated_at
+        - base_url
+        - posts
+        - about
+        - excerpts
+        - imgs
+
     PostsIndex:
       type: object
       properties:
