@@ -21,6 +21,7 @@ If you're looking to build your own AI setup, take a look or point your AI to `.
 Ready to use:
 
 - [ChatGPT](https://chatgpt.com/g/g-6a61ca759b788191babe096fc2c19e58-burnout-series) (Custom GPT)
+- [Claude](.agents/CLAUDE.md), requires local cloning of this repository
 
 ## Updating it
 
