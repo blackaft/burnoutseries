@@ -34,13 +34,15 @@ def _load_main() -> ModuleType:
 MAIN = _load_main()
 
 def fetch_rss() -> bytes:
-    if MAIN.FEED_RSS.exists() and MAIN.FEED_RSS.read_text(encoding="utf-8").strip():
-        print(f"Reading RSS from {MAIN.FEED_RSS.relative_to(ROOT)}")
-        return MAIN.FEED_RSS.read_bytes()
     print(f"Fetching RSS from {MAIN.RSS_URL}")
-    result = subprocess.run(["curl", "-fsSL", MAIN.RSS_URL], check=True, capture_output=True)
+    result = subprocess.run(
+        ["curl", "-v", "-fsSL", MAIN.RSS_URL],
+        check=True,
+        stdout=subprocess.PIPE,
+    )
+    MAIN.FEED_RSS.parent.mkdir(parents=True, exist_ok=True)
     MAIN.FEED_RSS.write_bytes(result.stdout)
-    return result.stdout
+    return MAIN.FEED_RSS.read_bytes()
 
 def element_text(element: ET.Element | None) -> str:
     if element is None or element.text is None:

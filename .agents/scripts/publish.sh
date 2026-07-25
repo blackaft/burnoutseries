@@ -338,91 +338,7 @@ A manual Git review is required before publishing."
 fi
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 4. Validate feed.rss
-# ─────────────────────────────────────────────────────────────────────────────
-
-info "Checking feed.rss..."
-
-[[ -f "$ROOT/feed.rss" ]] ||
-  fail "feed.rss is missing from the repository root."
-
-python3 <<'PY'
-from pathlib import Path
-import sys
-import xml.etree.ElementTree as ET
-
-path = Path("feed.rss")
-data = path.read_bytes()
-
-def stop(message: str) -> None:
-    print(f"\n❌ {message}", file=sys.stderr)
-    print(
-        """
-How to copy the raw Substack feed:
-
-1. Open:
-   https://burnoutseries.substack.com/feed.rss
-
-2. Right-click the feed view.
-
-3. Choose “View Page Source” or “Show Page Source”.
-
-4. Copy the complete raw XML source.
-
-5. Replace the contents of feed.rss with that source.
-
-6. Make sure <?xml or <rss is the first content in the file.
-
-7. Run ./publish.sh again.
-""",
-        file=sys.stderr,
-    )
-    raise SystemExit(1)
-
-if not data:
-    stop("feed.rss is empty.")
-
-if data.startswith(b"\xef\xbb\xbf"):
-    stop("feed.rss begins with a UTF-8 byte-order mark.")
-
-if data[:1] in {b" ", b"\t", b"\r", b"\n"}:
-    stop("feed.rss contains whitespace before the XML document.")
-
-preview = data[:500].lower()
-
-if b"<!doctype html" in preview or b"<html" in preview:
-    stop("feed.rss contains a rendered HTML page instead of raw RSS XML.")
-
-if not data.startswith((b"<?xml", b"<rss")):
-    stop("feed.rss does not begin with an XML declaration or RSS element.")
-
-try:
-    root = ET.fromstring(data)
-except ET.ParseError as error:
-    stop(f"feed.rss is not valid XML: {error}")
-
-root_name = root.tag.rsplit("}", 1)[-1].lower()
-
-if root_name != "rss":
-    stop(f"The root element is <{root_name}>, not <rss>.")
-
-channel = root.find("channel")
-
-if channel is None:
-    stop("The RSS document does not contain a channel element.")
-
-items = channel.findall("item")
-
-if not items:
-    stop("The RSS feed does not contain any post items.")
-
-print(f"✅ feed.rss is valid and contains {len(items)} post item(s).")
-PY
-
-success "feed.rss passed validation."
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 5. Prepare an isolated Python environment
+# 4. Prepare an isolated Python environment
 # ─────────────────────────────────────────────────────────────────────────────
 
 info "Preparing the local publishing tools..."
@@ -444,7 +360,7 @@ fi
 source "${VENV_PATH}/bin/activate"
 
 python -m pip install --quiet --upgrade pip
-python -m pip install --quiet -r scripts/requirements.txt
+python -m pip install --quiet -r requirements.txt
 
 success "Python dependencies are ready."
 
@@ -471,11 +387,11 @@ success "Image index was generated."
 
 info "Reviewing the generated knowledge base..."
 
-python -m json.tool posts.json >/dev/null
-python -m json.tool imgs.json >/dev/null
+python -m json.tool ../vaults/posts.json >/dev/null
+python -m json.tool ../vaults/imgs.json >/dev/null
 
-if [[ -f manifest.json ]]; then
-  python -m json.tool manifest.json >/dev/null
+if [[ -f ../vaults/manifest.json ]]; then
+  python -m json.tool ../vaults/manifest.json >/dev/null
 fi
 
 success "All generated files are valid."
@@ -670,6 +586,6 @@ fi
 success "Publishing complete. Everything is synchronized and tidy. 🎉"
 
 printf "\n📚 Updated knowledge files:\n"
-printf "   • posts.md\n"
-printf "   • posts.json\n"
-printf "   • imgs.json\n\n"
+printf "   • .agents/vaults/posts/\n"
+printf "   • .agents/vaults/posts.json\n"
+printf "   • .agents/vaults/imgs.json\n\n"
