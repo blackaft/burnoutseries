@@ -1,13 +1,19 @@
 {
-  "updated_at": "2026-07-25T08:34:48Z",
+  "updated_at": "2026-07-25T08:58:22Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
-  "count": 2,
+  "count": 3,
   "items": [
     {
       "id": "manifest",
       "excerpt": "ust from the manifest metadata, quite a lot becomes apparent. None of this depends on reading the underlying documents—it's inference from the index itself. Observation What the manifest suggests The project is intentionally AI-readable The reposi...",
       "published_at": "2026-07-24T18:26:08Z",
       "file": "manifest.md"
+    },
+    {
+      "id": "sitemap",
+      "excerpt": "Substack - [Home](https://burnoutseries.substack.com/) - [Prologue](https://burnoutseries.substack.com/p/prologue) - [Chapters](https://burnoutseries.substack.com/p/chapters) - [Part One: Dissonance](https://burnoutseries.substack.com/t/part-one)...",
+      "published_at": "2026-07-24T18:26:08Z",
+      "file": "sitemap.md"
     },
     {
       "id": "summary",
