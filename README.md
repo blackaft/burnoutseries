@@ -24,10 +24,10 @@ Ready to use:
 
 ## Updating it
 
-Under `.humans/`, add any new
+Under `.humans/`, add any new:
 
-- Image, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
-- Text files, by prepending whether they're an about or excerpt item (i.e. `about-summary.txt`)
+- Images, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
+- Text files, by prepending whether they're an about or story excerpt item (i.e. `about-summary.txt`)
 
 Publish the update:
 
