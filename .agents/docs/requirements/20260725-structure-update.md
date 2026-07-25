@@ -8,9 +8,11 @@ Organise the repository in a more lean and robust manner, so that:
 - .humans/ remains the source of truth for any .txt and img files added by humans (to be processed as part of this knowledge base's logic)
 - root only contains docs, including the PRIVACY.md for the Custom GPT 
 
-# Architecture (.agents/)
+# Non-functional Specifications
 
-Keep in mind structural changes have already been initiated on the local working branch.
+## Architecture (.agents/)
+
+Keep in mind structural changes have already been initiated on the local working branch (and committed locally).
 
 - .agents/docs/ contains requirements and samples
     - requirements, with the former PRD.md moved here
@@ -24,7 +26,7 @@ Keep in mind structural changes have already been initiated on the local working
     - posts, from the series's meta-posts (not chapters)
 - .agents/AGENT.md contains a high-level mapping of this repository for future AI sessions
 
-# Technical Specifications
+# Functional Specifications
 
 ## Images
 
@@ -37,6 +39,18 @@ We need to change .agents/scripts/imgs.py:
 - Consider changing the script's name from imgs.py to process-images.py for consistency.
 - Update .agents/scripts/publish.sh to reflect path changes for the image script.
 
+## RSS
+
+We need to change .agents/scripts/rss.py:
+
+- To actually curl the Substack RSS raw source itself, since we're going to be running this locally and there have been no firewall blocking detections locally from Substack itself.
+- Add a function to also collect and excerpt of the post (the first 240 characters of the post). We'll need to update .agents/schemas/posts.schema.json to reflect the change.
+- Change the current behavior from updating the posts's content into a single posts.md file to multiple .md files under .agents/vaults/posts/ with the filename being the slug of the post prepended by the date (i.e. 20260724-github-now-available.md)
+- Change the post schema to reflect the addition of the md file on Github's raw content service alongside the source URL from Substack.
+- Keep the rest of the functionality as is, including continuing to update .agents/vaults/posts.json
+- Consider changing the script's name from rss.py to process-rss.py for consistency.
+- Update .agents/scripts/publish.sh to reflect path changes for the rss script.
+
 # Implementation Plan
 
-To be edited by AI, as part of analysis phase.
+[TO BE EDITED BY AI - REPLACE THIS WITH THE IMPLEMENTATION PLAN]
