@@ -72,9 +72,26 @@ User runs `./publish.sh`:
 
 No GitHub Actions. No external state. All logic is local and replayable.
 
-### The Custom GPT
+### Audience-Facing Companions
 
-The Custom GPT action is defined in `.agents/scripts/gpt.yml`. It should use `manifest.json` as the first context call, then fetch post, about, or excerpt Markdown only when the conversation needs full content.
+Two AI companions are available for audiences to explore Burnout:
+
+**Custom GPT** (OpenAI, persistent)
+- Defined in `.agents/scripts/gpt.yml` (OpenAPI spec)
+- Uses GPT Actions to call the repository-backed API
+- Retrieves `manifest.json` first, then fetches post, about, or excerpt Markdown on demand
+- Hosted in OpenAI's GPT store; requires no local setup
+- Ideal for: User-facing, discoverable, persistent companion
+
+**Claude Companion** (Anthropic, flexible)
+- Defined in **CLAUDE.md** (this repository root)
+- Fetches the knowledge base directly from GitHub raw URLs during conversation
+- Retrieves `manifest.json` first, then fetches content files on demand
+- No configuration needed; Claude fetches on every conversation
+- Ideal for: Developer workflows, experimentation, local use, integration with Cowork mode
+- Setup: Copy the prompt from CLAUDE.md into a Claude conversation, then ask your first question
+
+Both companions follow the same retrieval-first, manifest-focused approach. They differ only in platform and integration method.
 
 ## File Map
 
@@ -83,7 +100,7 @@ The Custom GPT action is defined in `.agents/scripts/gpt.yml`. It should use `ma
 | `README.md` | Human-facing project overview and update instructions | Read for broad context and publishing commands |
 | `.humans/` | Human intake folder for new text and image sources | Treat as staging; do not assume it contains the complete corpus |
 | `.agents/docs/requirements/` | Product and implementation notes | Read the latest dated file before changing the pipeline |
-| `.agents/docs/prompts/` | Custom GPT instruction drafts | Update when action behavior or companion stance changes |
+| `.agents/docs/prompts/20260725-custom-gpt.md` | Custom GPT behavior and retrieval rules | Update when GPT action or companion stance changes |
 | `.agents/schemas/` | JSON schema contracts for vault indexes | Keep aligned with generated JSON and samples |
 | `.agents/scripts/main.py` | Orchestrator and shared constants | Put shared paths and common helpers here |
 | `.agents/scripts/processors/` | Focused processors for each vault type | Keep processor-specific logic here; avoid duplicated path constants |
@@ -162,3 +179,10 @@ This repo is designed for **agent-agnostic use**. It will work identically with:
 - Any other agent with file I/O and shell access
 
 The system has no tool-specific state or dependencies. All logic is file-based, shell-based, and Python-based—portable across any capable agent environment.
+
+---
+
+## See Also
+
+- **CLAUDE.md** — Copy-paste prompt and quick-start guide for using Claude as the Burnout companion
+- **README.md** — Human-facing project overview
