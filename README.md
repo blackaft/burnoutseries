@@ -1,4 +1,4 @@
-# Burnout Series
+# Burnout Series @Blackaft
 
 ![Target Audience](https://img.shields.io/badge/Target_Audience-Humans-FF5722?style=flat-square&logo=userpilot&logoColor=white)
 
@@ -25,7 +25,7 @@ Publish the update:
     <summary>Run the command on the terminal yourself</summary>
 
 ```bash
-chmod +x publish.sh
+chmod +x .agents/scripts/publish.sh
 ./publish.sh
 ```
 </details>
