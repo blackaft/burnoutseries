@@ -1,8 +1,14 @@
 {
-  "updated_at": "2026-07-25T07:27:48Z",
+  "updated_at": "2026-07-25T08:34:48Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
-  "count": 1,
+  "count": 2,
   "items": [
+    {
+      "id": "manifest",
+      "excerpt": "ust from the manifest metadata, quite a lot becomes apparent. None of this depends on reading the underlying documents—it's inference from the index itself. Observation What the manifest suggests The project is intentionally AI-readable The reposi...",
+      "published_at": "2026-07-24T18:26:08Z",
+      "file": "manifest.md"
+    },
     {
       "id": "summary",
       "excerpt": "BURNOUT is an experimental series about the bullshit lies we tell ourselves, with 3 parts and 19 chapters, including videos, author’s notes and behind the scenes with George Kary. It was born out of a passion for exploring multi-disciplinary and c...",

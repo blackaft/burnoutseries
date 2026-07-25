@@ -17,39 +17,13 @@ def _load_main():
 
 MAIN = _load_main()
 
-def source_to_markdown(source: Path) -> str:
-    text = source.read_text(encoding="utf-8").strip()
-    return text + "\n" if text else "\n"
-
 def build_excerpt(source: Path, limit: int = 250) -> str:
-    text = source_to_markdown(source).strip()
+    text = source.read_text(encoding="utf-8").strip()
     text = text.replace("\n\n", " ")
     text = " ".join(text.split())
     if len(text) <= limit:
         return text if text.endswith("...") else text[: max(0, limit - 3)] + "..."
     return text[: max(0, limit - 3)].rstrip() + "..."
-
-def target_dir(source: Path) -> Path:
-    if source.name.startswith("about-"):
-        return MAIN.ABOUT_DIR
-    if source.name.startswith("excerpts-"):
-        return MAIN.EXCERPTS_DIR
-    raise ValueError(f"Unsupported TXT source: {source.name}")
-
-def build_item(source: Path, md_path: Path) -> dict[str, str]:
-    if source.name.startswith("about-"):
-        return {
-            "id": source.stem.replace("about-", "", 1) or source.stem,
-            "excerpt": build_excerpt(source),
-            "published_at": "2026-07-24T18:26:08Z",
-            "file": md_path.name,
-        }
-    return {
-        "id": source.stem.replace("excerpts-", "", 1) or source.stem,
-        "excerpt": build_excerpt(source),
-        "published_at": "2026-07-24T18:26:08Z",
-        "file": md_path.name,
-    }
 
 def write_index(path: Path, items: list[dict[str, str]]) -> None:
     payload = {
@@ -61,31 +35,28 @@ def write_index(path: Path, items: list[dict[str, str]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
-def process_file(source: Path) -> dict[str, dict[str, str]]:
-    destination_dir = target_dir(source)
-    destination_dir.mkdir(parents=True, exist_ok=True)
-    file_id = source.stem.split("-", 1)[1] if "-" in source.stem else source.stem
-    destination = destination_dir / f"{file_id}.md"
-    excerpt = source_to_markdown(source)
-    destination.write_text(excerpt, encoding="utf-8")
-    item = build_item(source, destination)
-    return {
-        "about": item if destination_dir == MAIN.ABOUT_DIR else {},
-        "excerpts": item if destination_dir == MAIN.EXCERPTS_DIR else {},
-    }
+def scan_vault_items(directory: Path, prefix: str) -> list[dict[str, str]]:
+    if not directory.exists():
+        return []
+
+    items: list[dict[str, str]] = []
+    for source in sorted(directory.glob("*.md")):
+        item_id = source.stem.replace(f"{prefix}-", "", 1) if source.stem.startswith(f"{prefix}-") else source.stem
+        items.append(
+            {
+                "id": item_id,
+                "excerpt": build_excerpt(source),
+                "published_at": "2026-07-24T18:26:08Z",
+                "file": source.name,
+            }
+        )
+    return items
 
 def main() -> None:
     MAIN.validate_sources()
 
-    about_items: list[dict[str, str]] = []
-    excerpt_items: list[dict[str, str]] = []
-
-    for source in MAIN.humans_txt_files():
-        item = process_file(source)
-        if item["about"]:
-            about_items.append(item["about"])
-        if item["excerpts"]:
-            excerpt_items.append(item["excerpts"])
+    about_items = scan_vault_items(MAIN.ABOUT_DIR, "about")
+    excerpt_items = scan_vault_items(MAIN.EXCERPTS_DIR, "excerpts")
 
     write_index(MAIN.ABOUT_JSON, about_items)
     write_index(MAIN.EXCERPTS_JSON, excerpt_items)
