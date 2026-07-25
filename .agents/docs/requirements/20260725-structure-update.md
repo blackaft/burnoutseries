@@ -119,3 +119,7 @@ We need to add a new `.agents/scripts/process-txt.py` script:
 2. Check that generated vault files, schemas, and indexes are internally consistent.
 3. Confirm the root README and all `.agents/` references point at the new paths.
 4. Remove any obsolete references to the old root-level scripts or flat corpus files once the new structure is proven stable.
+
+# Retrospective (incl. notes on QA/UAT iterations)
+
+[TO BE EDITED BY AI]
