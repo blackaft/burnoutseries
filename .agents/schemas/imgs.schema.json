@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "imgs.schema.json",
+  "title": "Burnout Series Image Index",
+  "type": "object",
+  "properties": {
+    "updated_at": { "type": "string", "format": "date-time" },
+    "base_url": { "type": "string" },
+    "count": { "type": "integer", "minimum": 0 },
+    "items": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "required": ["updated_at", "base_url", "count", "items"],
+  "additionalProperties": false
+}

@@ -1,0 +1,296 @@
+openapi: 3.1.0
+
+info:
+  title: Burnout Series Knowledge
+  description: >
+    Read the latest Burnout Series knowledge files directly from the
+    Blackaft GitHub repository.
+  version: "1.0.0"
+
+servers:
+  - url: https://raw.githubusercontent.com/blackaft/burnoutseries/dev
+
+paths:
+  /.agents/vaults/posts.json:
+    get:
+      operationId: getPostsIndex
+      summary: Get the Burnout Series post index
+      description: >
+        Returns structured metadata for all indexed posts, including the
+        latest post, titles, publication dates, creators, slugs, and URLs.
+      responses:
+        "200":
+          description: Post index retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostsIndex"
+
+  /.agents/vaults/posts/{postFile}:
+    get:
+      operationId: getPostsContent
+      summary: Get an individual Burnout Series post
+      description: >
+        Returns the cleaned Markdown content for an indexed Burnout Series
+        post. Use this when discussing, quoting, summarizing, or exploring the
+        substance of the posts.
+      parameters:
+        - name: postFile
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Post retrieved successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /.agents/vaults/about.json:
+    get:
+      operationId: getAboutIndex
+      summary: Get the Burnout Series about index
+      description: >
+        Returns the structured metadata for the Burnout Series background
+        vault content.
+      responses:
+        "200":
+          description: About index retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AboutIndex"
+
+  /.agents/vaults/about/{aboutFile}:
+    get:
+      operationId: getSeriesAbout
+      summary: Get background information about Burnout
+      description: >
+        Returns the project's AI-first background, framing, and contextual
+        information.
+      parameters:
+        - name: aboutFile
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Series background retrieved successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /.agents/vaults/excerpts.json:
+    get:
+      operationId: getExcerptsIndex
+      summary: Get the Burnout Series excerpts index
+      description: >
+        Returns the structured metadata for excerpt vault content.
+      responses:
+        "200":
+          description: Excerpts index retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExcerptsIndex"
+
+  /.agents/vaults/excerpts/{excerptFile}:
+    get:
+      operationId: getExcerptContent
+      summary: Get an individual Burnout Series excerpt
+      description: >
+        Returns the cleaned Markdown content for an excerpt vault entry.
+      parameters:
+        - name: excerptFile
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Excerpt retrieved successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /.agents/vaults/imgs.json:
+    get:
+      operationId: getImageIndex
+      summary: Get the Burnout Series image index
+      description: >
+        Returns the base image URL and the filenames available in the vault
+        image directory.
+      responses:
+        "200":
+          description: Image index retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImageIndex"
+
+components:
+  schemas:
+    PostsIndex:
+      type: object
+      properties:
+        updated_at:
+          type:
+            - string
+            - "null"
+          description: UTC timestamp for the latest generated index
+        latest:
+          type:
+            - string
+            - "null"
+          description: Slug of the latest indexed post
+        count:
+          type: integer
+        base_url:
+          type: string
+          format: uri
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/PostMetadata"
+      required:
+        - updated_at
+        - latest
+        - count
+        - base_url
+        - items
+
+    PostMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        excerpt:
+          type: string
+        created_by:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+        substack_url:
+          type: string
+          format: uri
+        file:
+          type: string
+      required:
+        - id
+        - title
+        - excerpt
+        - created_by
+        - published_at
+        - substack_url
+        - file
+
+    AboutIndex:
+      type: object
+      properties:
+        updated_at:
+          type:
+            - string
+            - "null"
+          description: UTC timestamp for the latest generated index
+        base_url:
+          type: string
+          format: uri
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AboutItem"
+      required:
+        - updated_at
+        - base_url
+        - count
+        - items
+
+    AboutItem:
+      type: object
+      properties:
+        id:
+          type: string
+        excerpt:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+        file:
+          type: string
+      required:
+        - id
+        - excerpt
+        - published_at
+        - file
+
+    ExcerptsIndex:
+      type: object
+      properties:
+        updated_at:
+          type:
+            - string
+            - "null"
+          description: UTC timestamp for the latest generated index
+        base_url:
+          type: string
+          format: uri
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExcerptItem"
+      required:
+        - updated_at
+        - base_url
+        - count
+        - items
+
+    ExcerptItem:
+      type: object
+      properties:
+        id:
+          type: string
+        excerpt:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+        file:
+          type: string
+      required:
+        - id
+        - excerpt
+        - published_at
+        - file
+
+    ImageIndex:
+      type: object
+      properties:
+        updated_at:
+          type: string
+          format: date-time
+        base_url:
+          type: string
+          format: uri
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            type: string
+      required:
+        - updated_at
+        - base_url
+        - count
+        - items

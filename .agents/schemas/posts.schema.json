@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "posts.schema.json",
+  "title": "Burnout Series Post Index",
+  "type": "object",
+  "properties": {
+    "updated_at": { "type": "string", "format": "date-time" },
+    "base_url": { "type": "string" },
+    "latest": { "type": ["string", "null"] },
+    "count": { "type": "integer", "minimum": 0 },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/postItem" }
+    }
+  },
+  "required": ["updated_at", "base_url", "latest", "count", "items"],
+  "additionalProperties": false,
+  "$defs": {
+    "postItem": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "created_by": { "type": "string" },
+        "published_at": { "type": "string", "format": "date-time" },
+        "substack_url": { "type": "string", "format": "uri" },
+        "file": { "type": "string" }
+      },
+      "required": ["id", "title", "excerpt", "created_by", "published_at", "substack_url", "file"],
+      "additionalProperties": false
+    }
+  }
+}

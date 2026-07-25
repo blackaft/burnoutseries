@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "about.schema.json",
+  "title": "Burnout Series About Index",
+  "type": "object",
+  "properties": {
+    "updated_at": { "type": "string", "format": "date-time" },
+    "base_url": { "type": "string" },
+    "count": { "type": "integer", "minimum": 0 },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/aboutItem" }
+    }
+  },
+  "required": ["updated_at", "base_url", "count", "items"],
+  "additionalProperties": false,
+  "$defs": {
+    "aboutItem": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "published_at": { "type": "string", "format": "date-time" },
+        "file": { "type": "string" }
+      },
+      "required": ["id", "excerpt", "published_at", "file"],
+      "additionalProperties": false
+    }
+  }
+}

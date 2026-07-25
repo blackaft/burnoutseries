@@ -454,7 +454,7 @@ success "Python dependencies are ready."
 
 info "Generating posts.md and posts.json..."
 
-python scripts/rss.py
+python main.py
 
 success "Post knowledge files were generated."
 
@@ -462,11 +462,6 @@ info "Generating imgs.json..."
 
 GITHUB_OWNER="${REPO%/*}"
 GITHUB_REPO="${REPO#*/}"
-
-GITHUB_OWNER="$GITHUB_OWNER" \
-GITHUB_REPO="$GITHUB_REPO" \
-GITHUB_BRANCH="$BASE_BRANCH" \
-python scripts/imgs.py
 
 success "Image index was generated."
 
@@ -520,6 +515,41 @@ printf "\n📋 Files to be published:\n\n"
 git status --short
 
 success "The knowledge base is ready to publish."
+
+PR_BODY_FILE="${TEMP_DIR}/pr-body.md"
+MERGE_BODY_FILE="${TEMP_DIR}/merge-body.md"
+
+cat >"$PR_BODY_FILE" <<EOF
+## Knowledge-base update
+
+This pull request was created by \`publish.sh\`.
+
+It refreshes the repository inputs and generated knowledge files, including:
+
+- \`feed.rss\`
+- \`.agents/vaults/posts/\`
+- \`.agents/vaults/posts.json\`
+- \`.agents/vaults/imgs.json\`
+- \`.agents/vaults/about.json\`
+- \`.agents/vaults/excerpts.json\`
+- relevant imagery or supporting files
+
+### Publish summary
+
+- RSS updated: ${RSS_CHANGED}
+- Posts regenerated: ${POSTS_CHANGED}
+- Image index regenerated: ${IMGS_CHANGED}
+- Image files changed: ${IMAGE_COUNT}
+EOF
+
+cat >"$MERGE_BODY_FILE" <<EOF
+Publish updated Burnout Series knowledge base
+
+- RSS updated: ${RSS_CHANGED}
+- Posts regenerated: ${POSTS_CHANGED}
+- Image index regenerated: ${IMGS_CHANGED}
+- Image files changed: ${IMAGE_COUNT}
+EOF
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 8. Commit and push
@@ -581,23 +611,12 @@ else
   info "Opening a pull request into ${BASE_BRANCH}..."
 
   PR_URL="$(
-    gh pr create \
+  gh pr create \
       --repo "$REPO" \
       --base "$BASE_BRANCH" \
       --head "$UPDATE_BRANCH" \
       --title "Update Burnout Series knowledge base" \
-      --body "## Knowledge-base update
-
-This pull request was created by \`publish.sh\`.
-
-It refreshes the repository inputs and generated knowledge files, including:
-
-- \`feed.rss\`
-- \`posts.md\`
-- \`posts.json\`
-- \`imgs.json\`
-- relevant imagery or supporting files
-"
+      --body-file "$PR_BODY_FILE"
   )"
 
   success "Pull request opened:"
@@ -619,6 +638,8 @@ info "Merging the pull request..."
 if ! gh pr merge "$PR_URL" \
   --repo "$REPO" \
   --squash \
+  --subject "$(head -n 1 "$MERGE_BODY_FILE")" \
+  --body-file "$MERGE_BODY_FILE" \
   --delete-branch; then
 
   fail "GitHub could not merge the pull request automatically.
