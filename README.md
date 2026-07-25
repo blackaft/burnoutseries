@@ -16,12 +16,14 @@ A major aspect of the experiment is the use of AI in both the creation of the pr
 
 ## Using this knowledge base
 
-If you're looking to build your own AI setup, take a look or point your AI to `.agents/BLACKAFT.md`.
+If you're looking to build your own AI setup, point your AI to:
+
+- [Companion](.agents/COMPANION.md), if you're simply looking to interact with the series.
+- [Publisher](.agents/PUBLISHER.md), to update the knowledge base
 
 Ready to use:
 
 - [ChatGPT](https://chatgpt.com/g/g-6a61ca759b788191babe096fc2c19e58-burnout-series) (Custom GPT)
-- [Claude](.agents/CLAUDE.md), requires local cloning of this repository
 
 ## Updating it
 

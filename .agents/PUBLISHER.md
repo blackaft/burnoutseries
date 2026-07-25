@@ -1,4 +1,4 @@
-# Blackaft Agent Brief
+# Publishing Brief
 
 This repository is the public knowledge base for **Burnout**, an experimental series by George Kary and Blackaft. It is built for humans who want to explore the series through AI companions, not for AI to replace the act of reading or watching the work.
 
@@ -83,13 +83,13 @@ Two AI companions are available for audiences to explore Burnout:
 - Hosted in OpenAI's GPT store; requires no local setup
 - Ideal for: User-facing, discoverable, persistent companion
 
-**Claude Companion** (Anthropic, flexible)
-- Defined in **CLAUDE.md** (this repository root)
+**AI Companion** (Agent-agnostic, flexible)
+- Defined in **.agents/COMPANION.md**
 - Fetches the knowledge base directly from GitHub raw URLs during conversation
 - Retrieves `manifest.json` first, then fetches content files on demand
-- No configuration needed; Claude fetches on every conversation
-- Ideal for: Developer workflows, experimentation, local use, integration with Cowork mode
-- Setup: Copy the prompt from CLAUDE.md into a Claude conversation, then ask your first question
+- Works with any AI agent (Claude, Gemini, Codex, etc.)
+- Ideal for: Developer workflows, experimentation, local use, integration with various AI platforms
+- Setup: Copy the prompt from COMPANION.md into an AI conversation, then ask your first question
 
 Both companions follow the same retrieval-first, manifest-focused approach. They differ only in platform and integration method.
 
@@ -98,6 +98,7 @@ Both companions follow the same retrieval-first, manifest-focused approach. They
 | Path | Purpose | Agent Guidance |
 | --- | --- | --- |
 | `README.md` | Human-facing project overview and update instructions | Read for broad context and publishing commands |
+| `.agents/COMPANION.md` | AI companion behavior and retrieval rules | Copy to any AI conversation to enable the companion |
 | `.humans/` | Human intake folder for new text and image sources | Treat as staging; do not assume it contains the complete corpus |
 | `.agents/docs/requirements/` | Product and implementation notes | Read the latest dated file before changing the pipeline |
 | `.agents/docs/prompts/20260725-custom-gpt.md` | Custom GPT behavior and retrieval rules | Update when GPT action or companion stance changes |
@@ -153,7 +154,7 @@ All vault outputs must pass validation:
 
 When starting work on this repo:
 
-- [ ] Read this brief (BLACKAFT.md)
+- [ ] Read this brief (PUBLISHER.md)
 - [ ] Skim the latest `.agents/docs/requirements/` file
 - [ ] Understand the specific task
 - [ ] Check current state: `git status`, review relevant JSON, inspect vault files
@@ -184,5 +185,5 @@ The system has no tool-specific state or dependencies. All logic is file-based, 
 
 ## See Also
 
-- **CLAUDE.md** — Copy-paste prompt and quick-start guide for using Claude as the Burnout companion
+- **COMPANION.md** — Copy-paste prompt for using any AI as the Burnout companion
 - **README.md** — Human-facing project overview
