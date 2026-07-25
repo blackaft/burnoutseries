@@ -1,1 +1,3 @@
 __pycache__/
+.agents/skills/*
+!.agents/skills/.gitkeep
