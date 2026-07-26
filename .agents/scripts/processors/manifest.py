@@ -32,6 +32,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 def build_manifest() -> dict[str, Any]:
     return {
+        "config": load_json(MAIN.CONFIG_JSON),
         "updated_at": MAIN.utc_now(),
         "base_url": MAIN.vault_base_url(),
         "posts": load_json(MAIN.POSTS_JSON),

@@ -11,6 +11,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = ROOT.parent
+CONFIG_JSON = REPO_ROOT / "config.json"
 HUMANS_DIR = REPO_ROOT / ".humans"
 SCRIPTS_DIR = ROOT / "scripts"
 PROCESSORS_DIR = SCRIPTS_DIR / "processors"
