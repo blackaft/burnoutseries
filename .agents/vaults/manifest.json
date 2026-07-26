@@ -1,8 +1,29 @@
 {
-  "updated_at": "2026-07-26T07:33:14Z",
+  "config": {
+    "title": "Burnout Series",
+    "creator": "Blackaft Associates",
+    "contributors": [
+      "George Kary",
+      "Thanos Doumas"
+    ],
+    "summary": "He backpacked to fix burnout. But burnout was just a battlefield. To heal, he must end the war. A experimental series about the bullshit lies we tell ourselves, with 3 parts and 19 chapters, including videos, author’s notes and behind the scenes with George Kary. It was born out of a passion for exploring multi-disciplinary and cross-functional projects; and, of course, a love of storytelling.",
+    "about": "The story is based on George’s own 3-month backpacking trip across Malta, Italy and Greece in 2025. It takes place across 104 days, mostly in reverse chronological order. This particular choice of narrative format helps express the unravelling of the false assumptions that we all hold based on a preferential and skewed view of our memories; or rather, how we choose to interpret those memories. Thus, the narrative was created in such a way to intentionally expose the entire story’s layers, one by one: Travel - oh, a guy who went backpacking to feel good / Emotional - oh, he felt really bad /Identity - oh, he was lying to himself all along. In summary, the series hopes to help viewers resonate with their own truths (and layers) by presenting the entire story with such raw brutality that it contrasts heavily with the content presented online and especially on social media. Making it so uncomfortable and infuriating to watch someone being so publicly absurd that it triggers cognitive dissonance with your own private fallacies.",
+    "channels": {
+      "main": "https://burnoutseries.substack.com",
+      "secondary": [
+        "https://www.instagram.com/georgekary_",
+        "https://www.youtube.com/@georgekary"
+      ],
+      "other": [
+        "https://substack.com/@thanosd",
+        "https://www.instagram.com/thanos_do/"
+      ]
+    }
+  },
+  "updated_at": "2026-07-26T07:41:47Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/",
   "posts": {
-    "updated_at": "2026-07-26T07:33:14Z",
+    "updated_at": "2026-07-26T07:41:47Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/posts/",
     "latest": "4-project-phases-1-intent",
     "count": 11,
@@ -109,7 +130,7 @@
     ]
   },
   "about": {
-    "updated_at": "2026-07-26T07:33:14Z",
+    "updated_at": "2026-07-26T07:41:47Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
     "count": 3,
     "items": [
@@ -134,7 +155,7 @@
     ]
   },
   "excerpts": {
-    "updated_at": "2026-07-26T07:33:14Z",
+    "updated_at": "2026-07-26T07:41:47Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/excerpts/",
     "count": 1,
     "items": [
@@ -147,7 +168,7 @@
     ]
   },
   "imgs": {
-    "updated_at": "2026-07-26T07:33:14Z",
+    "updated_at": "2026-07-26T07:41:47Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/imgs/",
     "count": 12,
     "items": [
