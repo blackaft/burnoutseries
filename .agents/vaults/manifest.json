@@ -1,12 +1,21 @@
 {
-  "updated_at": "2026-07-25T08:58:22Z",
+  "updated_at": "2026-07-26T07:33:14Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/",
   "posts": {
-    "updated_at": "2026-07-25T08:58:22Z",
+    "updated_at": "2026-07-26T07:33:14Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/posts/",
-    "latest": "github-now-available",
-    "count": 10,
+    "latest": "4-project-phases-1-intent",
+    "count": 11,
     "items": [
+      {
+        "id": "4-project-phases-1-intent",
+        "title": "4 project phases, 1 intent",
+        "excerpt": "BURNOUT is an experimental, multi-disciplinary project focused on upskilling, with 4 phases: setting the stage, the build-up, the release of the story and a retrospective BTS-focused part. We’re currently approaching the end of the first ph",
+        "created_by": "George Kary",
+        "published_at": "2026-07-26T07:32:30Z",
+        "substack_url": "https://burnoutseries.substack.com/p/4-project-phases-1-intent",
+        "file": "20260726-4-project-phases-1-intent.md"
+      },
       {
         "id": "github-now-available",
         "title": "Github, now available",
@@ -100,7 +109,7 @@
     ]
   },
   "about": {
-    "updated_at": "2026-07-25T08:58:22Z",
+    "updated_at": "2026-07-26T07:33:14Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
     "count": 3,
     "items": [
@@ -125,7 +134,7 @@
     ]
   },
   "excerpts": {
-    "updated_at": "2026-07-25T08:58:22Z",
+    "updated_at": "2026-07-26T07:33:14Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/excerpts/",
     "count": 1,
     "items": [
@@ -138,10 +147,11 @@
     ]
   },
   "imgs": {
-    "updated_at": "2026-07-25T08:58:22Z",
+    "updated_at": "2026-07-26T07:33:14Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/imgs/",
-    "count": 11,
+    "count": 12,
     "items": [
+      "4-project-phases.png",
       "authors-note-characters-george-kary.webp",
       "chatgpt-featured.webp",
       "composition-test-for-ego.webp",
