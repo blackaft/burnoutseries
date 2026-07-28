@@ -1,6 +1,6 @@
 ---
 id: "welcome-aboard"
-title: "Author's Note: Introduction"
+title: "Introduction"
 excerpt: "BURNOUT is an experimental series created by George Kary, born out of a passion for tackling multi-disciplinary and cross-functional projects. The purpose of the series is to explore:\n\nCinematography and storytelling. Techniques and princip"
 created_by: "George Kary"
 published_at: "2026-05-17T12:51:25Z"
