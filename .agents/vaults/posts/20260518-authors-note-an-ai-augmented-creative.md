@@ -1,6 +1,6 @@
 ---
 id: "authors-note-an-ai-augmented-creative"
-title: "Author's Note: An AI-augmented creative project"
+title: "An AI-augmented creative project"
 excerpt: "BURNOUT is a purely creative project, with text, images and videos exclusively created by humans, for humans, in alignment with Blackaft’s principles, the biztech venture firm founded by George Kary. But the project has long been augmented"
 created_by: "George Kary"
 published_at: "2026-05-18T22:19:42Z"

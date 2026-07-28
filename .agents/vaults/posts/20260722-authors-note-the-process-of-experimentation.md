@@ -1,14 +1,12 @@
 ---
 id: "authors-note-the-process-of-experimentation"
-title: "Author's Note: The process of experimentation"
-excerpt: "Still shot from lighting and composition tests for the scheduled author’s notes videos featuring George Kary.\n\nBURNOUT is an experimental series - the process of making it is equally - if not more - important as the actual story itself. Aft"
+title: "Process of experimentation"
+excerpt: "BURNOUT is an experimental series - the process of making it is equally - if not more - important as the actual story itself. After all, it is an exercise in upskilling on various fields and an effort born out of a passion for tackling mult"
 created_by: "George Kary"
 published_at: "2026-07-22T19:06:16Z"
 substack_url: "https://burnoutseries.substack.com/p/authors-note-the-process-of-experimentation"
 file: "20260722-authors-note-the-process-of-experimentation.md"
 ---
-
-Still shot from lighting and composition tests for the scheduled author’s notes videos featuring George Kary.
 
 BURNOUT is an experimental series - the process of making it is equally - if not more - important as the actual story itself. After all, it is an exercise in upskilling on various fields and an effort born out of a passion for tackling multi-disciplinary and cross-functional projects (continues).
 

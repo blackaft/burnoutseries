@@ -20,14 +20,23 @@
       ]
     }
   },
-  "updated_at": "2026-07-26T07:41:47Z",
+  "updated_at": "2026-07-28T21:01:48Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/",
   "posts": {
-    "updated_at": "2026-07-26T07:41:47Z",
+    "updated_at": "2026-07-28T21:01:48Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/posts/",
-    "latest": "4-project-phases-1-intent",
-    "count": 11,
+    "latest": "audio-now-available",
+    "count": 12,
     "items": [
+      {
+        "id": "audio-now-available",
+        "title": "Audio, now available",
+        "excerpt": "BURNOUT’s posts on Substack now include a “listen to the post” feature with George Kary. This is in par with the project’s focus on up-skilling; the addition of audio offers the opportunity to practice audio mixing and American english. At",
+        "created_by": "George Kary",
+        "published_at": "2026-07-28T20:56:27Z",
+        "substack_url": "https://burnoutseries.substack.com/p/audio-now-available",
+        "file": "20260728-audio-now-available.md"
+      },
       {
         "id": "4-project-phases-1-intent",
         "title": "4 project phases, 1 intent",
@@ -57,8 +66,8 @@
       },
       {
         "id": "authors-note-the-process-of-experimentation",
-        "title": "Author's Note: The process of experimentation",
-        "excerpt": "Still shot from lighting and composition tests for the scheduled author’s notes videos featuring George Kary.\n\nBURNOUT is an experimental series - the process of making it is equally - if not more - important as the actual story itself. Aft",
+        "title": "Process of experimentation",
+        "excerpt": "BURNOUT is an experimental series - the process of making it is equally - if not more - important as the actual story itself. After all, it is an exercise in upskilling on various fields and an effort born out of a passion for tackling mult",
         "created_by": "George Kary",
         "published_at": "2026-07-22T19:06:16Z",
         "substack_url": "https://burnoutseries.substack.com/p/authors-note-the-process-of-experimentation",
@@ -67,7 +76,7 @@
       {
         "id": "coming-up-july-2026",
         "title": "Coming up, July 2026",
-        "excerpt": "Thanos Doumas joins as one of the characters for the experimental Burnout Series by George Kary.\n\nBURNOUT is a bit behind schedule as we had to firefight the sudden recall of quite a bit of material, but it’s still alive and kicking. Additi",
+        "excerpt": "BURNOUT is a bit behind schedule as we had to firefight the sudden recall of quite a bit of material, but it’s still alive and kicking. Additionally to the 3 parts, 19 chapters and 19 pieces of BTS content (Behind the Scenes), we’re also lo",
         "created_by": "George Kary",
         "published_at": "2026-07-19T15:58:59Z",
         "substack_url": "https://burnoutseries.substack.com/p/coming-up-july-2026",
@@ -84,7 +93,7 @@
       },
       {
         "id": "characters-and-character-progression",
-        "title": "Author's Note: Characters and character progression",
+        "title": "Characters and character progression",
         "excerpt": "BURNOUT’s primary character is the Ego, played by George Kary. The story begins with the Ego being absurdly obnoxious, arrogant, superior and patronising (sometimes breaking the fourth wall for dramatic effect), looking back and remembering",
         "created_by": "George Kary",
         "published_at": "2026-05-26T20:19:51Z",
@@ -94,7 +103,7 @@
       {
         "id": "coming-up-may-2026",
         "title": "Coming up, May 2026",
-        "excerpt": "Gallery and symbolism\nof the logo\n\nMeet the Id\n\nFrom initial concept to how the character progressed, insights from AI-assisted analysis, challenges, setup, lighting and color grading.\n\nMeet the Superego\n\nMeet the Ego\n\nAlso including challe",
+        "excerpt": "BURNOUT’s content coming up:\n\nGallery and symbolism\nof the logo\n\nMeet the Id\n\nFrom initial concept to how the character progressed, insights from AI-assisted analysis, challenges, setup, lighting and color grading.\n\nMeet the Superego\n\nMeet",
         "created_by": "George Kary",
         "published_at": "2026-05-19T21:18:11Z",
         "substack_url": "https://burnoutseries.substack.com/p/coming-up-may-2026",
@@ -102,7 +111,7 @@
       },
       {
         "id": "authors-note-an-ai-augmented-creative",
-        "title": "Author's Note: An AI-augmented creative project",
+        "title": "An AI-augmented creative project",
         "excerpt": "BURNOUT is a purely creative project, with text, images and videos exclusively created by humans, for humans, in alignment with Blackaft’s principles, the biztech venture firm founded by George Kary. But the project has long been augmented",
         "created_by": "George Kary",
         "published_at": "2026-05-18T22:19:42Z",
@@ -111,7 +120,7 @@
       },
       {
         "id": "upcoming-behind-the-scenes-content",
-        "title": "Author's Note: Upcoming \"behind the scenes\" content",
+        "title": "Upcoming BTS content",
         "excerpt": "BURNOUT’s content also features “behind the scenes”, which complements the experimental nature of the series as a “meta” piece of the entire experience. Here’s the list of episodes (videos and articles) planned:\n\nPixar’s 3-layer narrative",
         "created_by": "George Kary",
         "published_at": "2026-05-17T13:21:37Z",
@@ -120,7 +129,7 @@
       },
       {
         "id": "welcome-aboard",
-        "title": "Author's Note: Introduction",
+        "title": "Introduction",
         "excerpt": "BURNOUT is an experimental series created by George Kary, born out of a passion for tackling multi-disciplinary and cross-functional projects. The purpose of the series is to explore:\n\nCinematography and storytelling. Techniques and princip",
         "created_by": "George Kary",
         "published_at": "2026-05-17T12:51:25Z",
@@ -130,7 +139,7 @@
     ]
   },
   "about": {
-    "updated_at": "2026-07-26T07:41:47Z",
+    "updated_at": "2026-07-28T21:01:48Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
     "count": 3,
     "items": [
@@ -155,7 +164,7 @@
     ]
   },
   "excerpts": {
-    "updated_at": "2026-07-26T07:41:47Z",
+    "updated_at": "2026-07-28T21:01:48Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/excerpts/",
     "count": 1,
     "items": [
@@ -168,7 +177,7 @@
     ]
   },
   "imgs": {
-    "updated_at": "2026-07-26T07:41:47Z",
+    "updated_at": "2026-07-28T21:01:48Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/imgs/",
     "count": 12,
     "items": [

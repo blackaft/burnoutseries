@@ -1,6 +1,6 @@
 ---
 id: "upcoming-behind-the-scenes-content"
-title: "Author's Note: Upcoming \"behind the scenes\" content"
+title: "Upcoming BTS content"
 excerpt: "BURNOUT’s content also features “behind the scenes”, which complements the experimental nature of the series as a “meta” piece of the entire experience. Here’s the list of episodes (videos and articles) planned:\n\nPixar’s 3-layer narrative"
 created_by: "George Kary"
 published_at: "2026-05-17T13:21:37Z"

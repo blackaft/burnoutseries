@@ -1,6 +1,6 @@
 ---
 id: "characters-and-character-progression"
-title: "Author's Note: Characters and character progression"
+title: "Characters and character progression"
 excerpt: "BURNOUT’s primary character is the Ego, played by George Kary. The story begins with the Ego being absurdly obnoxious, arrogant, superior and patronising (sometimes breaking the fourth wall for dramatic effect), looking back and remembering"
 created_by: "George Kary"
 published_at: "2026-05-26T20:19:51Z"

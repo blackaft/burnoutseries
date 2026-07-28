@@ -176,8 +176,8 @@ The series’s GPT will continuously be extended with the project’s knowledge 
 
 So, that was the 4 phases of the Burnout Series project.
 
-But have you figured out the 1 intent?
-
-Interact with the series’s preloaded ChatGPT.
+Continue with the series’s preloaded ChatGPT.
 
 Explore your thoughts
+
+Huh?
