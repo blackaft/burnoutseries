@@ -54,7 +54,7 @@ Locations (Malta, Italy, Greece)
 
 The Characters
 
-The globe is an important prop for the Ego character.
+Composition tests for the project’s “In a Summary” videos, ft. George Kary. The globe is an important prop for the Ego character.
 
 To offset the bluntness of the “travel documentary” effect, we needed to satisfy one more condition for effective storytelling.
 
@@ -97,7 +97,7 @@ Symbolism and sequence of the logo
 
 The Mechanics
 
-George Kary (left) and Thanos Doumas (right) discussing the challenges of lighting and navigating DIY solutions.
+George Kary (left) and Thanos Doumas (right) discussing the challenges of a DIY setup, during a test lighting session.
 
 First of all, simply to conclude the conjunction (and juxtaposition) of the story with the characters clashing, it just made good sense to put a simplifying label on the whole thing - and thus, the 3 parts were born:
 
@@ -134,6 +134,8 @@ Release formats and mediums
 Breaking down trailers
 Breaking down mood setting chapter videos
 
-Continue with the series’s preloaded ChatGPT.
+Continue with the project’s preloaded ChatGPT.
 
 Explore your thoughts
+
+Huh?

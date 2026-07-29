@@ -22,8 +22,6 @@ It also meant that launches, pivots and especially AI adoption may and will requ
 
 A practice run.
 
-Blackaft Studio.
-
 BURNOUT now lives under https://github.com/blackaft, with a little bit of Google Drive and Google Photos for handling multimedia.
 
 Screenshot of the Blackaft Studio repository on Github, which contains the firm’s creative projects, like the Burnout Series.
@@ -36,8 +34,6 @@ The process is also self-improving; meaning there are deterministic workflows in
 
 Suffice to say, Gemini remains the king across benchmarking in terms of handling context for such type of processes in building up blocks on top of blocks.
 
-Results.
-
 Why does this entire thing matter? Sure, it sounds fancy; a creative project using such a “coding” level of AI?
 
 Outside helping with the actual production content and schedule, this post was crafted by a human in less than 10 minutes. The thoughts and raw notes were already there since September 2025. The AI, operating inside that Blackaft Studio agentic setup, was able to provide the human with all the necessary context.
@@ -48,6 +44,8 @@ Machines on the back; humans at the front.
 
 Check it out below.
 
-Explore your thoughts on this post with the series’s preloaded ChatGPT.
+Continue with the project’s preloaded ChatGPT.
 
-Missed the previous one?
+Explore your thoughts
+
+Huh?

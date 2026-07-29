@@ -26,9 +26,7 @@ The Superego represents the judgemental figure and moral compass, relentlessly p
 
 ~ rim chroma = red, opposite light/dark sides to the Id for lighting
 
-Emotional states.
-
-Photography stills from one of the initial discovery sessions for the Superego’s emotional states, in an effort to POC the series’s character progression.
+Lighting and composition tests for the six emotional states of the Superego character, played by George Kary.
 
 Both secondary characters undergo 6 different emotional states (+1 exclusively reserved for the ending sequence and the plot twist reveal).
 
@@ -52,14 +50,16 @@ Climax ~ controlling, furious and victimised (white undershirt).
 
 Resolution ~ no spoilers (duh)
 
-Technical aspects.
-
 Both secondary characters wear a beanie across all states.
 
 All photo and video material used across all methods and channels showcase both characters above the chest with the collarbone and just enough of the shoulders-to-forearms ratio to achieve the “part of one” symbolism.
 
 The colors, layers of clothes and glitching and trilateral sequence appearances of both secondary characters represent a Chekhov’s Gun narrative device (vital clues for introducing, expanding and revealing upon the core identity layer).
 
-Explore your thoughts on this post with the series’s preloaded ChatGPT.
+Suffice to say, the entire story is a misdirection for the plot-twist.
 
-Missed the previous one?
+Continue with the project’s preloaded ChatGPT.
+
+Explore your thoughts
+
+Huh?
