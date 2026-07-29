@@ -20,18 +20,27 @@
       ]
     }
   },
-  "updated_at": "2026-07-28T21:01:48Z",
+  "updated_at": "2026-07-29T18:02:04Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/",
   "posts": {
-    "updated_at": "2026-07-28T21:01:48Z",
+    "updated_at": "2026-07-29T18:02:04Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/posts/",
-    "latest": "audio-now-available",
-    "count": 12,
+    "latest": "a-plot-twist-at-the-storys-core",
+    "count": 13,
     "items": [
+      {
+        "id": "a-plot-twist-at-the-storys-core",
+        "title": "A plot twist at the story's core",
+        "excerpt": "BURNOUT’s story is based on a plot twist, one that will be revealed in the last moments of the last “Origins of Delusion” chapter in Part Three: Convergence. While this project reveals a lot of information on narrative devices, characters a",
+        "created_by": "George Kary",
+        "published_at": "2026-07-29T18:01:49Z",
+        "substack_url": "https://burnoutseries.substack.com/p/a-plot-twist-at-the-storys-core",
+        "file": "20260729-a-plot-twist-at-the-storys-core.md"
+      },
       {
         "id": "audio-now-available",
         "title": "Audio, now available",
-        "excerpt": "BURNOUT’s posts on Substack now include a “listen to the post” feature with George Kary. This is in par with the project’s focus on up-skilling; the addition of audio offers the opportunity to practice audio mixing and American english. At",
+        "excerpt": "BURNOUT’s posts on Substack now include a “listen to the post” feature with . This is in par with the project’s focus on up-skilling; the addition of audio offers the opportunity to practice audio mixing and American english. At some point,",
         "created_by": "George Kary",
         "published_at": "2026-07-28T20:56:27Z",
         "substack_url": "https://burnoutseries.substack.com/p/audio-now-available",
@@ -139,7 +148,7 @@
     ]
   },
   "about": {
-    "updated_at": "2026-07-28T21:01:48Z",
+    "updated_at": "2026-07-29T18:02:04Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
     "count": 3,
     "items": [
@@ -164,7 +173,7 @@
     ]
   },
   "excerpts": {
-    "updated_at": "2026-07-28T21:01:48Z",
+    "updated_at": "2026-07-29T18:02:04Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/excerpts/",
     "count": 1,
     "items": [
@@ -177,7 +186,7 @@
     ]
   },
   "imgs": {
-    "updated_at": "2026-07-28T21:01:48Z",
+    "updated_at": "2026-07-29T18:02:04Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/imgs/",
     "count": 12,
     "items": [

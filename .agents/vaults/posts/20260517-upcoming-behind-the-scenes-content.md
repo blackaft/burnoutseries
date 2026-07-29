@@ -48,8 +48,8 @@ Editing
 
 Metrics and social media
 
-Discover these under t/behind-the-scenes or through George Kary’s profiles on either Instagram or YouTube.
+Continue with the project’s preloaded ChatGPT.
 
-Explore your thoughts on this post with the series’s preloaded ChatGPT.
+Explore your thoughts
 
-Missed the previous one?
+Huh?

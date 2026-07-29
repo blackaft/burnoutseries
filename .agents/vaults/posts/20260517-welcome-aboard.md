@@ -64,4 +64,8 @@ Then you read the chapter.
 
 That’s it.
 
-Explore your thoughts on this post with the series’s preloaded ChatGPT.
+Continue with the project’s preloaded ChatGPT.
+
+Explore your thoughts
+
+Huh?

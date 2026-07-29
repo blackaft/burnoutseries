@@ -26,8 +26,6 @@ This is, of course, in alignment with Blackaft’s principle of distributing con
 
 Feel free to fork the repo on Github and experiment yourself.
 
-Burnout Series @Blackaft
-
 Whereas the workflow so far for the series’s custom GPT included manually updating relevant files on the GPT, the new workflow is programmatic.
 
 Now, the process is much more simple:
@@ -38,7 +36,7 @@ Humans or their AIs can run a robust publishing script
 
 All done - Custom GPT and all AIs hooking to the series’s stream have the new context, using Github’s own raw content service
 
-Running publish.sh on a VS Code + Cline BYOK setup.
+A deterministic publishing workflow on a BYOK setup, ft. VS Code and Cline.
 
 Why is the first step still manual?
 
@@ -48,6 +46,8 @@ A natural solution to that would be to use Apify’s built-in Substack scrapers.
 
 But hey, we ain’t gonna pay that much for a measly experiment!
 
-Continue with the series’s preloaded ChatGPT.
+Continue with the project’s preloaded ChatGPT.
 
 Explore your thoughts
+
+Huh?
