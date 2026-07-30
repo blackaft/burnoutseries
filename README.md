@@ -64,18 +64,15 @@ What happens, in order:
 flowchart LR
   A[Human adds files in .humans/] --> B[Publish script runs]
   B --> C[main.py orchestrates processors]
-  C --> D[imgs.py moves images into .agents/vaults/imgs/]
-  C --> E[rss.py fetches Substack RSS and builds posts]
-  C --> F[txt.py converts txt sources and refreshes about / excerpts]
-  C --> G[manifest.py merges all vault JSON into manifest.json]
-  D --> H[imgs.json]
-  E --> I[posts.json + per-post markdown]
-  F --> J[about.json + excerpts.json + vault markdown]
-  G --> K[manifest.json]
-  H --> L[Custom GPT and other AI clients read the manifest]
-  I --> L
-  J --> L
-  K --> L
+  C --> D[rss.py fetches Substack RSS, builds posts, and downloads feed images]
+  C --> E[txt.py converts txt sources and refreshes about]
+  C --> F[manifest.py merges all vault JSON into manifest.json]
+  D --> G[posts.json + per-post markdown + imgs.json + vault images]
+  E --> H[about.json + vault markdown]
+  F --> I[manifest.json]
+  G --> J[Custom GPT and other AI clients read the manifest]
+  H --> J
+  I --> J
 ```
 
 ## Links
