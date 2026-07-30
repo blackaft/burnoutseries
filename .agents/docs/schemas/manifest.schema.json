@@ -15,7 +15,7 @@
       "type": "string"
     },
     "posts": {
-      "$ref": "#/$defs/manifestFileSection"
+      "$ref": "#/$defs/manifestPostSection"
     },
     "about": {
       "$ref": "#/$defs/manifestFileSection"
@@ -34,6 +34,28 @@
         "file": { "type": "string" }
       },
       "required": ["excerpt", "file"],
+      "additionalProperties": false
+    },
+    "manifestPostItem": {
+      "type": "object",
+      "properties": {
+        "excerpt": { "type": "string" },
+        "file": { "type": "string" },
+        "substack_url": { "type": "string", "format": "uri" }
+      },
+      "required": ["excerpt", "file", "substack_url"],
+      "additionalProperties": false
+    },
+    "manifestPostSection": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/manifestPostItem" }
+        }
+      },
+      "required": ["path", "items"],
       "additionalProperties": false
     },
     "manifestFileSection": {

@@ -20,7 +20,7 @@ def _load_main() -> ModuleType:
 MAIN = _load_main()
 
 MANIFEST_SECTION_FIELDS_DROP = {"updated_at", "base_url", "latest", "count"}
-MANIFEST_ITEM_FIELDS_DROP = {"id", "created_by", "substack_url"}
+MANIFEST_ITEM_FIELDS_DROP = {"id", "created_by"}
 
 def load_json(path: Path) -> dict[str, Any]:
     if not path.exists():

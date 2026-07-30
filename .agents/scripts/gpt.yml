@@ -119,9 +119,13 @@ components:
           type: string
         file:
           type: string
+        substack_url:
+          type: string
+          format: uri
       required:
         - excerpt
         - file
+        - substack_url
 
     AboutIndex:
       type: object

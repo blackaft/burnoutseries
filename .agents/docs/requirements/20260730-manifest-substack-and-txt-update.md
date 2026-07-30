@@ -41,6 +41,8 @@ Capture the product and implementation decisions made during the July 30, 2026 s
 - Embedded `posts` items now expose only:
   - `excerpt`
   - `file`
+- Embedded `posts` items also expose:
+  - `substack_url`
 - Embedded `about` items now expose only:
   - `excerpt`
   - `file`
@@ -48,7 +50,6 @@ Capture the product and implementation decisions made during the July 30, 2026 s
 - The following fields are intentionally not exposed inside the embedded manifest items anymore:
   - `id`
   - `created_by`
-  - `substack_url`
   - `title`
   - `published_at`
 
