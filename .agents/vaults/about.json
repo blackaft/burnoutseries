@@ -1,31 +1,19 @@
 {
-  "updated_at": "2026-07-30T17:03:36Z",
+  "updated_at": "2026-07-30T17:17:36Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
-  "count": 4,
+  "count": 2,
   "items": [
     {
-      "id": "links",
+      "id": "guide",
       "excerpt": "BURNOUT can be found on a variety of channels, depending on how much you’re looking to immerse yourself. While the story itself is a book, the project offers complementary material such as mood setting videos for chapters, as well as audiovisual m...",
       "published_at": "2026-07-24T18:26:08Z",
-      "file": "links.md"
+      "file": "guide.md"
     },
     {
-      "id": "manifest",
-      "excerpt": "ust from the manifest metadata, quite a lot becomes apparent. None of this depends on reading the underlying documents—it's inference from the index itself. Observation What the manifest suggests The project is intentionally AI-readable The reposi...",
+      "id": "prologue",
+      "excerpt": "And on the 103rd day, his hollow gaze towards the Greek horizon, thinking how summer waves on the beach was just a fucking cliche. The sky instinctively felt blue, but its color was washed away by Chalkidiki’s unforgiving August sun. He shook his...",
       "published_at": "2026-07-24T18:26:08Z",
-      "file": "manifest.md"
-    },
-    {
-      "id": "sitemap",
-      "excerpt": "Substack - [Home](https://burnoutseries.substack.com/) - [Prologue](https://burnoutseries.substack.com/p/prologue) - [Chapters](https://burnoutseries.substack.com/p/chapters) - [Part One: Dissonance](https://burnoutseries.substack.com/t/part-one)...",
-      "published_at": "2026-07-24T18:26:08Z",
-      "file": "sitemap.md"
-    },
-    {
-      "id": "summary",
-      "excerpt": "BURNOUT is an experimental series about the bullshit lies we tell ourselves, with 3 parts and 19 chapters, including videos, author’s notes and behind the scenes with George Kary. It was born out of a passion for exploring multi-disciplinary and c...",
-      "published_at": "2026-07-24T18:26:08Z",
-      "file": "summary.md"
+      "file": "prologue.md"
     }
   ]
 }
