@@ -17,12 +17,11 @@ paths:
       operationId: getManifest
       summary: Get the Burnout Series manifest
       description: >
-        Returns the merged Burnout manifest. Start here for factual questions
-        so the GPT can read repository config, prompt context, available about
-        files, post files, post substack URLs, and image assets before
-        drilling into content. Use `substack_url` for post links. Use
-        `base_url` plus section `path` plus `file` only for raw repository
-        content.
+        Returns the merged Burnout manifest. Start here for factual questions.
+        It exposes repository config, about files, post files, post
+        `substack_url` values, and image assets. Use `substack_url` for post
+        links. Use `base_url` plus section `path` plus `file` only for raw
+        repository content.
       responses:
         "200":
           description: Manifest retrieved successfully
