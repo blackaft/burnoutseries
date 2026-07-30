@@ -10,10 +10,10 @@
     "about": "The story is based on George’s own 3-month backpacking trip across Malta, Italy and Greece in 2025. It spans 104 days, mostly in reverse chronological order. This particular choice of narrative format helps express the unravelling of the false assumptions that we all hold based on a preferential and skewed view of our memories; or rather, how we choose to interpret those memories. Thus, the narrative was created in such a way to intentionally expose the entire story’s layers, one by one: Travel - oh, a guy who went backpacking to feel good Emotional - oh, he felt really bad Identity - oh, he was lying to himself all along In summary, the project hopes to help viewers resonate with their own truths by presenting the entire story with such raw brutality that it contrasts heavily with the content presented online and especially on social media. Making it so uncomfortable and infuriating to watch someone being so publicly absurd that it triggers cognitive dissonance with your own private fallacies.",
     "links": "See the guide file"
   },
-  "updated_at": "2026-07-30T17:16:37Z",
+  "updated_at": "2026-07-30T17:26:28Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/",
   "posts": {
-    "updated_at": "2026-07-30T17:16:37Z",
+    "updated_at": "2026-07-30T17:26:28Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/posts/",
     "latest": "a-plot-twist-at-the-storys-core",
     "count": 13,
@@ -138,10 +138,16 @@
     ]
   },
   "about": {
-    "updated_at": "2026-07-30T17:16:37Z",
+    "updated_at": "2026-07-30T17:26:28Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
-    "count": 2,
+    "count": 3,
     "items": [
+      {
+        "id": "georgekary",
+        "excerpt": "George Kary is publicly described across multiple profiles as the founder of Blackaft Associates and a hands-on biztech operator focused on launches, pivots and AI adoption for startups and SMEs. His public bios also describe him as a digital noma...",
+        "published_at": "2026-07-24T18:26:08Z",
+        "file": "georgekary.md"
+      },
       {
         "id": "guide",
         "excerpt": "BURNOUT can be found on a variety of channels, depending on how much you’re looking to immerse yourself. While the story itself is a book, the project offers complementary material such as mood setting videos for chapters, as well as audiovisual m...",
@@ -157,7 +163,7 @@
     ]
   },
   "imgs": {
-    "updated_at": "2026-07-30T17:16:37Z",
+    "updated_at": "2026-07-30T17:26:28Z",
     "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/imgs/",
     "count": 12,
     "items": [

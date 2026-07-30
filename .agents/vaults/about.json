@@ -1,8 +1,14 @@
 {
-  "updated_at": "2026-07-30T17:17:36Z",
+  "updated_at": "2026-07-30T17:26:28Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
-  "count": 2,
+  "count": 3,
   "items": [
+    {
+      "id": "georgekary",
+      "excerpt": "George Kary is publicly described across multiple profiles as the founder of Blackaft Associates and a hands-on biztech operator focused on launches, pivots and AI adoption for startups and SMEs. His public bios also describe him as a digital noma...",
+      "published_at": "2026-07-24T18:26:08Z",
+      "file": "georgekary.md"
+    },
     {
       "id": "guide",
       "excerpt": "BURNOUT can be found on a variety of channels, depending on how much you’re looking to immerse yourself. While the story itself is a book, the project offers complementary material such as mood setting videos for chapters, as well as audiovisual m...",
