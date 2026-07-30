@@ -447,7 +447,6 @@ It refreshes the repository inputs and generated knowledge files, including:
 - \`.agents/vaults/posts.json\`
 - \`.agents/vaults/imgs.json\`
 - \`.agents/vaults/about.json\`
-- \`.agents/vaults/excerpts.json\`
 - relevant imagery or supporting files
 
 ### Publish summary
