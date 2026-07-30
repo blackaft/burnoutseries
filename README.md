@@ -27,10 +27,7 @@ Ready to use:
 
 ## Updating it
 
-Under `.humans/`, add any new:
-
-- Images, using filenames that match the relevant post or subject (for example, `process-of-experimentation-featured.png`).
-- Text files, by prepending whether they're an about or story excerpt item (i.e. `about-summary.txt`).
+Under `.humans/`, add any new text files for about material. Use a simple filename such as `georgekary.txt` or `guide.txt`.
 
 Publish the update:
 
@@ -58,7 +55,7 @@ What happens, in order:
 2. `publish.sh` runs the orchestrator in `.agents/scripts/main.py`.
 3. The processors move or generate durable assets under `.agents/vaults/`.
 4. The manifest is rebuilt as the single entrypoint for AI clients.
-5. The Custom GPT reads the manifest first, then drills into posts, about text, excerpts, or images only when needed.
+5. The Custom GPT reads the manifest first, then drills into posts, about text, or images only when needed.
 
 ```mermaid
 flowchart LR
@@ -75,36 +72,13 @@ flowchart LR
   I --> J
 ```
 
-## Links
+The knowledge base is now designed so AI companions start from `manifest.json`.
 
-### Substack
-
-- [Home](https://burnoutseries.substack.com/)
-- [Prologue](https://burnoutseries.substack.com/p/prologue)
-- [Chapters](https://burnoutseries.substack.com/p/chapters)
-    - [Part One: Dissonance](https://burnoutseries.substack.com/t/part-one)
-    - [Part Two: Resonance](https://burnoutseries.substack.com/t/part-two)
-    - [Part Three: Convergence](https://burnoutseries.substack.com/t/part-three)
-    - [All chapters](https://burnoutseries.substack.com/t/chapters)
-- [Meta](https://burnoutseries.substack.com/p/meta)
-    - [Schedule updates on the series](https://burnoutseries.substack.com/t/update)
-    - [Notes by George Kary](https://burnoutseries.substack.com/t/authors-notes)
-    - [Behind the scenes with George Kary](https://burnoutseries.substack.com/t/behind-the-scenes)
-    - [Materials and guides](https://burnoutseries.substack.com/t/materials-and-guides)
-    - [Videos](https://burnoutseries.substack.com/t/videos)
-    - [About](https://burnoutseries.substack.com/about)
-- [RSS](https://burnoutseries.substack.com/feed.rss)
-
-### George Kary
-
-- [Substack](https://substack.com/@georgekary)
-- [Instagram](https://www.instagram.com/georgekary_)
-- [YouTube](https://www.youtube.com/@georgekary)
-
-### Thanos Doumas
-
-- [Substack](https://substack.com/@thanosd)
-- [Instagram](https://www.instagram.com/thanos_do/)
+- The manifest exposes the repository `config`, including prompt guidance for AI companions.
+- It exposes `posts`, `about`, and `imgs` as lightweight indexes with `path` plus `items`.
+- Post items include `substack_url` for real post links.
+- Raw repository content should be derived from `base_url + path + file`.
+- Public post links should come from `substack_url`, not guessed website URLs.
 
 ---
 
