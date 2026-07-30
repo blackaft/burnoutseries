@@ -42,7 +42,7 @@ Substack (content source)
     ↓
 .agents/scripts/main.py (orchestrator)
     ↓
-Processors (rss.py, txt.py, manifest.py)
+Processors (substack.py, txt.py, manifest.py)
     ↓
 .agents/vaults/ (durable indexed corpus)
     ↓
@@ -53,7 +53,7 @@ GitHub raw URLs → Custom GPT + retrieval clients
 
 Run `.agents/scripts/main.py` to orchestrate the processors:
 
-- `processors/rss.py` fetches the Substack RSS feed, stores it at `.agents/vaults/feed.rss`, generates per-post Markdown files, downloads feed-linked images into `.agents/vaults/imgs/`, and regenerates both `posts.json` and `imgs.json`.
+- `processors/substack.py` fetches the Substack RSS feed, stores it at `.agents/vaults/feed.rss`, generates per-post Markdown files, downloads feed-linked images into `.agents/vaults/imgs/`, and regenerates both `posts.json` and `imgs.json`.
 - `processors/txt.py` scans existing Markdown files under `.agents/vaults/about/` and `.agents/vaults/excerpts/` and regenerates their JSON indexes.
 - `processors/manifest.py` merges the generated vault indexes into `.agents/vaults/manifest.json`.
 
