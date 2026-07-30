@@ -14,12 +14,21 @@ from html.parser import HTMLParser
 from pathlib import Path
 from types import ModuleType
 from typing import Any
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, quote, unquote, urlparse
+from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 NAMESPACES = {
     "content": "http://purl.org/rss/1.0/modules/content/",
     "dc": "http://purl.org/dc/elements/1.1/",
+}
+IMAGE_CONTENT_TYPES = {
+    "image/avif": ".avif",
+    "image/gif": ".gif",
+    "image/jpeg": ".jpg",
+    "image/jpg": ".jpg",
+    "image/png": ".png",
+    "image/webp": ".webp",
 }
 
 def _load_main() -> ModuleType:
@@ -126,6 +135,56 @@ def html_to_clean_markdown(content: str) -> str:
     parser.feed(content)
     return parser.get_text()
 
+class FeedImageParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.image_urls: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "img":
+            return
+        attributes = dict(attrs)
+        data_attrs = (attributes.get("data-attrs") or "").strip()
+        if data_attrs:
+            try:
+                parsed_data_attrs = json.loads(html.unescape(data_attrs))
+            except json.JSONDecodeError:
+                parsed_data_attrs = {}
+            src = str(parsed_data_attrs.get("src") or "").strip()
+            if src:
+                self.image_urls.append(html.unescape(src))
+                return
+        src = (attributes.get("src") or "").strip()
+        if src:
+            self.image_urls.append(html.unescape(src))
+
+def unique_preserving_order(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    unique: list[str] = []
+    for value in values:
+        if not value or value in seen:
+            continue
+        seen.add(value)
+        unique.append(value)
+    return unique
+
+def canonical_feed_image_url(url: str) -> str:
+    parsed = urlparse(url)
+    decoded_url = unquote(url)
+    if parsed.netloc.lower().endswith("substackcdn.com"):
+        nested_index = decoded_url.rfind("https://")
+        if nested_index > 0:
+            return decoded_url[nested_index:]
+        nested_index = decoded_url.rfind("http://")
+        if nested_index > 0:
+            return decoded_url[nested_index:]
+    return decoded_url
+
+def extract_feed_image_urls(content_html: str) -> list[str]:
+    parser = FeedImageParser()
+    parser.feed(content_html)
+    return unique_preserving_order(parser.image_urls)
+
 def parse_feed(xml_data: bytes) -> list[dict[str, str]]:
     root = ET.fromstring(xml_data)
     channel = root.find("channel")
@@ -139,6 +198,7 @@ def parse_feed(xml_data: bytes) -> list[dict[str, str]]:
         creator = element_text(item.find("dc:creator", NAMESPACES))
         published_raw = element_text(item.find("pubDate"))
         content_html = element_text(item.find("content:encoded", NAMESPACES))
+        enclosure = item.find("enclosure")
         if not title or not url or not published_raw:
             print("Skipping RSS item missing title, URL or publication date", file=sys.stderr)
             continue
@@ -150,6 +210,13 @@ def parse_feed(xml_data: bytes) -> list[dict[str, str]]:
             continue
         content = html_to_clean_markdown(content_html)
         excerpt = normalize_excerpt(content[:240])
+        image_urls: list[str] = []
+        if enclosure is not None and enclosure.attrib.get("url") and str(enclosure.attrib.get("type", "")).startswith("image/"):
+            image_urls.append(enclosure.attrib["url"].strip())
+        image_urls.extend(extract_feed_image_urls(content_html))
+        canonical_image_urls = unique_preserving_order(
+            [canonical_feed_image_url(image_url) for image_url in image_urls]
+        )
         posts.append(
             {
                 "slug": slug,
@@ -160,6 +227,7 @@ def parse_feed(xml_data: bytes) -> list[dict[str, str]]:
                 "url": url,
                 "excerpt": excerpt,
                 "content": content,
+                "image_urls": canonical_image_urls,
             }
         )
     posts.sort(key=lambda post: post["published"], reverse=True)
@@ -254,6 +322,93 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
+def load_existing_imgs_json() -> dict[str, Any]:
+    if not MAIN.IMGS_JSON.exists():
+        return {"items": []}
+    try:
+        raw = MAIN.IMGS_JSON.read_text(encoding="utf-8").strip()
+        if not raw:
+            return {"items": []}
+        payload = json.loads(raw)
+    except (json.JSONDecodeError, OSError) as error:
+        print(f"Could not read existing imgs.json: {error}", file=sys.stderr)
+        return {"items": []}
+    return payload if isinstance(payload, dict) else {"items": []}
+
+def image_extension(url: str, content_type: str) -> str:
+    parsed = urlparse(url)
+    suffix = Path(unquote(parsed.path)).suffix.lower()
+    if suffix in IMAGE_CONTENT_TYPES.values():
+        return suffix
+    content_type = content_type.split(";", 1)[0].strip().lower()
+    if content_type in IMAGE_CONTENT_TYPES:
+        return IMAGE_CONTENT_TYPES[content_type]
+    raise ValueError(f"Unsupported image type for {url}: {content_type or 'unknown'}")
+
+def download_image(url: str, filename_stem: str) -> tuple[str, bytes]:
+    request = Request(url, headers={"User-Agent": "burnout-rss-processor/1.0"})
+    with urlopen(request) as response:
+        content = response.read()
+        extension = image_extension(url, response.headers.get_content_type())
+    filename = f"{sanitize_filename(filename_stem)}{extension}"
+    return filename, content
+
+def image_filename_stem(post_slug: str, image_index: int) -> str:
+    if image_index == 1:
+        return f"{post_slug}-featured"
+    return f"{post_slug}-{image_index - 1}"
+
+def build_imgs_json(items: list[str]) -> dict[str, Any]:
+    sorted_items = sorted(items, key=str.lower)
+    return {
+        "updated_at": MAIN.utc_now(),
+        "base_url": MAIN.vault_base_url("imgs"),
+        "count": len(sorted_items),
+        "items": [quote(item, safe="/") for item in sorted_items],
+    }
+
+def sync_feed_images(feed_posts: list[dict[str, Any]]) -> tuple[int, dict[str, Any]]:
+    MAIN.IMGS_DIR.mkdir(parents=True, exist_ok=True)
+    existing_index = load_existing_imgs_json()
+    managed_files = {
+        str(item)
+        for item in existing_index.get("items", [])
+        if isinstance(item, str) and item.strip()
+    }
+    url_to_filename: dict[str, str] = {}
+    desired_files: list[str] = []
+    reserved_filenames: set[str] = set()
+    downloaded_count = 0
+
+    for post in feed_posts:
+        for index, image_url in enumerate(post.get("image_urls", []), start=1):
+            if image_url in url_to_filename:
+                desired_files.append(url_to_filename[image_url])
+                continue
+
+            filename_stem = image_filename_stem(post["slug"], index)
+            filename, content = download_image(image_url, filename_stem)
+            candidate = Path(filename)
+            collision_index = 2
+            while candidate.name in reserved_filenames:
+                candidate = Path(f"{sanitize_filename(filename_stem)}-{collision_index}{candidate.suffix}")
+                collision_index += 1
+
+            destination = MAIN.IMGS_DIR / candidate.name
+            destination.write_bytes(content)
+            url_to_filename[image_url] = candidate.name
+            reserved_filenames.add(candidate.name)
+            desired_files.append(candidate.name)
+            downloaded_count += 1
+
+    desired_set = set(desired_files)
+    for stale in managed_files - desired_set:
+        stale_path = MAIN.IMGS_DIR / unquote(stale)
+        if stale_path.exists():
+            stale_path.unlink()
+
+    return downloaded_count, build_imgs_json(unique_preserving_order(desired_files))
+
 def write_posts(feed_posts: list[dict[str, str]]) -> None:
     MAIN.POSTS_DIR.mkdir(parents=True, exist_ok=True)
     for post in feed_posts:
@@ -264,8 +419,11 @@ def main() -> None:
     feed_posts = parse_feed(fetch_rss())
     metadata = merge_metadata(existing_index, feed_posts)
     write_posts(feed_posts)
+    downloaded_images, imgs_payload = sync_feed_images(feed_posts)
     write_json(MAIN.POSTS_JSON, build_posts_json(metadata))
+    write_json(MAIN.IMGS_JSON, imgs_payload)
     print(f"Processed {len(feed_posts)} RSS item(s); indexed {len(metadata)} total post(s)")
+    print(f"Downloaded {downloaded_images} feed image(s); indexed {imgs_payload['count']} total image(s)")
 
 if __name__ == "__main__":
     main()
