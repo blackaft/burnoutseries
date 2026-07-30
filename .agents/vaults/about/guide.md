@@ -1,6 +1,4 @@
-BURNOUT can be found on a variety of channels, depending on how much you’re looking to immerse yourself. While the story itself is a book, the project offers complementary material such as mood setting videos for chapters, as well as audiovisual material with author’s notes, project updates, behind the scenes and so forth, with George Kary.
-
-BURNOUT has two stories: the actual story, and the story of making the story. For a complete experience, audiences are encouraged to consume the entire thing. However, some audiences may just prefer the story and won't want spoilers.
+BURNOUT can be found on a variety of channels, depending on how much you’re looking to immerse yourself. While the story itself is a book, the project offers complementary material such as mood setting videos for chapters, as well as audiovisual material with author’s notes, project updates, behind the scenes and so forth, with George Kary. It has two stories: the actual story, and the story of making the story. For a complete experience, audiences are encouraged to consume the entire thing. However, some audiences may just prefer the story and won't want spoilers.
 
 To read the story:
 
