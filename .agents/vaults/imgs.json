@@ -1,19 +1,24 @@
 {
-  "updated_at": "2026-07-30T17:26:28Z",
+  "updated_at": "2026-07-30T18:17:18Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/imgs/",
-  "count": 12,
+  "count": 17,
   "items": [
-    "4-project-phases.png",
-    "authors-note-characters-george-kary.webp",
-    "chatgpt-featured.webp",
-    "composition-test-for-ego.webp",
-    "discovery-session-for-superego-states.webp",
-    "diy-lighting-with-thanos-doumas.webp",
-    "drone-prop-for-ego.webp",
-    "experimentation-featured.webp",
-    "george-kary-bts.webp",
-    "github-available-featured.png",
-    "update-featured-july-id-thanos-doumas.webp",
-    "update-may-bts.webp"
+    "4-project-phases-1-intent-featured.webp",
+    "a-plot-twist-at-the-storys-core-featured.png",
+    "audio-now-available-featured.png",
+    "authors-note-an-ai-augmented-creative-1.png",
+    "authors-note-an-ai-augmented-creative-featured.png",
+    "authors-note-the-process-of-experimentation-1.png",
+    "authors-note-the-process-of-experimentation-2.png",
+    "authors-note-the-process-of-experimentation-featured.png",
+    "characters-and-character-progression-1.png",
+    "characters-and-character-progression-featured.png",
+    "coming-up-july-2026-featured.png",
+    "github-now-available-1.png",
+    "github-now-available-2.png",
+    "github-now-available-featured.png",
+    "materials-and-guides-explore-your-featured.png",
+    "upcoming-behind-the-scenes-content-featured.png",
+    "welcome-aboard-featured.png"
   ]
 }
