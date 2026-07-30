@@ -10,7 +10,7 @@ Follow on [X](https://x.com/blackaftx) for updates.
 
 ## A few words
 
-**BURNOUT** is an experimental project about the process of making a story, with the goal of up-skilling. It includes project updates, author’s notes, behind the scenes and materials and guides. Created by George Kary and born out of a passion for exploring multi-disciplinary and cross-functional projects; and, of course, a love of storytelling.
+**BURNOUT** is an experimental project about the process of making a story, with the goal of up-skilling. It includes project updates, author’s notes, behind the scenes and materials and guides. Born out of a passion for exploring multi-disciplinary and cross-functional projects; and, of course, a love of storytelling.
 
 A major aspect of the experiment is the use of AI in both the creation of the project (strictly for research, analysis and retrospectives) and the distribution of its knowledge base. Rather than asking audiences to navigate dozens of articles, the series publishes a structured, machine-readable corpus that can be explored through AI assistants, coding agents or any application capable of ingesting external context, whether through knowledge uploads, raw files or programmatic retrieval.
 
