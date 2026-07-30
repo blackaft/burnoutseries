@@ -38,7 +38,9 @@ Martin Lawrence kills it - and it’s just a freaking hot dog.
 
 The Ego’s account, akin to the superficial nature of social media but more absurd (think someone actually saying how awesome they are with their summer posts on social media) versus what actually happened.
 
-This literary choice is also reflected on the mood setting videos, which intentionally blur the line between them. It’s an internal battle, externalised in text and audiovisual format. A battle with a meaning that the plot twist will redefine. Just take a look at the logline’s third - sorry three - sentences…
+This literary choice is also reflected on the mood setting videos, which intentionally blur the line between them. It’s an internal battle, externalised in text and audiovisual format. A battle with a meaning that the plot twist will redefine.
+
+Just take a look at the logline’s third - sorry three - sentences…
 
 He backpacked to fix burnout. But burnout was just a battlefield. To heal, he must end the war.
 

@@ -8,7 +8,7 @@ substack_url: "https://burnoutseries.substack.com/p/authors-note-the-process-of-
 file: "20260722-authors-note-the-process-of-experimentation.md"
 ---
 
-BURNOUT is an experimental series - the process of making it is equally - if not more - important as the actual story itself. After all, it is an exercise in upskilling on various fields and an effort born out of a passion for tackling multi-disciplinary and cross-functional projects (continues).
+BURNOUT is an experimental series - the process of making it is equally - if not more - important as the actual story itself. After all, it is an exercise in upskilling on various fields and an effort born out of a passion for tackling multi-disciplinary and cross-functional projects.
 
 But let’s get back to the process.
 
@@ -28,7 +28,7 @@ But that wasn’t enough. Feeling restless after years of not taking a vacation?
 
 So, the more analytical the deconstruction of the story became - and the more testing on social media affirmed these assumptions of “bleh”, the more organic it felt that there was a deeper layer, the core layer.
 
-Freud’s civil war (cited) - the bullshit we tell ourselves.
+Freud’s civil war (reference) - the bullshit we tell ourselves.
 
 Now that, will absolutely resonate. And it did in closed testing.
 
@@ -60,7 +60,7 @@ To offset the bluntness of the “travel documentary” effect, we needed to sat
 
 We needed a hero for the conflict.
 
-Or an anti-hero (ref).
+Or an anti-hero (reference).
 
 This was easy - having Freud’s work laid out in front of us, deciding on the 3 main characters was instant: the Id, the Ego and the Superego. What we had to figure out was the binding thread between them.
 

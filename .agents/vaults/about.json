@@ -1,8 +1,14 @@
 {
-  "updated_at": "2026-07-29T18:02:04Z",
+  "updated_at": "2026-07-30T17:03:36Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/about/",
-  "count": 3,
+  "count": 4,
   "items": [
+    {
+      "id": "links",
+      "excerpt": "BURNOUT can be found on a variety of channels, depending on how much you’re looking to immerse yourself. While the story itself is a book, the project offers complementary material such as mood setting videos for chapters, as well as audiovisual m...",
+      "published_at": "2026-07-24T18:26:08Z",
+      "file": "links.md"
+    },
     {
       "id": "manifest",
       "excerpt": "ust from the manifest metadata, quite a lot becomes apparent. None of this depends on reading the underlying documents—it's inference from the index itself. Observation What the manifest suggests The project is intentionally AI-readable The reposi...",
