@@ -19,7 +19,10 @@ paths:
       description: >
         Returns the merged Burnout manifest. Start here for factual questions
         so the GPT can read repository config, prompt context, available about
-        files, post files, and image assets before drilling into content.
+        files, post files, post substack URLs, and image assets before
+        drilling into content. Use `substack_url` for post links. Use
+        `base_url` plus section `path` plus `file` only for raw repository
+        content.
       responses:
         "200":
           description: Manifest retrieved successfully
@@ -35,7 +38,8 @@ paths:
       description: >
         Returns the cleaned Markdown content for an indexed Burnout Series
         post. Use this when discussing, quoting, summarizing, or exploring the
-        substance of the posts.
+        substance of the posts. This endpoint returns raw repository content,
+        not a public website URL.
       parameters:
         - name: postFile
           in: path
