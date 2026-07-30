@@ -21,7 +21,6 @@ EXCERPTS_DIR = VAULT_ROOT / "excerpts"
 IMGS_DIR = VAULT_ROOT / "imgs"
 POSTS_DIR = VAULT_ROOT / "posts"
 ABOUT_JSON = VAULT_ROOT / "about.json"
-EXCERPTS_JSON = VAULT_ROOT / "excerpts.json"
 IMGS_JSON = VAULT_ROOT / "imgs.json"
 POSTS_JSON = VAULT_ROOT / "posts.json"
 FEED_RSS = VAULT_ROOT / "feed.rss"
@@ -120,7 +119,7 @@ def run_processors() -> None:
 def main() -> None:
     validate_sources()
     run_processors()
-    validate_outputs([POSTS_JSON, IMGS_JSON, ABOUT_JSON, EXCERPTS_JSON, MANIFEST_JSON])
+    validate_outputs([POSTS_JSON, IMGS_JSON, ABOUT_JSON, MANIFEST_JSON])
 
 if __name__ == "__main__":
     main()
