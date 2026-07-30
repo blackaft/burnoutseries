@@ -372,9 +372,7 @@ info "Generating posts.md and posts.json..."
 
 python main.py
 
-success "Post knowledge files were generated."
-
-info "Generating imgs.json..."
+success "Post, image and manifest knowledge files were generated."
 
 GITHUB_OWNER="${REPO%/*}"
 GITHUB_REPO="${REPO#*/}"
