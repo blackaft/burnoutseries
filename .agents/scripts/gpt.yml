@@ -3,10 +3,9 @@ openapi: 3.1.0
 info:
   title: Knowledge Base for the Burnout Series
   description: >
-    AI companion knowledge base for Burnout Series audiences. Retrieves the
-    series' about material, story excerpts, image assets, and Substack post
-    metadata directly from the Burnout GitHub repository for context-aware
-    conversation and analysis.
+    AI companion knowledge base for Burnout Series audiences. Use the manifest
+    first to inspect the available prompt context, about material, Substack
+    post metadata, and image assets before requesting specific content files.
   version: "1.0.0"
 
 servers:
@@ -18,9 +17,9 @@ paths:
       operationId: getManifest
       summary: Get the Burnout Series manifest
       description: >
-        Returns a merged manifest of the Burnout Series knowledge vaults so an
-        AI client can inspect the available about material, excerpts, posts,
-        and image assets before drilling into specific content files.
+        Returns the merged Burnout manifest. Start here for factual questions
+        so the GPT can read repository config, prompt context, available about
+        files, post files, and image assets before drilling into content.
       responses:
         "200":
           description: Manifest retrieved successfully
@@ -72,31 +71,13 @@ paths:
               schema:
                 type: string
 
-  /.agents/vaults/excerpts/{excerptFile}:
-    get:
-      operationId: getExcerptContent
-      summary: Get an individual Burnout Series excerpt
-      description: >
-        Returns the cleaned Markdown content for an excerpt vault entry.
-      parameters:
-        - name: excerptFile
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Excerpt retrieved successfully
-          content:
-            text/plain:
-              schema:
-                type: string
-
 components:
   schemas:
     Manifest:
       type: object
       properties:
+        config:
+          type: object
         updated_at:
           type:
             - string
@@ -108,174 +89,73 @@ components:
           $ref: "#/components/schemas/PostsIndex"
         about:
           $ref: "#/components/schemas/AboutIndex"
-        excerpts:
-          $ref: "#/components/schemas/ExcerptsIndex"
         imgs:
           $ref: "#/components/schemas/ImageIndex"
       required:
+        - config
         - updated_at
         - base_url
         - posts
         - about
-        - excerpts
         - imgs
 
     PostsIndex:
       type: object
       properties:
-        updated_at:
-          type:
-            - string
-            - "null"
-          description: UTC timestamp for the latest generated index
-        latest:
-          type:
-            - string
-            - "null"
-          description: Slug of the latest indexed post
-        count:
-          type: integer
-        base_url:
+        path:
           type: string
-          format: uri
         items:
           type: array
           items:
             $ref: "#/components/schemas/PostMetadata"
       required:
-        - updated_at
-        - latest
-        - count
-        - base_url
+        - path
         - items
 
     PostMetadata:
       type: object
       properties:
-        id:
-          type: string
-        title:
-          type: string
         excerpt:
           type: string
-        created_by:
-          type: string
-        published_at:
-          type: string
-          format: date-time
-        substack_url:
-          type: string
-          format: uri
         file:
           type: string
       required:
-        - id
-        - title
         - excerpt
-        - created_by
-        - published_at
-        - substack_url
         - file
 
     AboutIndex:
       type: object
       properties:
-        updated_at:
-          type:
-            - string
-            - "null"
-          description: UTC timestamp for the latest generated index
-        base_url:
+        path:
           type: string
-          format: uri
-        count:
-          type: integer
         items:
           type: array
           items:
             $ref: "#/components/schemas/AboutItem"
       required:
-        - updated_at
-        - base_url
-        - count
+        - path
         - items
 
     AboutItem:
       type: object
       properties:
-        id:
-          type: string
         excerpt:
           type: string
-        published_at:
-          type: string
-          format: date-time
         file:
           type: string
       required:
-        - id
         - excerpt
-        - published_at
-        - file
-
-    ExcerptsIndex:
-      type: object
-      properties:
-        updated_at:
-          type:
-            - string
-            - "null"
-          description: UTC timestamp for the latest generated index
-        base_url:
-          type: string
-          format: uri
-        count:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/ExcerptItem"
-      required:
-        - updated_at
-        - base_url
-        - count
-        - items
-
-    ExcerptItem:
-      type: object
-      properties:
-        id:
-          type: string
-        excerpt:
-          type: string
-        published_at:
-          type: string
-          format: date-time
-        file:
-          type: string
-      required:
-        - id
-        - excerpt
-        - published_at
         - file
 
     ImageIndex:
       type: object
       properties:
-        updated_at:
+        path:
           type: string
-          format: date-time
-        base_url:
-          type: string
-          format: uri
-        count:
-          type: integer
         items:
           type: array
           items:
             type: string
       required:
-        - updated_at
-        - base_url
-        - count
+        - path
         - items
