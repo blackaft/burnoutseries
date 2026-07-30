@@ -1,0 +1,39 @@
+{
+  "config": {
+    "title": "Burnout Series",
+    "creator": "Blackaft Associates",
+    "contributors": [
+      "George Kary",
+      "Thanos Doumas"
+    ],
+    "summary": "BURNOUT is an experimental story about the bullshit lies we tell ourselves, with 3 parts and 19 chapters, including videos, author’s notes and behind the scenes with George Kary. It was born out of a passion for exploring multi-disciplinary and cross-functional projects; and, of course, a love of storytelling.",
+    "about": "The story is based on George’s own 3-month backpacking trip across Malta, Italy and Greece in 2025.",
+    "links": "See the guide file"
+  },
+  "updated_at": "2026-07-30T17:54:02Z",
+  "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/",
+  "posts": {
+    "path": "posts/",
+    "items": [
+      {
+        "excerpt": "BURNOUT’s story is based on a plot twist, one that will be revealed in the last moments of the last “Origins of Delusion” chapter in Part Three: Convergence. While this project reveals a lot of information on narrative devices, characters a",
+        "file": "20260729-a-plot-twist-at-the-storys-core.md"
+      }
+    ]
+  },
+  "about": {
+    "path": "about/",
+    "items": [
+      {
+        "excerpt": "George Kary is publicly described across multiple profiles as the founder of Blackaft Associates and a hands-on biztech operator focused on launches, pivots and AI adoption for startups and SMEs. His public bios also describe him as a digital noma...",
+        "file": "georgekary.md"
+      }
+    ]
+  },
+  "imgs": {
+    "path": "imgs/",
+    "items": [
+      "a-plot-twist-at-the-storys-core-featured.png"
+    ]
+  }
+}

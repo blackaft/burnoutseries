@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "manifest.schema.json",
+  "title": "Burnout Series Manifest",
+  "type": "object",
+  "properties": {
+    "config": {
+      "type": "object"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "base_url": {
+      "type": "string"
+    },
+    "posts": {
+      "$ref": "#/$defs/manifestFileSection"
+    },
+    "about": {
+      "$ref": "#/$defs/manifestFileSection"
+    },
+    "imgs": {
+      "$ref": "#/$defs/manifestStringSection"
+    }
+  },
+  "required": ["config", "updated_at", "base_url", "posts", "about", "imgs"],
+  "additionalProperties": false,
+  "$defs": {
+    "manifestFileItem": {
+      "type": "object",
+      "properties": {
+        "excerpt": { "type": "string" },
+        "file": { "type": "string" }
+      },
+      "required": ["excerpt", "file"],
+      "additionalProperties": false
+    },
+    "manifestFileSection": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/manifestFileItem" }
+        }
+      },
+      "required": ["path", "items"],
+      "additionalProperties": false
+    },
+    "manifestStringSection": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["path", "items"],
+      "additionalProperties": false
+    }
+  }
+}
