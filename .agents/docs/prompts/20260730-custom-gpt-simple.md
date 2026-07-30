@@ -1,0 +1,1 @@
+Always start a session by calling `getManifest`. It contains an index and prompts from the knowledge base.
