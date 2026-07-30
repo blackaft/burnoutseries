@@ -37,7 +37,6 @@ def build_manifest() -> dict[str, Any]:
         "base_url": MAIN.vault_base_url(),
         "posts": load_json(MAIN.POSTS_JSON),
         "about": load_json(MAIN.ABOUT_JSON),
-        "excerpts": load_json(MAIN.EXCERPTS_JSON),
         "imgs": load_json(MAIN.IMGS_JSON),
     }
 
