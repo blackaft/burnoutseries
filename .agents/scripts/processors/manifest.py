@@ -19,6 +19,9 @@ def _load_main() -> ModuleType:
 
 MAIN = _load_main()
 
+MANIFEST_SECTION_FIELDS_DROP = {"updated_at", "base_url", "latest", "count"}
+MANIFEST_ITEM_FIELDS_DROP = {"id", "created_by", "substack_url"}
+
 def load_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {}
@@ -30,14 +33,37 @@ def load_json(path: Path) -> dict[str, Any]:
         raise ValueError(f"Expected JSON object in {path}")
     return payload
 
+def sanitize_manifest_section(payload: dict[str, Any], path: str) -> dict[str, Any]:
+    sanitized: dict[str, Any] = {}
+    sanitized["path"] = f"{path}/"
+    for key, value in payload.items():
+        if key in MANIFEST_SECTION_FIELDS_DROP:
+            continue
+        if key == "items" and isinstance(value, list):
+            sanitized["items"] = [
+                {
+                    item_key: item_value
+                    for item_key, item_value in item.items()
+                    if item_key not in MANIFEST_ITEM_FIELDS_DROP
+                    and not (path == "about" and item_key == "published_at")
+                    and not (path == "posts" and item_key in {"title", "published_at"})
+                }
+                if isinstance(item, dict)
+                else item
+                for item in value
+            ]
+            continue
+        sanitized[key] = value
+    return sanitized
+
 def build_manifest() -> dict[str, Any]:
     return {
         "config": load_json(MAIN.CONFIG_JSON),
         "updated_at": MAIN.utc_now(),
         "base_url": MAIN.vault_base_url(),
-        "posts": load_json(MAIN.POSTS_JSON),
-        "about": load_json(MAIN.ABOUT_JSON),
-        "imgs": load_json(MAIN.IMGS_JSON),
+        "posts": sanitize_manifest_section(load_json(MAIN.POSTS_JSON), "posts"),
+        "about": sanitize_manifest_section(load_json(MAIN.ABOUT_JSON), "about"),
+        "imgs": sanitize_manifest_section(load_json(MAIN.IMGS_JSON), "imgs"),
     }
 
 def main() -> None:
