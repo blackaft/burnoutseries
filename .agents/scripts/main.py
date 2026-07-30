@@ -111,7 +111,7 @@ def load_processor(name: str) -> ModuleType:
     return module
 
 def run_processors() -> None:
-    load_processor("rss.py").main()
+    load_processor("substack.py").main()
     load_processor("txt.py").main()
     load_processor("manifest.py").main()
 
