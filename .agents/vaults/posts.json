@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-31T07:51:44Z",
+  "updated_at": "2026-07-31T09:01:57Z",
   "base_url": "https://raw.githubusercontent.com/blackaft/burnoutseries/dev/.agents/vaults/posts/",
   "latest": "a-plot-twist-at-the-storys-core",
   "count": 13,
@@ -42,7 +42,7 @@
     },
     {
       "id": "materials-and-guides-explore-your",
-      "title": "Materials & Guides: Explore your thoughts with the series's preloaded ChatGPT",
+      "title": "Explore your thoughts with the series's preloaded ChatGPT",
       "excerpt": "BURNOUT is a series that intentionally embraces the complexity of multi-thread narration, both in the story and the meta. Both represent inexplicable pieces of the project’s own deconstruction-in-construction process, since the project itse",
       "created_by": "George Kary",
       "published_at": "2026-07-24T10:13:48Z",
@@ -105,7 +105,7 @@
     },
     {
       "id": "upcoming-behind-the-scenes-content",
-      "title": "Upcoming BTS content",
+      "title": "Upcoming behind the scenes content",
       "excerpt": "BURNOUT’s content also features “behind the scenes”, which complements the experimental nature of the series as a “meta” piece of the entire experience. Here’s the list of episodes (videos and articles) planned:\n\nPixar’s 3-layer narrative",
       "created_by": "George Kary",
       "published_at": "2026-05-17T13:21:37Z",
@@ -114,7 +114,7 @@
     },
     {
       "id": "welcome-aboard",
-      "title": "Introduction",
+      "title": "Welcome aboard",
       "excerpt": "BURNOUT is an experimental series created by George Kary, born out of a passion for tackling multi-disciplinary and cross-functional projects. The purpose of the series is to explore:\n\nCinematography and storytelling. Techniques and princip",
       "created_by": "George Kary",
       "published_at": "2026-05-17T12:51:25Z",

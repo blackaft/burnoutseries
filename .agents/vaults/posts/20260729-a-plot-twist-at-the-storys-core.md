@@ -48,6 +48,8 @@ Think you’ve cracked the plot twist?
 
 Explore with Burnout's AI
 
+~
+
 Immerse yourself further.
 
 Discover options

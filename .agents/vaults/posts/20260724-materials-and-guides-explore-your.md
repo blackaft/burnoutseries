@@ -1,6 +1,6 @@
 ---
 id: "materials-and-guides-explore-your"
-title: "Materials & Guides: Explore your thoughts with the series's preloaded ChatGPT"
+title: "Explore your thoughts with the series's preloaded ChatGPT"
 excerpt: "BURNOUT is a series that intentionally embraces the complexity of multi-thread narration, both in the story and the meta. Both represent inexplicable pieces of the project’s own deconstruction-in-construction process, since the project itse"
 created_by: "George Kary"
 published_at: "2026-07-24T10:13:48Z"
@@ -13,8 +13,6 @@ BURNOUT is a series that intentionally embraces the complexity of multi-thread n
 But that wouldn’t really work without AI, these days, would it?
 
 You’d immediately lose your audience.
-
-Follow the experiment.
 
 So, it was of paramount importance to embrace the fact that audiences absolutely use AI these days to dive and understand. However, using AI to research and analyse the material that’s published, in a silo, is just one side of the coin.
 
@@ -50,6 +48,10 @@ Back to the left panel, (more), GPTs, and on the top right corner, hit “Create
 
 Here’s Scott Friesen w/ Simpletivity, to explain what you’re seeing:
 
-Continue with the series’s preloaded ChatGPT.
+Give it a whirl
 
-Explore your thoughts
+~
+
+Immerse yourself further.
+
+Discover options
