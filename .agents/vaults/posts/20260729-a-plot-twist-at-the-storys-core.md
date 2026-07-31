@@ -14,10 +14,6 @@ It’s not a plot twist of a superficial nature; what you see is what you get ac
 
 So, the entire story is a misdirection.
 
-Follow the experiment.
-
-Subscribe now
-
 There are three key elements to the story’s plot twist.
 
 First of all, the characters themselves.
@@ -48,8 +44,10 @@ And finally, the biggest hint lies in the creative choice itself of tackling the
 
 Not saying anything more on that [cough].
 
-Continue with the project’s preloaded ChatGPT.
+Think you’ve cracked the plot twist?
 
-Explore your thoughts
+Explore with Burnout's AI
 
-Huh?
+Immerse yourself further.
+
+Discover options
