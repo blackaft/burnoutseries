@@ -17,11 +17,10 @@ paths:
       operationId: getManifest
       summary: Get the Burnout Series manifest
       description: >
-        Returns the merged Burnout manifest. Start here for factual questions.
-        It exposes repository config, about files, post files, post
-        `substack_url` values, and image assets. Use `substack_url` for post
-        links. Use `base_url` plus section `path` plus `file` only for raw
-        repository content.
+        Start here for factual questions. The manifest exposes config,
+        prompts, navigation, about files, post files, `substack_url` values,
+        and image assets. Use `substack_url` for post links. Use `base_url`
+        plus section `path` plus `file` only for raw repository content.
       responses:
         "200":
           description: Manifest retrieved successfully
