@@ -10,8 +10,6 @@ file: "20260526-characters-and-character-progression.md"
 
 BURNOUT’s primary character is the Ego, played by George Kary. The story begins with the Ego being absurdly obnoxious, arrogant, superior and patronising (sometimes breaking the fourth wall for dramatic effect), looking back and remembering a 103-day backpacking trip, feasting on its victory over burnout and its accomplishments. As the story unfolds, its assumptions and certainty appear and feel hollow. The Ego begins to unravel and spiral, ultimately forced to face the secondary characters at the end of the series.
 
-Follow the experiment.
-
 The secondary characters are the Id and the Superego, loosely inspired by Freud’s fundamental principles on human identity. They are silent, interfering with the Ego’s delusions, as both of them have been excluded from the Ego’s understanding of the self. As the story unfolds, both attempt to drive their separate agendas against each other, taking hits, until they are also forced to face the primary character for the final realization (plot twist reveal).
 
 The Ego is the only narrator both in the teaser videos and the text chapters, rambling incessantly and driving the story forward (MacGuffin device, also paired with the Unreliable Narrator narrative device).
@@ -58,8 +56,12 @@ The colors, layers of clothes and glitching and trilateral sequence appearances 
 
 Suffice to say, the entire story is a misdirection for the plot-twist.
 
-Continue with the project’s preloaded ChatGPT.
+Think you’ve cracked the misdirection?
 
-Explore your thoughts
+Explore with Burnout's AI
 
-Huh?
+~
+
+Immerse yourself further.
+
+Discover options

@@ -12,8 +12,6 @@ BURNOUT is an experimental series - the process of making it is equally - if not
 
 But let’s get back to the process.
 
-Follow the experiment.
-
 The Story
 
 Deconstructing a seemingly superficial story of travel and injecting a little bit of drama into it (103 days of backpacking across 3 countries) still kept the surface level at the center of the narrative.
@@ -134,8 +132,12 @@ Release formats and mediums
 Breaking down trailers
 Breaking down mood setting chapter videos
 
-Continue with the project’s preloaded ChatGPT.
+Think you figured out the dissonance?
 
-Explore your thoughts
+Explore with Burnout's AI
 
-Huh?
+~
+
+Immerse yourself further.
+
+Discover options

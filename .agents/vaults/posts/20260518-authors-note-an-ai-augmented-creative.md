@@ -12,8 +12,6 @@ BURNOUT is a purely creative project, with text, images and videos exclusively c
 
 This is all just a fancy way to say humans make stuff by using AI before and after the humans-making-stuff process takes place.
 
-Follow the experiment.
-
 Balancing both sides of the aisle has been a massive hurdle, especially in terms of record keeping. You know how it goes: you open a conversation on ChatGPT, Gemini, Claude, etc., only to have the damn thing locked in that particular session, essentially unavailable to all other chats.
 
 Naturally tackling launches, pivots and AI adoption, Blackaft employed an AI-augmentation-first approach from the start.
@@ -23,8 +21,6 @@ It also meant that launches, pivots and especially AI adoption may and will requ
 A practice run.
 
 BURNOUT now lives under https://github.com/blackaft, with a little bit of Google Drive and Google Photos for handling multimedia.
-
-Screenshot of the Blackaft Studio repository on Github, which contains the firm’s creative projects, like the Burnout Series.
 
 For the devs/biztech folk out there, the setup - and Blackaft’s philosophy - is generally agnostic in terms of the tool or model, as a core foundational premise to be able to serve clients by embedding into their own operations to more effectively tackle launches and pivots. Since the repository also adheres to the firm’s central infrastructure direction, the cost to initialise such a thing with a VS Code + Cline + BYOK via Google’s Agent Platform setup was a meagre $0.98.
 
@@ -44,8 +40,12 @@ Machines on the back; humans at the front.
 
 Check it out below.
 
-Continue with the project’s preloaded ChatGPT.
+Think you can harness AI properly?
 
-Explore your thoughts
+Explore with Burnout's AI
 
-Huh?
+~
+
+Immerse yourself further.
+
+Discover options

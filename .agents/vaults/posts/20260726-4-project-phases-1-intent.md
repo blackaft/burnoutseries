@@ -12,10 +12,6 @@ BURNOUT is an experimental, multi-disciplinary project focused on upskilling, wi
 
 So, let’s take a look at the agenda.
 
-Follow the experiment.
-
-Subscribe now
-
 Owing to the story’s own modular architecture relying on the three major acts of storytelling, the project’s phases, are, well, acts themselves; aiming to make audiences feel that distinct act-change effect on the project level, as well.
 
 But more on that, later. Back to the phases.
@@ -178,8 +174,12 @@ So, that was the 4 phases of the Burnout Series project.
 
 But what about the 1 intent?
 
-Continue with the project’s preloaded ChatGPT.
+Think you’ve cracked that intent?
 
-Explore your thoughts
+Explore with Burnout's AI
 
-Huh?
+~
+
+Immerse yourself further.
+
+Discover options

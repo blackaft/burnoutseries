@@ -12,10 +12,6 @@ BURNOUT embraces AI strictly for analysis, distribution in some parts and post-c
 
 So, let’s distribute context for AI next to content for humans.
 
-Follow the experiment.
-
-Subscribe now
-
 The new repository is agnostic, in terms of AI setups. While it’s currently working for the series’s Custom GPT in strictly production terms, the repository was tested with isolated ChatGPT sessions, Codex, Claude and a BYOK setup including VS Code + Cline for the agentic management.
 
 That means, if you don’t prefer GPT, you can use the repository’s manifest - and even the repository itself by forking it - to set up your own stream for the series.
@@ -25,6 +21,8 @@ It’s essentially a workflow, with a very rudimentary advent of RAG principles.
 This is, of course, in alignment with Blackaft’s principle of distributing content from and to AI, acknowledging that humans use AI to consume, anyway.
 
 Feel free to fork the repo on Github and experiment yourself.
+
+Screenshot of the repository on Github.
 
 Whereas the workflow so far for the series’s custom GPT included manually updating relevant files on the GPT, the new workflow is programmatic.
 
@@ -36,7 +34,7 @@ Humans or their AIs can run a robust publishing script
 
 All done - Custom GPT and all AIs hooking to the series’s stream have the new context, using Github’s own raw content service
 
-A deterministic publishing workflow on a BYOK setup, ft. VS Code and Cline.
+Screenshot of the publishing workflow’s output on VS Code.
 
 Why is the first step still manual?
 
@@ -46,8 +44,12 @@ A natural solution to that would be to use Apify’s built-in Substack scrapers.
 
 But hey, we ain’t gonna pay that much for a measly experiment!
 
-Continue with the project’s preloaded ChatGPT.
+Think the tech is above your head?
 
-Explore your thoughts
+Explore with Burnout's AI
 
-Huh?
+~
+
+Immerse yourself further.
+
+Discover options
