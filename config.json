@@ -7,7 +7,218 @@
     ],
     "summary": "BURNOUT is an experimental story about the bullshit lies we tell ourselves, with 3 parts and 19 chapters, including videos, author’s notes and behind the scenes with George Kary. It was born out of a passion for exploring multi-disciplinary and cross-functional projects; and, of course, a love of storytelling.",
     "about": "The story is based on George’s own 3-month backpacking trip across Malta, Italy and Greece in 2025. It spans 104 days, mostly in reverse chronological order. This particular choice of narrative format helps express the unravelling of the false assumptions that we all hold based on a preferential and skewed view of our memories; or rather, how we choose to interpret those memories. Thus, the narrative was created in such a way to intentionally expose the entire story’s layers, one by one: Travel - oh, a guy who went backpacking to feel good Emotional - oh, he felt really bad Identity - oh, he was lying to himself all along In summary, the project hopes to help viewers resonate with their own truths by presenting the entire story with such raw brutality that it contrasts heavily with the content presented online and especially on social media. Making it so uncomfortable and infuriating to watch someone being so publicly absurd that it triggers cognitive dissonance with your own private fallacies.",
-    "links": "See the about/guide file",
+    "navigation": [
+        {
+            "title": "Overview",
+            "description": "BURNOUT can be found across multiple channels, depending on how deeply someone wants to immerse themselves. The story itself is a book, while the wider project also includes mood-setting videos for chapters, author's notes, project updates, behind the scenes material, and other audiovisual context with George Kary. It has two stories: the actual story, and the story of making the story. For the fullest experience, audiences are encouraged to explore both. Some, however, may prefer just the story and may want to avoid spoilers."
+        },
+        {
+            "title": "Read the story",
+            "description": "Start here if the priority is the core story itself.",
+            "items": [
+                {
+                    "label": "Goodreads",
+                    "description": "Goodreads page for the story.",
+                    "status": "coming soon"
+                },
+                {
+                    "label": "Amazon",
+                    "description": "Purchase the book.",
+                    "status": "coming soon"
+                },
+                {
+                    "label": "Substack",
+                    "description": "Explore excerpts from the story.",
+                    "status": "coming soon"
+                }
+            ]
+        },
+        {
+            "title": "Enhance the story",
+            "description": "Use these channels for complementary audiovisual material around the story.",
+            "items": [
+                {
+                    "label": "Instagram",
+                    "description": "George Kary's channel with author's notes, mood-setting videos, and more.",
+                    "url": "https://www.instagram.com/georgekary_"
+                },
+                {
+                    "label": "YouTube",
+                    "description": "Dedicated playlists for author's notes, mood-setting videos, YouTube Shorts, and more.",
+                    "url": "https://www.youtube.com/@georgekary"
+                },
+                {
+                    "label": "TikTok",
+                    "description": "Dedicated channel for the project and story.",
+                    "url": "https://www.tiktok.com/@burnout.series"
+                }
+            ]
+        },
+        {
+            "title": "Explore the project",
+            "description": "Use these entry points to explore both the story and the meta-story around making it.",
+            "items": [
+                {
+                    "label": "ChatGPT",
+                    "description": "The project's Custom GPT, acting as an AI companion for audiences.",
+                    "url": "https://chatgpt.com/g/g-6a61ca759b788191babe096fc2c19e58-burnout-series"
+                },
+                {
+                    "label": "GitHub",
+                    "description": "The project's public knowledge base for AIs."
+                },
+                {
+                    "label": "Meta",
+                    "description": "Substack page with author's notes, materials and guides, project updates, and behind the scenes.",
+                    "url": "https://burnoutseries.substack.com/p/meta"
+                },
+                {
+                    "label": "Gallery",
+                    "description": "Logos, photos, and other creative assets.",
+                    "url": "https://burnoutseries.substack.com/p/gallery"
+                },
+                {
+                    "label": "About",
+                    "description": "Quick introduction to the project and the story.",
+                    "url": "https://burnoutseries.substack.com/about"
+                },
+                {
+                    "label": "Get Started",
+                    "description": "Guide for newcomers on starting either the story or the meta-story with step-by-step links.",
+                    "url": "https://burnoutseries.substack.com/p/get-started"
+                }
+            ]
+        },
+        {
+            "title": "Available meta content",
+            "description": "These Substack tags group the project's main categories of meta content.",
+            "items": [
+                {
+                    "label": "Updates on the project",
+                    "description": "Project updates and progress notes.",
+                    "url": "https://burnoutseries.substack.com/t/update"
+                },
+                {
+                    "label": "Author's notes from George Kary",
+                    "description": "Notes and reflections from George Kary.",
+                    "url": "https://burnoutseries.substack.com/t/authors-notes"
+                },
+                {
+                    "label": "Behind the scenes with George Kary",
+                    "description": "Behind the scenes material around making the series.",
+                    "url": "https://burnoutseries.substack.com/t/behind-the-scenes"
+                },
+                {
+                    "label": "Materials and guides",
+                    "description": "Guides, support material, and reference pieces.",
+                    "url": "https://burnoutseries.substack.com/t/materials-and-guides"
+                }
+            ]
+        },
+        {
+            "title": "Getting started posts on Substack",
+            "description": "Suggested starting posts on Substack, meant to be read and or listened to with George Kary.",
+            "items": [
+                {
+                    "label": "Introduction",
+                    "description": "Starting point for newcomers."
+                },
+                {
+                    "label": "Characters and character progression",
+                    "description": "Overview of the characters and how they evolve."
+                },
+                {
+                    "label": "Process of experimentation",
+                    "description": "How the project approached experimentation."
+                },
+                {
+                    "label": "A plot twist at the story's core",
+                    "description": "Core framing around the story's plot twist."
+                },
+                {
+                    "label": "Locations in Greece, Malta and Italy",
+                    "description": "Geographic context for the story."
+                },
+                {
+                    "label": "Meet the characters (Id, Ego, Superego)",
+                    "description": "Direct introduction to the core characters."
+                },
+                {
+                    "label": "Symbolism and sequence of the logo",
+                    "description": "Visual symbolism and logo logic."
+                },
+                {
+                    "label": "Mood setting videos",
+                    "description": "How the mood-setting videos support the experience."
+                },
+                {
+                    "label": "Release formats and mediums",
+                    "description": "How the project is released across formats and channels."
+                },
+                {
+                    "label": "Prologue => Chapters => Epilogue",
+                    "description": "How the story structure unfolds."
+                }
+            ]
+        },
+        {
+            "title": "Connect with George Kary",
+            "description": "Additional channels where George Kary can be followed based on audience interest.",
+            "items": [
+                {
+                    "label": "Wanderlog",
+                    "description": "For fellow travelers, with travel locations, places, and guides.",
+                    "url": "https://wanderlog.com/u/georgekary"
+                },
+                {
+                    "label": "Threads",
+                    "description": "For fellow creatives, with creative points of view.",
+                    "url": "https://www.threads.com/@georgekary_"
+                },
+                {
+                    "label": "Medium",
+                    "description": "For fellow writers and general long-reads.",
+                    "url": "https://medium.com/@georgekary"
+                },
+                {
+                    "label": "GitHub",
+                    "description": "For fellow coders, including George Kary and Blackaft.",
+                    "url": "https://github.com/geogkary"
+                },
+                {
+                    "label": "Blackaft GitHub",
+                    "description": "Blackaft's GitHub presence.",
+                    "url": "https://github.com/blackaft"
+                },
+                {
+                    "label": "LinkedIn",
+                    "description": "George Kary's LinkedIn profile.",
+                    "url": "https://www.linkedin.com/in/georgekary/"
+                },
+                {
+                    "label": "Substack",
+                    "description": "George Kary's wider Substack presence, including Blackaft Associates.",
+                    "url": "https://substack.com/@georgekary"
+                }
+            ]
+        },
+        {
+            "title": "Connect with Thanos Doumas",
+            "description": "Channels for Thanos Doumas, who is part of the team and also plays the Id character.",
+            "items": [
+                {
+                    "label": "Substack",
+                    "description": "Thanos Doumas on Substack.",
+                    "url": "https://substack.com/@thanosd"
+                },
+                {
+                    "label": "Instagram",
+                    "description": "Thanos Doumas on Instagram.",
+                    "url": "https://www.instagram.com/thanos_do/"
+                }
+            ]
+        }
+    ],
     "prompts": {
         "system": [
             "You are the AI companion for Burnout.",
