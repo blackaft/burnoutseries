@@ -24,10 +24,10 @@ Keep the knowledge base:
 
 - Human-authored content is the source. AI may process, organize, summarize, validate, and retrieve it.
 - `.humans/` is an intake area, not the durable knowledge base.
-- `.agents/vaults/` is the durable machine-readable corpus exposed to GPTs and other retrieval clients.
+- `vaults/burnoutseries/` is the durable machine-readable corpus exposed to GPTs and other retrieval clients.
 - Do not delete, move, or rewrite source material unless the processor behavior clearly requires it.
-- Prefer manifest-first retrieval. `manifest.json` exists so agents do not need to ingest the entire repository.
-- Keep generated JSON shapes consistent: top-level metadata, `base_url`, `count`, and `items` where applicable.
+- Prefer index-first retrieval. `api/index.json` exists so agents do not need to ingest the entire repository.
+- Keep generated JSON shapes consistent and domain-grouped under `api/`.
 - Do not invent posts, dates, image references, authors, excerpts, or project claims.
 - Preserve the Blackaft stance: human creative authorship, AI-assisted context and reflection.
 
@@ -42,9 +42,9 @@ Substack (content source)
     ↓
 .agents/scripts/main.py (orchestrator)
     ↓
-Processors (substack.py, txt.py, manifest.py)
+Processors (vault.py, about.py, substack.py, index.py)
     ↓
-.agents/vaults/ (durable indexed corpus)
+vaults/burnoutseries/ (durable indexed corpus)
     ↓
 GitHub raw URLs → Custom GPT + retrieval clients
 ```
@@ -53,9 +53,10 @@ GitHub raw URLs → Custom GPT + retrieval clients
 
 Run `.agents/scripts/main.py` to orchestrate the processors:
 
-- `processors/substack.py` fetches the Substack RSS feed, stores it at `.agents/vaults/feed.rss`, generates per-post Markdown files, downloads feed-linked images into `.agents/vaults/imgs/`, and regenerates both `posts.json` and `imgs.json`.
-- `processors/txt.py` scans existing Markdown files under `.agents/vaults/about/` and `.agents/vaults/excerpts/` and regenerates their JSON indexes.
-- `processors/manifest.py` merges the generated vault indexes into `.agents/vaults/manifest.json`.
+- `processors/vault.py` writes `vaults/burnoutseries/vault.json` from the repository config.
+- `processors/about.py` syncs `vaults/burnoutseries/about/`, creates `project.md`, and regenerates `api/about/project.json`, `story.json`, and `creator.json`.
+- `processors/substack.py` fetches the Substack RSS feed, stores it at `vaults/burnoutseries/substack/feed.rss`, generates per-post Markdown files, downloads feed-linked images into `vaults/burnoutseries/substack/imgs/`, and regenerates `api/substack/articles.json` and `api/substack/imgs.json`.
+- `processors/index.py` merges the generated vault surfaces into `vaults/burnoutseries/api/index.json`.
 
 Each processor is isolated, reads from specific inputs, writes to specific outputs, and updates one or two JSON files. Processors import path constants from `main.py` rather than duplicating them.
 
@@ -78,14 +79,14 @@ Two AI companions are available for audiences to explore Burnout:
 **Custom GPT** (OpenAI, persistent)
 - Defined in `.agents/scripts/gpt.yml` (OpenAPI spec)
 - Uses GPT Actions to call the repository-backed API
-- Retrieves `manifest.json` first, then fetches post, about, or excerpt Markdown on demand
+- Retrieves `api/index.json` first, then fetches post or about Markdown on demand
 - Hosted in OpenAI's GPT store; requires no local setup
 - Ideal for: User-facing, discoverable, persistent companion
 
 **AI Companion** (Agent-agnostic, flexible)
 - Defined in **.agents/COMPANION.md**
 - Fetches the knowledge base directly from GitHub raw URLs during conversation
-- Retrieves `manifest.json` first, then fetches content files on demand
+- Retrieves `api/index.json` first, then fetches content files on demand
 - Works with any AI agent (Claude, Gemini, Codex, etc.)
 - Ideal for: Developer workflows, experimentation, local use, integration with various AI platforms
 - Setup: Copy the prompt from COMPANION.md into an AI conversation, then ask your first question
@@ -104,17 +105,17 @@ Both companions follow the same retrieval-first, manifest-focused approach. They
 | `.agents/schemas/` | JSON schema contracts for vault indexes | Keep aligned with generated JSON and samples |
 | `.agents/scripts/main.py` | Orchestrator and shared constants | Put shared paths and common helpers here |
 | `.agents/scripts/processors/` | Focused processors for each vault type | Keep processor-specific logic here; avoid duplicated path constants |
-| `.agents/scripts/gpt.yml` | OpenAPI action spec for the Custom GPT | Keep manifest-first unless the retrieval model changes |
+| `.agents/scripts/gpt.yml` | OpenAPI action spec for the Custom GPT | Keep index-first unless the retrieval model changes |
 | `.agents/scripts/publish.sh` | Human-run publish workflow | Preserve existing flow unless explicitly asked to change it |
-| `.agents/vaults/manifest.json` | Merged knowledge manifest | Primary AI entrypoint |
-| `.agents/vaults/posts/` | Generated Markdown from Substack posts | Durable post content for retrieval |
-| `.agents/vaults/about/` | Durable about/context Markdown | Use for project framing and philosophy |
-| `.agents/vaults/excerpts/` | Durable story excerpt Markdown | Use for narrative and theme exploration |
-| `.agents/vaults/imgs/` | Durable image assets | Use with `imgs.json` base URL to construct raw image links |
+| `vaults/burnoutseries/api/index.json` | Merged knowledge index | Primary AI entrypoint |
+| `vaults/burnoutseries/vault.json` | Vault-level metadata and prompt/navigation config | Read with the index or separately when needed |
+| `vaults/burnoutseries/substack/articles/` | Generated Markdown from Substack posts | Durable post content for retrieval |
+| `vaults/burnoutseries/about/` | Durable about/context Markdown | Use for project framing, creator info, and story context |
+| `vaults/burnoutseries/substack/imgs/` | Durable image assets | Use with `api/substack/imgs.json` to construct raw image links |
 
 ## Working Rules
 
-Before making changes, inspect the latest requirements note and current generated JSON. When changing processors, run or mentally trace `main.py` end to end: images, RSS, text indexes, then manifest.
+Before making changes, inspect the latest requirements note and current generated JSON. When changing processors, run or mentally trace `main.py` end to end: vault, about, Substack, then index.
 
 When in doubt, keep the durable vaults stable and update the indexes to reflect the vault contents. The goal is not to maximize automation; the goal is to keep the knowledge base trustworthy for audience-facing AI companions.
 
@@ -124,20 +125,20 @@ When in doubt, keep the durable vaults stable and update the indexes to reflect 
 Each processor:
 - Imports `MAIN` constants from `main.py`
 - Reads from `.humans/` or vault sources
-- Writes JSON + Markdown to `.agents/vaults/`
+- Writes JSON + Markdown to `vaults/burnoutseries/`
 - Returns exit code 0 on success
 - Can be extended or refactored; never hardcode paths
 
 ### Durable Vaults
-Once content exists in `.agents/vaults/`, it is canonical:
-- `.agents/vaults/posts/` contains generated Markdown from Substack
-- `.agents/vaults/about/` and `.agents/vaults/excerpts/` contain durable story and context material
-- `.agents/vaults/imgs/` contains image assets
+Once content exists in `vaults/burnoutseries/`, it is canonical:
+- `vaults/burnoutseries/substack/articles/` contains generated Markdown from Substack
+- `vaults/burnoutseries/about/` contains durable story and context material
+- `vaults/burnoutseries/substack/imgs/` contains image assets
 - `.humans/` is an intake area; processors decide whether to copy or move
 
-### Manifest-First Retrieval
-`manifest.json` is the primary entrypoint for all retrieval clients:
-- External tools (Custom GPT) read manifest first
+### Index-First Retrieval
+`api/index.json` is the primary entrypoint for all retrieval clients:
+- External tools (Custom GPT) read the index first
 - They then fetch full Markdown or images only when needed
 - This keeps bandwidth and inference cost low
 - Agents should never need to ingest the entire repository
@@ -163,9 +164,9 @@ When starting work on this repo:
 
 ## Common Pitfalls to Avoid
 
-- **Don't assume .humans/ is complete.** It's an intake area. The canonical corpus is in `.agents/vaults/`.
+- **Don't assume .humans/ is complete.** It's an intake area. The canonical corpus is in `vaults/burnoutseries/`.
 - **Don't hardcode paths.** Import from `main.py` or ask the user.
-- **Don't delete vault files without reason.** If a post exists in `.agents/vaults/posts/`, it stays until explicitly removed.
+- **Don't delete vault files without reason.** If a post exists in `vaults/burnoutseries/substack/articles/`, it stays until explicitly removed.
 - **Don't modify publish.sh unless you understand the full flow.** It orchestrates Git, Python, and validation in sequence; changes can break the pipeline.
 - **Don't invent content.** Strictly process and retrieve; never hallucinate posts, dates, images, or claims.
 
