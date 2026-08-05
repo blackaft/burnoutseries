@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import parse_qs, quote, unquote, urlparse
+from urllib.parse import quote, unquote, urlparse
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -29,7 +29,6 @@ IMAGE_CONTENT_TYPES = {
     "image/webp": ".webp",
 }
 
-
 def _load_main():
     path = ROOT / "scripts" / "process.py"
     spec = importlib.util.spec_from_file_location("burnout_main", path)
@@ -39,36 +38,21 @@ def _load_main():
     spec.loader.exec_module(module)
     return module
 
-
 MAIN = _load_main()
 
+# -----------------------------------------------------------------------------
+# HELPERS
+# -----------------------------------------------------------------------------
 
-def normalize_date(value: str) -> str:
-    parsed = parsedate_to_datetime(value)
-    if parsed.tzinfo is None:
-        parsed = parsed.replace(tzinfo=timezone.utc)
-    return parsed.astimezone(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-
-
-def slug_from_url(url: str) -> str:
-    path = urlparse(url).path.rstrip("/")
-    candidate = path.split("/")[-1].lower()
-    slug = re.sub(r"[^a-z0-9-]+", "-", candidate)
-    slug = re.sub(r"-+", "-", slug).strip("-")
-    if not slug:
-        raise ValueError(f"Could not derive slug from URL: {url}")
-    return slug
-
-
-def sanitize_filename(value: str) -> str:
+def normalize_filename(value: str) -> str:
+    # Internal id / stem -> filesystem-safe filename segment.
     value = re.sub(r"[^a-z0-9-]+", "-", value.lower())
     return re.sub(r"-+", "-", value).strip("-")
 
-
-def post_filename(post: dict[str, str]) -> str:
+def build_post_filename(post: dict[str, str]) -> str:
+    # Normalized post metadata -> durable markdown filename in the vault.
     published = datetime.fromisoformat(post["published_at"].replace("Z", "+00:00"))
-    return f"{published.strftime('%Y%m%d')}-{sanitize_filename(post['id'])}.md"
-
+    return f"{published.strftime('%Y%m%d')}-{normalize_filename(post['id'])}.md"
 
 class SimpleHTMLToMarkdown(HTMLParser):
     def __init__(self) -> None:
@@ -107,7 +91,6 @@ class SimpleHTMLToMarkdown(HTMLParser):
         text = re.sub(r"\n{3,}", "\n\n", text)
         return text.strip()
 
-
 class FeedImageParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -131,7 +114,6 @@ class FeedImageParser(HTMLParser):
         if src:
             self.image_urls.append(html.unescape(src))
 
-
 def unique_preserving_order(values: list[str]) -> list[str]:
     seen: set[str] = set()
     unique: list[str] = []
@@ -141,31 +123,19 @@ def unique_preserving_order(values: list[str]) -> list[str]:
             unique.append(value)
     return unique
 
-
-def canonical_feed_image_url(url: str) -> str:
-    parsed = urlparse(url)
-    decoded_url = unquote(url)
-    if parsed.netloc.lower().endswith("substackcdn.com"):
-        for marker in ("https://", "http://"):
-            nested_index = decoded_url.rfind(marker)
-            if nested_index > 0:
-                return decoded_url[nested_index:]
-    return decoded_url
-
-
 def extract_feed_image_urls(content_html: str) -> list[str]:
     parser = FeedImageParser()
     parser.feed(content_html)
     return unique_preserving_order(parser.image_urls)
-
 
 def html_to_clean_markdown(content: str) -> str:
     parser = SimpleHTMLToMarkdown()
     parser.feed(content)
     return parser.get_text()
 
-
 def fetch_rss() -> bytes:
+    # Fetching is deliberately thin: network I/O is isolated here so parsing and
+    # output shaping below stay focused on data transformation.
     result = subprocess.run(
         ["curl", "-fsSL", MAIN.RSS_URL],
         check=True,
@@ -175,14 +145,51 @@ def fetch_rss() -> bytes:
     MAIN.FEED_RSS.write_bytes(result.stdout)
     return result.stdout
 
-
-def element_text(element: ET.Element | None) -> str:
-    if element is None or element.text is None:
-        return ""
-    return html.unescape(element.text.strip())
-
-
+# -----------------------------------------------------------------------------
+# Feed parsing
+# Why this block exists:
+# This is the boundary between external RSS input and the internal post shape
+# used by the vault/API pipeline. Posts are normalized close to their final API
+# fields here to reduce reshaping later.
+# -----------------------------------------------------------------------------
 def parse_feed(xml_data: bytes) -> list[dict[str, object]]:
+    # These helpers stay nested because they only make sense while translating a
+    # single RSS item into the internal post contract, and they read in the same
+    # order as that transformation inside the loop below.
+    def parse_feed_extract_element_text(element: ET.Element | None) -> str:
+        if element is None or element.text is None:
+            return ""
+        return html.unescape(element.text.strip())
+
+    def parse_feed_normalize_date(value: str) -> str:
+        # Feed `pubDate` -> normalized UTC ISO timestamp for the repo contract.
+        parsed = parsedate_to_datetime(value)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+    def parse_feed_extract_slug_from_url(url: str) -> str:
+        # Feed post URL -> stable slug used as the internal post id.
+        path = urlparse(url).path.rstrip("/")
+        candidate = path.split("/")[-1].lower()
+        slug = re.sub(r"[^a-z0-9-]+", "-", candidate)
+        slug = re.sub(r"-+", "-", slug).strip("-")
+        if not slug:
+            raise ValueError(f"Could not derive slug from URL: {url}")
+        return slug
+
+    def parse_feed_extract_canonical_image_url(url: str) -> str:
+        # Substack often wraps the original asset URL inside a CDN URL. We
+        # unwrap it here so feed-level deduplication works on the original URL.
+        parsed = urlparse(url)
+        decoded_url = unquote(url)
+        if parsed.netloc.lower().endswith("substackcdn.com"):
+            for marker in ("https://", "http://"):
+                nested_index = decoded_url.rfind(marker)
+                if nested_index > 0:
+                    return decoded_url[nested_index:]
+        return decoded_url
+
     root = ET.fromstring(xml_data)
     channel = root.find("channel")
     if channel is None:
@@ -190,23 +197,26 @@ def parse_feed(xml_data: bytes) -> list[dict[str, object]]:
 
     posts: list[dict[str, object]] = []
     for item in channel.findall("item"):
-        title = element_text(item.find("title"))
-        url = element_text(item.find("link"))
-        creator = element_text(item.find("dc:creator", NAMESPACES))
-        published_raw = element_text(item.find("pubDate"))
-        content_html = element_text(item.find("content:encoded", NAMESPACES))
+        title = parse_feed_extract_element_text(item.find("title"))
+        url = parse_feed_extract_element_text(item.find("link"))
+        creator = parse_feed_extract_element_text(item.find("dc:creator", NAMESPACES))
+        published_raw = parse_feed_extract_element_text(item.find("pubDate"))
+        content_html = parse_feed_extract_element_text(item.find("content:encoded", NAMESPACES))
         enclosure = item.find("enclosure")
         if not title or not url or not published_raw:
             continue
 
         try:
-            published_at = normalize_date(published_raw)
-            slug = slug_from_url(url)
+            published_at = parse_feed_normalize_date(published_raw)
+            slug = parse_feed_extract_slug_from_url(url)
         except (TypeError, ValueError) as error:
             print(f"Skipping invalid RSS item: {error}", file=sys.stderr)
             continue
 
         content = html_to_clean_markdown(content_html)
+        # The full cleaned article body is kept for markdown output, while the
+        # shorter excerpt is delegated to the shared helper in `process.py` so
+        # excerpt rules stay consistent across processors.
         image_urls: list[str] = []
         if enclosure is not None and enclosure.attrib.get("url") and str(enclosure.attrib.get("type", "")).startswith("image/"):
             image_urls.append(enclosure.attrib["url"].strip())
@@ -220,10 +230,10 @@ def parse_feed(xml_data: bytes) -> list[dict[str, object]]:
                 "created_by": creator,
                 "published_at": published_at,
                 "substack_url": url,
-                "file": post_filename({"id": slug, "published_at": published_at}),
+                "file": build_post_filename({"id": slug, "published_at": published_at}),
                 "content": content,
                 "image_urls": unique_preserving_order(
-                    [canonical_feed_image_url(value) for value in image_urls]
+                    [parse_feed_extract_canonical_image_url(value) for value in image_urls]
                 ),
             }
         )
@@ -231,8 +241,8 @@ def parse_feed(xml_data: bytes) -> list[dict[str, object]]:
     posts.sort(key=lambda post: str(post["published_at"]), reverse=True)
     return posts
 
-
-def render_post(post: dict[str, object]) -> str:
+# TODO: Schemas should be declared centrally or fetched from file.
+def build_post_markdown(post: dict[str, object]) -> str:
     lines = [
         "---",
         f'id: {json.dumps(post["id"], ensure_ascii=False)}',
@@ -254,12 +264,12 @@ def write_articles(posts: list[dict[str, object]]) -> None:
     MAIN.SUBSTACK_ARTICLES_DIR.mkdir(parents=True, exist_ok=True)
     for post in posts:
         (MAIN.SUBSTACK_ARTICLES_DIR / str(post["file"])).write_text(
-            render_post(post),
+            build_post_markdown(post),
             encoding="utf-8",
         )
 
-
-def parse_frontmatter(path: Path) -> tuple[dict[str, str], str]:
+# TODO: Deprecate; covered by api/ files, is context bloat.
+def extract_frontmatter(path: Path) -> tuple[dict[str, str], str]:
     raw = path.read_text(encoding="utf-8")
     if not raw.startswith("---\n"):
         return {}, raw.strip()
@@ -275,11 +285,10 @@ def parse_frontmatter(path: Path) -> tuple[dict[str, str], str]:
         metadata[key.strip()] = json.loads(value.strip())
     return metadata, content.strip()
 
-
 def load_articles_from_existing() -> list[dict[str, object]]:
     posts: list[dict[str, object]] = []
     for path in sorted(MAIN.SUBSTACK_ARTICLES_DIR.glob("*.md")):
-        metadata, content = parse_frontmatter(path)
+        metadata, content = extract_frontmatter(path)
         if not metadata:
             continue
         metadata.setdefault("file", path.name)
@@ -288,7 +297,7 @@ def load_articles_from_existing() -> list[dict[str, object]]:
     posts.sort(key=lambda post: str(post.get("published_at", "")), reverse=True)
     return posts
 
-
+# TODO: Schemas should be declared centrally or fetched from file.
 def build_articles_payload(posts: list[dict[str, object]]) -> dict:
     return {
         "updated_at": MAIN.utc_now(),
@@ -309,7 +318,6 @@ def build_articles_payload(posts: list[dict[str, object]]) -> dict:
         ],
     }
 
-
 def build_imgs_payload() -> dict:
     items = sorted(path.name for path in MAIN.SUBSTACK_IMGS_DIR.iterdir() if path.is_file())
     return {
@@ -319,8 +327,14 @@ def build_imgs_payload() -> dict:
         "items": [quote(item, safe="/") for item in items],
     }
 
-
-def image_extension(url: str, content_type: str) -> str:
+# -----------------------------------------------------------------------------
+# Image synchronization
+# Why this block exists:
+# Feed-linked images are durable vault assets, not temporary attachments. This
+# block is responsible for downloading, naming, deduplicating, and pruning image
+# files so the vault directory remains the source of truth.
+# -----------------------------------------------------------------------------
+def extract_image_extension(url: str, content_type: str) -> str:
     suffix = Path(unquote(urlparse(url).path)).suffix.lower()
     if suffix in IMAGE_CONTENT_TYPES.values():
         return suffix
@@ -330,7 +344,7 @@ def image_extension(url: str, content_type: str) -> str:
     raise ValueError(f"Unsupported image type for {url}: {content_type or 'unknown'}")
 
 
-def image_filename_stem(post_slug: str, image_index: int) -> str:
+def build_image_filename_stem(post_slug: str, image_index: int) -> str:
     if image_index == 1:
         return f"{post_slug}-featured"
     return f"{post_slug}-{image_index - 1}"
@@ -340,8 +354,8 @@ def download_image(url: str, filename_stem: str) -> tuple[str, bytes]:
     request = Request(url, headers={"User-Agent": "burnout-vault-processor/1.0"})
     with urlopen(request) as response:
         content = response.read()
-        extension = image_extension(url, response.headers.get_content_type())
-    filename = f"{sanitize_filename(filename_stem)}{extension}"
+        extension = extract_image_extension(url, response.headers.get_content_type())
+    filename = f"{normalize_filename(filename_stem)}{extension}"
     return filename, content
 
 
@@ -352,7 +366,7 @@ def sync_feed_images(posts: list[dict[str, object]]) -> None:
 
     for post in posts:
         for index, image_url in enumerate(post.get("image_urls", []), start=1):
-            filename, content = download_image(str(image_url), image_filename_stem(str(post["id"]), index))
+            filename, content = download_image(str(image_url), build_image_filename_stem(str(post["id"]), index))
             candidate = Path(filename)
             collision_index = 2
             while candidate.name in reserved:
@@ -367,6 +381,15 @@ def sync_feed_images(posts: list[dict[str, object]]) -> None:
             stale.unlink()
 
 
+# -----------------------------------------------------------------------------
+# Entry point
+# Why this block exists:
+# The processor supports two modes:
+# - normal mode fetches RSS and refreshes durable vault assets
+# - reuse mode rebuilds API JSON from already-stored vault content
+# That split keeps implementation/review work possible without forcing a live
+# fetch or publication run every time.
+# -----------------------------------------------------------------------------
 def main() -> None:
     MAIN.ensure_directories()
     use_existing = os.getenv("VAULT_USE_EXISTING_SUBSTACK") == "1"

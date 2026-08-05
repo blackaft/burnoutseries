@@ -18,8 +18,8 @@ A major aspect of the experiment is the use of AI for research, analysis, retros
 
 If you're looking to build your own AI setup, point your AI to:
 
-- [Companion](.agents/COMPANION.md), if you're simply looking to interact with the series.
-- [Publisher](.agents/PUBLISHER.md), to update the knowledge base.
+- [Companion Instructions](.agents/docs/prompts/20260805-companion-instructions.md), if you're simply looking to interact with the series.
+- [Publisher Instructions](.agents/docs/prompts/20260805-publisher-instructions.md), to update the knowledge base.
 
 Ready to use:
 
@@ -52,30 +52,33 @@ Publish this knowledge base update by running `./.agents/scripts/publish.sh` and
 What happens, in order:
 
 1. You add human-authored source files under `.humans/`.
-2. `publish.sh` runs the orchestrator in `.agents/scripts/main.py`.
-3. The processors move or generate durable assets under `.agents/vaults/`.
-4. The manifest is rebuilt as the single entrypoint for AI clients.
-5. The Custom GPT reads the manifest first, then drills into posts, about text, or images only when needed.
+2. `publish.sh` runs the orchestrator in `.agents/scripts/process.py`.
+3. The processors move or generate durable assets under `vaults/burnoutseries/`.
+4. The API is rebuilt under `api/`, with `api/index.json` as the global registry and `api/burnoutseries/index.json` as the vault-specific entrypoint.
+5. The Custom GPT reads `api/burnoutseries/index.json` first, then drills into posts, about text, or images only when needed.
 
 ```mermaid
 flowchart LR
   A[Human adds files in .humans/] --> B[Publish script runs]
-  B --> C[main.py orchestrates processors]
-  C --> D[substack.py fetches Substack RSS, builds posts, and downloads feed images]
-  C --> E[txt.py converts txt sources and refreshes about]
-  C --> F[manifest.py merges all vault JSON into manifest.json]
-  D --> G[posts.json + per-post markdown + imgs.json + vault images]
-  E --> H[about.json + vault markdown]
-  F --> I[manifest.json]
-  G --> J[Custom GPT and other AI clients read the manifest]
-  H --> J
-  I --> J
+  B --> C[process.py orchestrates local and remote processors]
+  C --> D[remote/substack.py fetches Substack RSS, builds article markdown, and downloads feed images]
+  C --> E[local/about.py syncs about markdown and grouped JSON]
+  C --> F[local/vault.py writes api/index.json]
+  C --> G[local/index.py writes api/burnoutseries/index.json]
+  D --> H[api/burnoutseries/substack/articles.json + api/burnoutseries/substack/imgs.json + vault assets]
+  E --> I[api/burnoutseries/about/project.json + story.json + creator.json]
+  F --> J[api/index.json]
+  G --> K[api/burnoutseries/index.json]
+  H --> L[Custom GPT and other AI clients read the index]
+  I --> L
+  J --> L
+  K --> L
 ```
 
-The knowledge base is now designed so AI companions start from `manifest.json`.
+The knowledge base is now designed so AI companions start from `api/burnoutseries/index.json`.
 
-- The manifest exposes the repository `config`, including prompt guidance for AI companions.
-- It exposes `posts`, `about`, and `imgs` as lightweight indexes with `path` plus `items`.
+- The index exposes `vault`, including prompt guidance and navigation.
+- It exposes grouped `about` and `substack` indexes with `path` plus `items`.
 - Post items include `substack_url` for real post links.
 - Raw repository content should be derived from `base_url + path + file`.
 - Public post links should come from `substack_url`, not guessed website URLs.
