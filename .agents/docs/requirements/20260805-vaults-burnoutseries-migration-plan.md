@@ -40,7 +40,7 @@ These files currently exist as placeholders rather than live generated outputs.
 
 ### Repository documentation is out of sync with the intended direction
 
-`README.md`, `.agents/COMPANION.md`, `.agents/PUBLISHER.md`, and prior requirements documents still describe `.agents/vaults/` as the canonical retrieval surface.
+`README.md`, the active prompt instructions under `.agents/docs/prompts/`, and prior requirements documents still describe `.agents/vaults/` as the canonical retrieval surface.
 
 This first iteration does not need to rewrite past progressive artifacts exhaustively. Human-facing and machine-facing fixed artifacts can be cleaned up more broadly in a second iteration as part of the later transformation into an AI-agent skill.
 
@@ -57,17 +57,18 @@ For this migration, `.agents/scripts/` should be created as part of the implemen
 The target structure should be:
 
 ```text
+api/
+  burnoutseries/
+    about/
+      project.json
+      story.json
+      creator.json
+    substack/
+      articles.json
+      imgs.json
+    index.json
 vaults/
   burnoutseries/
-    api/
-      about/
-        project.json
-        story.json
-        creator.json
-      substack/
-        articles.json
-        imgs.json
-      index.json
     about/
     substack/
       articles/
@@ -87,18 +88,18 @@ vaults/
 - `about/` holds durable markdown context files about the project, people, or framing.
 - `substack/articles/` holds durable markdown generated from or aligned with Substack posts.
 - `substack/imgs/` holds durable image assets associated with Substack/article content.
-- `api/` holds machine-readable JSON surfaces for AI consumers and tooling.
+- `api/burnoutseries/` holds machine-readable JSON surfaces for AI consumers and tooling.
 - `vault.json` holds vault-level metadata and settings.
 
 ### API naming
 
 The new structure is more explicit if JSON surfaces are grouped by domain:
 
-- `api/index.json` as the top-level AI entrypoint
+- `api/burnoutseries/index.json` as the top-level AI entrypoint
 - `vault.json` for vault-level metadata and navigation/config
-- `api/about/project.json`, `api/about/story.json`, and `api/about/creator.json` for segmented about material
-- `api/substack/articles.json` for article metadata and content pointers
-- `api/substack/imgs.json` for image discovery
+- `api/burnoutseries/about/project.json`, `story.json`, and `creator.json` for segmented about material
+- `api/burnoutseries/substack/articles.json` for article metadata and content pointers
+- `api/burnoutseries/substack/imgs.json` for image discovery
 
 This makes the domain boundaries clearer than the flatter legacy names `posts.json`, `imgs.json`, and `manifest.json`.
 
@@ -116,7 +117,7 @@ This makes the domain boundaries clearer than the flatter legacy names `posts.js
 
 Before moving files, confirm and document:
 
-- whether `vault.json` fully replaces the old embedded `config` contract or continues to be embedded inside `api/index.json`
+- whether `vault.json` fully replaces the old embedded `config` contract or continues to be embedded inside `api/burnoutseries/index.json`
 - whether `substack/articles/` is the permanent replacement for legacy `posts/`
 - whether `substack/imgs/` is the permanent replacement for legacy `imgs/`
 - whether `api/about/project.json`, `story.json`, and `creator.json` are generated from distinct sources or split from a common source
@@ -133,10 +134,10 @@ Create an explicit one-to-one mapping from legacy paths to new paths:
 - `.agents/vaults/about/*.md` -> `vaults/burnoutseries/about/*.md`
 - `.agents/vaults/posts/*.md` -> `vaults/burnoutseries/substack/articles/*.md`
 - `.agents/vaults/imgs/*` -> `vaults/burnoutseries/substack/imgs/*`
-- `.agents/vaults/about.json` -> split into `vaults/burnoutseries/api/about/project.json`, `story.json`, and `creator.json` as required by the new contract
-- `.agents/vaults/posts.json` -> `vaults/burnoutseries/api/substack/articles.json`
-- `.agents/vaults/imgs.json` -> `vaults/burnoutseries/api/substack/imgs.json`
-- `.agents/vaults/manifest.json` -> `vaults/burnoutseries/api/index.json`
+- `.agents/vaults/about.json` -> split into `api/burnoutseries/about/project.json`, `story.json`, and `creator.json` as required by the new contract
+- `.agents/vaults/posts.json` -> `api/burnoutseries/substack/articles.json`
+- `.agents/vaults/imgs.json` -> `api/burnoutseries/substack/imgs.json`
+- `.agents/vaults/manifest.json` -> `api/burnoutseries/index.json`
 - legacy embedded config/settings -> `vaults/burnoutseries/vault.json`
 - `.agents/vaults/feed.rss` -> either `vaults/burnoutseries/substack/feed.rss` or removal if RSS caching is no longer part of the published vault contract
 
@@ -150,7 +151,7 @@ Update the JSON contract so that retrieval clients no longer depend on `.agents/
 
 Minimum expectations:
 
-- `api/index.json` remains the first read for AI clients
+- `api/burnoutseries/index.json` remains the first read for AI clients
 - index paths point into `vaults/burnoutseries/`
 - item references use the new directory layout
 - raw content URLs are derived from the new root, not the legacy one
@@ -164,7 +165,7 @@ Key design decision:
 Once the contract is fixed:
 
 - move markdown and image assets into the new tree
-- regenerate `api/about/*.json`, `api/substack/articles.json`, `api/substack/imgs.json`, `api/index.json`, and `vault.json`
+- regenerate `api/burnoutseries/about/*.json`, `api/burnoutseries/substack/articles.json`, `api/burnoutseries/substack/imgs.json`, `api/burnoutseries/index.json`, and `vault.json`
 - validate that every legacy file has an equivalent new location
 - confirm that counts and item identifiers match or intentionally differ with documented reasons
 
@@ -177,8 +178,7 @@ Important rule:
 Every retrieval-facing or maintenance-facing surface must be updated:
 
 - `README.md`
-- `.agents/COMPANION.md`
-- `.agents/PUBLISHER.md`
+- active prompt docs under `.agents/docs/prompts/`
 - active requirements docs that still describe `.agents/vaults/` as canonical
 - active prompt docs or GPT contracts that reference raw GitHub paths
 - any OpenAPI or action schema files that currently point at `.agents/vaults/...`
@@ -215,7 +215,7 @@ After cutover:
 
 The migration is complete when all of the following are true:
 
-1. `vaults/burnoutseries/api/index.json` is the canonical AI entrypoint.
+1. `api/burnoutseries/index.json` is the canonical AI entrypoint.
 2. Durable markdown and image assets are generated under `vaults/burnoutseries/` by the new publication flow.
 3. No primary documentation still instructs users or tools to read from `.agents/vaults/`.
 4. Any generation or publish flow writes to `vaults/burnoutseries/`, not `.agents/vaults/`.
@@ -230,7 +230,7 @@ The current checkout does not contain the `.agents/scripts/` architecture descri
 
 ### Contract drift
 
-The repo currently has documented contracts for `posts.json`, `imgs.json`, and `.agents/vaults/manifest.json`. Replacing these with `api/substack/articles.json`, `api/substack/imgs.json`, and `vaults/burnoutseries/api/index.json` will break clients unless all active retrieval surfaces are updated together.
+The repo currently has documented contracts for `posts.json`, `imgs.json`, and `.agents/vaults/manifest.json`. Replacing these with `api/burnoutseries/substack/articles.json`, `api/burnoutseries/substack/imgs.json`, and `api/burnoutseries/index.json` will break clients unless all active retrieval surfaces are updated together.
 
 ### Partial migration risk
 
@@ -238,7 +238,7 @@ Because the new vault currently exists only as placeholders, there is a risk of 
 
 ## Open Questions
 
-1. Should `vault.json` be embedded into `api/index.json`, or fetched separately by clients?
+1. Should `vault.json` be embedded into `api/burnoutseries/index.json`, or fetched separately by clients?
 2. Should `feed.rss` remain a tracked artifact in the new vault structure?
 3. Is `excerpts/` intentionally removed from the future architecture, or simply not created yet under `vaults/burnoutseries/`?
 4. What is the intended source split for `api/about/project.json`, `story.json`, and `creator.json`?

@@ -15,10 +15,12 @@ After the first exchange, converse naturally. Answer the user's actual question 
 
 ## How to Retrieve Knowledge
 
-The Burnout Series knowledge base is at: https://raw.githubusercontent.com/blackaft/burnoutseries/dev/vaults/burnoutseries/
+The Burnout Series knowledge base is split across:
+- Vault content: https://raw.githubusercontent.com/blackaft/burnoutseries/dev/vaults/burnoutseries/
+- API indexes: https://raw.githubusercontent.com/blackaft/burnoutseries/dev/api/burnoutseries/
 
 Start every factual question by fetching the index:
-https://raw.githubusercontent.com/blackaft/burnoutseries/dev/vaults/burnoutseries/api/index.json
+https://raw.githubusercontent.com/blackaft/burnoutseries/dev/api/burnoutseries/index.json
 
 Then fetch full content from these locations as needed:
 - About: https://raw.githubusercontent.com/blackaft/burnoutseries/dev/vaults/burnoutseries/about/{filename}
@@ -70,4 +72,4 @@ If the user asks about updating, managing, or publishing content to the Burnout 
 
 ## References
 
-For maintaining or updating this file, see **PUBLISHER.md** for the complete architecture. The knowledge base is version-controlled in `vaults/burnoutseries/` and updated via `publish.sh`.
+For maintaining or updating this file, see **PUBLISHER.md** for the complete architecture. The content vault is version-controlled in `vaults/burnoutseries/`, the API indexes in `api/burnoutseries/`, and both are updated via `publish.sh`.

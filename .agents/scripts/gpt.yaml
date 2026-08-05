@@ -1,35 +1,41 @@
+#
+# Deprecated compatibility copy.
+# Canonical spec: .agents/docs/schemas/openapi.yaml
+#
 openapi: 3.1.0
 
 info:
   title: Knowledge Base for the Burnout Series
   description: >
-    AI companion knowledge base for Burnout Series audiences. Use the manifest
-    first to inspect the available prompt context, about material, Substack
-    post metadata, and image assets before requesting specific content files.
+    AI companion knowledge base for Burnout Series audiences. Use the index
+    first to inspect the available vault context, grouped about material,
+    Substack post metadata, and image assets before requesting specific
+    content files.
   version: "1.0.0"
 
 servers:
   - url: https://raw.githubusercontent.com/blackaft/burnoutseries/dev
 
 paths:
-  /.agents/vaults/manifest.json:
+  /api/burnoutseries/index.json:
     get:
       operationId: getManifest
-      summary: Get the Burnout Series manifest
+      summary: Get the Burnout Series index
       description: >
-        Start here for factual questions. The manifest exposes config,
-        prompts, navigation, about files, post files, `substack_url` values,
-        and image assets. Use `substack_url` for post links. Use `base_url`
-        plus section `path` plus `file` only for raw repository content.
+        Start here for factual questions. The index exposes vault metadata,
+        prompts, navigation, grouped about files, Substack post metadata,
+        `substack_url` values, and image assets. Use `substack_url` for post
+        links. Use `base_url` plus section `path` plus `file` only for raw
+        repository content.
       responses:
         "200":
-          description: Manifest retrieved successfully
+          description: Index retrieved successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Manifest"
+                $ref: "#/components/schemas/Index"
 
-  /.agents/vaults/posts/{postFile}:
+  /vaults/burnoutseries/substack/articles/{postFile}:
     get:
       operationId: getPostsContent
       summary: Get an individual Burnout Series post
@@ -52,13 +58,13 @@ paths:
               schema:
                 type: string
 
-  /.agents/vaults/about/{aboutFile}:
+  /vaults/burnoutseries/about/{aboutFile}:
     get:
       operationId: getSeriesAbout
       summary: Get background information about Burnout
       description: >
-        Returns the project's AI-first background, framing, and contextual
-        information.
+        Returns the project's AI-first background, creator framing, and story
+        context files.
       parameters:
         - name: aboutFile
           in: path
@@ -73,32 +79,68 @@ paths:
               schema:
                 type: string
 
+  /vaults/burnoutseries/vault.json:
+    get:
+      operationId: getVaultConfig
+      summary: Get the Burnout Series vault metadata
+      description: >
+        Returns the vault-level metadata, navigation, and prompt guidance for
+        Burnout Series.
+      responses:
+        "200":
+          description: Vault metadata retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+
 components:
   schemas:
-    Manifest:
+    Index:
       type: object
       properties:
-        config:
-          type: object
         updated_at:
-          type:
-            - string
-            - "null"
+          type: string
+          format: date-time
         base_url:
           type: string
           format: uri
-        posts:
-          $ref: "#/components/schemas/PostsIndex"
+        vault:
+          type: object
         about:
+          $ref: "#/components/schemas/AboutGroups"
+        substack:
+          $ref: "#/components/schemas/SubstackGroups"
+      required:
+        - updated_at
+        - base_url
+        - vault
+        - about
+        - substack
+
+    AboutGroups:
+      type: object
+      properties:
+        project:
           $ref: "#/components/schemas/AboutIndex"
+        story:
+          $ref: "#/components/schemas/AboutIndex"
+        creator:
+          $ref: "#/components/schemas/AboutIndex"
+      required:
+        - project
+        - story
+        - creator
+
+    SubstackGroups:
+      type: object
+      properties:
+        articles:
+          $ref: "#/components/schemas/PostsIndex"
         imgs:
           $ref: "#/components/schemas/ImageIndex"
       required:
-        - config
-        - updated_at
-        - base_url
-        - posts
-        - about
+        - articles
         - imgs
 
     PostsIndex:
@@ -106,32 +148,52 @@ components:
       properties:
         path:
           type: string
+        latest:
+          type:
+            - string
+            - "null"
         items:
           type: array
           items:
             $ref: "#/components/schemas/PostMetadata"
       required:
         - path
+        - latest
         - items
 
     PostMetadata:
       type: object
       properties:
+        id:
+          type: string
+        title:
+          type: string
         excerpt:
           type: string
+        created_by:
+          type: string
+        published_at:
+          type: string
+          format: date-time
         file:
           type: string
         substack_url:
           type: string
           format: uri
       required:
+        - id
+        - title
         - excerpt
+        - created_by
+        - published_at
         - file
         - substack_url
 
     AboutIndex:
       type: object
       properties:
+        category:
+          type: string
         path:
           type: string
         items:
@@ -139,17 +201,21 @@ components:
           items:
             $ref: "#/components/schemas/AboutItem"
       required:
+        - category
         - path
         - items
 
     AboutItem:
       type: object
       properties:
+        id:
+          type: string
         excerpt:
           type: string
         file:
           type: string
       required:
+        - id
         - excerpt
         - file
 
