@@ -1,4 +1,4 @@
 __pycache__/
 .venv
 .agents/skills/*
-!.agents/skills/.gitkeep
+!.gitkeep
