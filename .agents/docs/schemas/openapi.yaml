@@ -29,7 +29,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Index"
+                $ref: "#/components/schemas/ApiIndex"
 
   /vaults/burnoutseries/substack/articles/{postFile}:
     get:
@@ -75,23 +75,39 @@ paths:
               schema:
                 type: string
 
-  /vaults/burnoutseries/vault.json:
-    get:
-      operationId: getVaultConfig
-      summary: Get the Burnout Series vault metadata
-      description: >
-        Returns the vault-level metadata, navigation, and prompt guidance for
-        Burnout Series.
-      responses:
-        "200":
-          description: Vault metadata retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-
 components:
   schemas:
+    ApiIndex:
+      type: object
+      properties:
+        updated_at:
+          type: string
+          format: date-time
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApiRegistryItem"
+      required:
+        - updated_at
+        - count
+        - items
+
+    ApiRegistryItem:
+      type: object
+      properties:
+        id:
+          type: string
+        path:
+          type: string
+        api:
+          type: string
+      required:
+        - id
+        - path
+        - api
+
     Index:
       type: object
       properties:

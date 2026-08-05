@@ -19,11 +19,23 @@ def _load_main():
 MAIN = _load_main()
 
 
+def build_vault_metadata() -> dict:
+    payload = MAIN.load_json(MAIN.CONFIG_JSON)
+    payload.update(
+        {
+            "id": MAIN.VAULT_ID,
+            "updated_at": MAIN.utc_now(),
+            "base_url": MAIN.vault_base_url(),
+        }
+    )
+    return payload
+
+
 def build_index() -> dict:
     return {
         "updated_at": MAIN.utc_now(),
         "base_url": MAIN.raw_base_url(),
-        "vault": MAIN.load_json(MAIN.VAULT_JSON),
+        "vault": build_vault_metadata(),
         "about": {
             "project": MAIN.load_json(MAIN.PROJECT_JSON),
             "story": MAIN.load_json(MAIN.STORY_JSON),

@@ -19,20 +19,22 @@ def _load_main():
 MAIN = _load_main()
 
 
-def build_vault_payload() -> dict:
-    payload = MAIN.load_json(MAIN.CONFIG_JSON)
-    payload.update(
-        {
-            "id": MAIN.VAULT_ID,
-            "updated_at": MAIN.utc_now(),
-            "base_url": MAIN.vault_base_url(),
-        }
-    )
-    return payload
+def build_api_registry_payload() -> dict:
+    return {
+        "updated_at": MAIN.utc_now(),
+        "count": 1,
+        "items": [
+            {
+                "id": MAIN.VAULT_ID,
+                "path": f"api/{MAIN.VAULT_ID}/",
+                "api": f"api/{MAIN.VAULT_ID}/index.json",
+            }
+        ],
+    }
 
 
 def main() -> None:
-    MAIN.write_json(MAIN.VAULT_JSON, build_vault_payload())
+    MAIN.write_json(MAIN.API_ROOT_INDEX_JSON, build_api_registry_payload())
 
 
 if __name__ == "__main__":

@@ -25,6 +25,7 @@ Keep the knowledge base:
 - Human-authored content is the source. AI may process, organize, summarize, validate, and retrieve it.
 - `.humans/` is an intake area, not the durable knowledge base.
 - `vaults/burnoutseries/` is the durable content corpus.
+- `api/index.json` is the global API registry.
 - `api/burnoutseries/` is the machine-readable index surface exposed to retrieval clients.
 - Do not delete, move, or rewrite source material unless the processor behavior clearly requires it.
 - Prefer index-first retrieval. `api/burnoutseries/index.json` exists so agents do not need to ingest the entire repository.
@@ -54,7 +55,7 @@ GitHub raw URLs → Custom GPT + retrieval clients
 
 Run `.agents/scripts/process.py` to orchestrate the processors:
 
-- `local/vault.py` writes `vaults/burnoutseries/vault.json` from the repository config.
+- `local/vault.py` maintains `api/index.json` as the global API registry.
 - `local/about.py` syncs `vaults/burnoutseries/about/`, creates `project.md`, and regenerates `api/burnoutseries/about/project.json`, `story.json`, and `creator.json`.
 - `remote/substack.py` fetches the Substack RSS feed, stores it at `vaults/burnoutseries/substack/feed.rss`, generates per-post Markdown files, downloads feed-linked images into `vaults/burnoutseries/substack/imgs/`, and regenerates `api/burnoutseries/substack/articles.json` and `api/burnoutseries/substack/imgs.json`.
 - `local/index.py` merges the generated vault surfaces into `api/burnoutseries/index.json`.
@@ -111,8 +112,8 @@ Both companions follow the same retrieval-first, manifest-focused approach. They
 | `.agents/docs/schemas/openapi.yaml` | Canonical OpenAPI spec for the Custom GPT | Keep this authoritative |
 | `.agents/scripts/gpt.yaml` | Deprecated compatibility copy of the OpenAPI spec | Remove later when no longer needed |
 | `.agents/scripts/publish.sh` | Human-run publish workflow | Preserve existing flow unless explicitly asked to change it |
+| `api/index.json` | Global API registry | Use to discover available API endpoints |
 | `api/burnoutseries/index.json` | Merged knowledge index | Primary AI entrypoint |
-| `vaults/burnoutseries/vault.json` | Vault-level metadata and prompt/navigation config | Read with the index or separately when needed |
 | `vaults/burnoutseries/substack/articles/` | Generated Markdown from Substack posts | Durable post content for retrieval |
 | `vaults/burnoutseries/about/` | Durable about/context Markdown | Use for project framing, creator info, and story context |
 | `vaults/burnoutseries/substack/imgs/` | Durable image assets | Use with `api/substack/imgs.json` to construct raw image links |
@@ -158,7 +159,7 @@ All vault outputs must pass validation:
 
 When starting work on this repo:
 
-- [ ] Read this brief (PUBLISHER.md)
+- [ ] Read this brief (`20260805-publisher-instructions.md`)
 - [ ] Skim the latest `.agents/docs/requirements/` file
 - [ ] Understand the specific task
 - [ ] Check current state: `git status`, review relevant JSON, inspect vault files

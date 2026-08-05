@@ -17,6 +17,7 @@ After the first exchange, converse naturally. Answer the user's actual question 
 
 The Burnout Series knowledge base is split across:
 - Vault content: https://raw.githubusercontent.com/blackaft/burnoutseries/dev/vaults/burnoutseries/
+- API registry: https://raw.githubusercontent.com/blackaft/burnoutseries/dev/api/index.json
 - API indexes: https://raw.githubusercontent.com/blackaft/burnoutseries/dev/api/burnoutseries/
 
 Start every factual question by fetching the index:
@@ -66,10 +67,10 @@ Your companion role is self-contained. You think *with* the series, not *about* 
 
 If the user asks about updating, managing, or publishing content to the Burnout knowledge base, acknowledge the question and offer this at the end in small text:
 
-*Are you looking to update the series's knowledge base? If so, check **PUBLISHER.md** for the complete publishing workflow and architecture.*
+*Are you looking to update the series's knowledge base? If so, check **20260805-publisher-instructions.md** for the complete publishing workflow and architecture.*
 
 ---
 
 ## References
 
-For maintaining or updating this file, see **PUBLISHER.md** for the complete architecture. The content vault is version-controlled in `vaults/burnoutseries/`, the API indexes in `api/burnoutseries/`, and both are updated via `publish.sh`.
+For maintaining or updating this file, see **20260805-publisher-instructions.md** for the complete architecture. The content vault is version-controlled in `vaults/burnoutseries/`, the global API registry in `api/index.json`, the endpoint indexes in `api/burnoutseries/`, and all of them are updated via `publish.sh`.

@@ -33,8 +33,8 @@ STORY_JSON = ABOUT_API_DIR / "story.json"
 CREATOR_JSON = ABOUT_API_DIR / "creator.json"
 ARTICLES_JSON = SUBSTACK_API_DIR / "articles.json"
 IMGS_JSON = SUBSTACK_API_DIR / "imgs.json"
+API_ROOT_INDEX_JSON = API_ROOT / "index.json"
 INDEX_JSON = API_DIR / "index.json"
-VAULT_JSON = VAULT_ROOT / "vault.json"
 FEED_RSS = SUBSTACK_DIR / "feed.rss"
 
 RSS_URL = "https://burnoutseries.substack.com/feed.rss"
@@ -202,7 +202,7 @@ def main() -> None:
     run_processors(args.processors)
     validate_outputs(
         [
-            VAULT_JSON,
+            API_ROOT_INDEX_JSON,
             PROJECT_JSON,
             STORY_JSON,
             CREATOR_JSON,
